@@ -69,6 +69,37 @@ public class TicketDAO {
         }
     }
 
+	public int getVehicleOccurence (String vehicleRegNumber)
+	{
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int occurences = 0;
+
+		try
+		{
+			con = dataBaseConfig.getConnection();
+			ps = con.prepareStatement(DBConstants.GET_VEHICLE_OCCURENCES);
+			ps.setString(1, vehicleRegNumber);
+			rs = ps.executeQuery();
+
+			if(rs.next())
+				occurences = rs.getInt(1);
+		}
+		catch(Exception ex)
+		{
+			logger.error("Error fetching vehicle occurence", ex);
+		}
+		finally
+		{
+			dataBaseConfig.closeConnection(con);
+			dataBaseConfig.closePreparedStatement(ps);
+			dataBaseConfig.closeResultSet(rs);
+
+			return occurences;
+		}
+	}
+    
     public boolean updateTicket(Ticket ticket) {
         Connection con = null;
         try {

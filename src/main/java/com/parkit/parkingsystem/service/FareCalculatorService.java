@@ -5,7 +5,7 @@ import com.parkit.parkingsystem.model.Ticket;
 
 public class FareCalculatorService {
 
-	public void calculateFare(Ticket ticket) {
+	public void calculateFare(Ticket ticket,  boolean isRecurrent) {
 		if ((ticket.getOutTime() == null) || (ticket.getOutTime().before(ticket.getInTime()))) {
 			throw new IllegalArgumentException("Out time provided is incorrect:" + ticket.getOutTime().toString());
 		}
@@ -29,20 +29,37 @@ public class FareCalculatorService {
 		// *******************TASK COMPLETED - 30 Minutes free**********************
 
 		if (duration < 0.5) {
-			duration = 0;
+			ticket.setPrice(0);
+			return;			
 		}
 
-		switch (ticket.getParkingSpot().getParkingType()) {
-		case CAR: {
-			ticket.setPrice(duration * Fare.CAR_RATE_PER_HOUR);
-			break;
-		}
-		case BIKE: {
-			ticket.setPrice(duration * Fare.BIKE_RATE_PER_HOUR);
-			break;
-		}
-		default:
-			throw new IllegalArgumentException("Unkown Parking Type");
-		}
+		double selectedFare = 0;
+
+		switch (ticket.getParkingSpot().getParkingType())
+		{
+            case CAR:
+				selectedFare = Fare.CAR_RATE_PER_HOUR;
+                break;
+
+            case BIKE:
+				selectedFare = Fare.BIKE_RATE_PER_HOUR;
+                break;
+
+            default:
+				throw new IllegalArgumentException("Unkown Parking Type");
+        }
+
+		ticket.setPrice(computeFare(duration, selectedFare, isRecurrent));
+    }
+
+	double computeFare (double duration, double selectedFareType, boolean isRecurrent)
+	{
+		double fare = duration * selectedFareType;
+
+		// discounted fare value for the recurrent users
+		if(isRecurrent)
+			fare -= (fare / 100 * 5);
+		double computedFare = fare;
+		return computedFare;
 	}
 }
