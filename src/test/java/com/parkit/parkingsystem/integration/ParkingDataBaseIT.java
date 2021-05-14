@@ -69,8 +69,12 @@ public class ParkingDataBaseIT {
 
 	@Test
 	public void testParkingACar() {
+
+		// GIVEN
 		int firstAlternateParkingSlot = parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR);
 		ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+
+		// WHEN
 		parkingService.processIncomingVehicle();
 
 		// *******************TASK COMPLETED*****************************************
@@ -79,16 +83,23 @@ public class ParkingDataBaseIT {
 		// *******************TASK COMPLETED*****************************************
 
 		Ticket ticket = ticketDAO.getTicket("ABCDEF");
+
+		// THEN
 		assertNotNull(ticket);
 		verify(parkingSpotDAO, Mockito.times(1)).updateParking(any(ParkingSpot.class));
 		assertFalse(ticket.getParkingSpot().isAvailable());
 
+		// GIVEN WHEN
 		int nextAlternateParkingSlot = parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR);
+
+		// THEN
 		assertNotEquals(firstAlternateParkingSlot, nextAlternateParkingSlot);
 	}
 
 	@Test
 	public void testParkingLotExit() throws InterruptedException {
+
+		// GIVEN
 		testParkingACar();
 		ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
 
@@ -98,15 +109,20 @@ public class ParkingDataBaseIT {
 		// *******************TASK COMPLETED*****************************************
 
 		Ticket ticket = ticketDAO.getTicket("ABCDEF");
+
+		// THEN
 		assertNull(ticket.getOutTime());
 		assertEquals(ticket.getPrice(), 0.0);
 
+		// GIVEN
 		TimeUnit.SECONDS.sleep(1);
+
+		// WHEN
 		parkingService.processExitingVehicle();
+
+		// THEN
 		assertNotNull(ticket);
 
 	}
-	
 
 }
-
