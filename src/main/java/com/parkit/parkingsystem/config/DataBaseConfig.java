@@ -1,28 +1,61 @@
 package com.parkit.parkingsystem.config;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
-
+/**
+ * DataBaseConfig This class deals with database connection configuration
+ * settings
+ * 
+ * @package - com.parkit.parkingsystem.config
+ * @project - P3 - parking system - ParkIt
+ * @see Methods: {@link #getConnection()},
+ *      {@link #closeConnection(Connection)},{@link #closePreparedStatement(PreparedStatement)},
+ *      {@link #closeResultSet(ResultSet)}
+ * 
+ * @author Senthil
+ */
 public class DataBaseConfig {
 
 	private static final Logger logger = LogManager.getLogger("DataBaseConfig");
 
-	public Connection getConnection() throws IllegalAccessException, InstantiationException{
-		Connection con =null;
+	/**
+	 * getConnection() This method establishes DB connection
+	 * 
+	 * @return Instance variable - returns connection values
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 * @exception SQLException
+	 * @exception ClassNotFoundException
+	 */
+	public Connection getConnection() throws IllegalAccessException, InstantiationException {
+		Connection con = null;
 		logger.info("Create DB connection");
 		try {
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/prod", "root", "rootroot");
-    } catch (SQLException e) {
-        logger.error("Exception occured : SQLException : ", e);
-    } catch (ClassNotFoundException e) {
-        logger.error("Exception occured : ClassNotFoundException : ", e);
-    }
-	return con;
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/prod", "root", "rootroot");
+		} catch (SQLException e) {
+			logger.error("Exception occured : SQLException : ", e);
+		} catch (ClassNotFoundException e) {
+			logger.error("Exception occured : ClassNotFoundException : ", e);
+		}
+		return con;
 	}
 
+	/**
+	 * closeConnection() This method closes the DB connection object - prevents
+	 * connection leaks
+	 * 
+	 * @param con - Connection object value is supplied as a input parameter to this
+	 *            method
+	 * @exception SQLException
+	 */
 	public void closeConnection(Connection con) {
 		if (con != null) {
 			try {
@@ -35,6 +68,15 @@ public class DataBaseConfig {
 		}
 	}
 
+	/**
+	 * closePreparedStatement() This method closes the DB PreparedStatement object -
+	 * prevents memory leakage, deals with performance issues or even stability
+	 * issues
+	 * 
+	 * @param ps - PreparedStatement object value is supplied as a input parameter
+	 *           to this method
+	 * @exception SQLException
+	 */
 	public void closePreparedStatement(PreparedStatement ps) {
 		if (ps != null) {
 			try {
@@ -47,6 +89,15 @@ public class DataBaseConfig {
 		}
 	}
 
+	/**
+	 * closePreparedStatement() This method closes the DB ResultSet object -
+	 * prevents memory leakage, deals with performance issues or even stability
+	 * issues
+	 * 
+	 * @param rs - ResultSet object value is supplied as a input parameter to this
+	 *           method
+	 * @exception SQLException
+	 */
 	public void closeResultSet(ResultSet rs) {
 		if (rs != null) {
 			try {

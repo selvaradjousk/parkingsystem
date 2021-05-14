@@ -11,14 +11,32 @@ import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
+/**
+ * TicketDAO - Functions and Methods for dealing with Ticket management for
+ * customers parking
+ * 
+ * @package - com.parkit.parkingsystem.dao
+ * @project - P3 - parking system - ParkIt
+ * @see Methods: {@link #getTicket(String)}, {@link #saveTicket(Ticket)},
+ *      {@link #getVehicleOccurence(String)}, {@link #updateTicket(Ticket)}
+ * 
+ * @author Senthil
+ */
 public class TicketDAO {
-
 	private static final Logger logger = LogManager.getLogger("TicketDAO");
-
 	public DataBaseConfig dataBaseConfig = new DataBaseConfig();
 
+	/**
+	 * saveTicket() This method helps to save the parking spot
+	 * made available for parking of vehicle by customer
+	 * 
+	 * @return boolean - returns boolean value to confirm saving process implemented successfully or not.
+	 * @param ticket - instance variable of {@link #Ticket}
+	 * @exception SQLException 
+	 */
 	public boolean saveTicket(Ticket ticket) {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -33,7 +51,7 @@ public class TicketDAO {
 			ps.setTimestamp(4, new Timestamp(ticket.getInTime().getTime()));
 			ps.setTimestamp(5, (ticket.getOutTime() == null) ? null : (new Timestamp(ticket.getOutTime().getTime())));
 			return ps.execute();
-		} catch (Exception ex) {
+		} catch (SQLException ex) {
 			logger.error("Error fetching next available slot", ex);
 		} finally {
 			dataBaseConfig.closeConnection(con);
@@ -42,6 +60,14 @@ public class TicketDAO {
 		}
 	}
 
+	/**
+	 * getTicket() This method helps to assign ticket for the parking spot
+	 * made available for parking of vehicle by customer
+	 * 
+	 * @return ticket - returns object value basically instantiated from the class Ticket.
+	 * @param vehicleRegNumber - This the input information provided by client on the vehicles registration number
+	 * @exception SQLException 
+	 */
 	public Ticket getTicket(String vehicleRegNumber) {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -63,7 +89,7 @@ public class TicketDAO {
 				ticket.setOutTime(rs.getTimestamp(5));
 			}
 			dataBaseConfig.closeResultSet(rs);
-		} catch (Exception ex) {
+		} catch (SQLException ex) {
 			logger.error("Error fetching next available slot", ex);
 		} finally {
 			dataBaseConfig.closePreparedStatement(ps);
@@ -72,6 +98,13 @@ public class TicketDAO {
 		}
 	}
 
+	/**
+	 * getVehicleOccurence() This method helps to calculate the number of parking visits of the vehicle by customer
+	 * 
+	 * @return occurrences - returns value on the number of recurrent visits made by customer.
+	 * @param vehicleRegNumber - This the input information provided by client on the vehicles registration number
+	 * @exception SQLException 
+	 */
 	public int getVehicleOccurence(String vehicleRegNumber) {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -86,7 +119,7 @@ public class TicketDAO {
 
 			if (rs.next())
 				occurences = rs.getInt(1);
-		} catch (Exception ex) {
+		} catch (SQLException ex) {
 			logger.error("Error fetching vehicle occurence", ex);
 		} finally {
 			dataBaseConfig.closeConnection(con);
@@ -96,7 +129,17 @@ public class TicketDAO {
 		}
 	}
 
-	public boolean updateTicket(Ticket ticket) {
+	/**
+	 * updateTicket() This method helps to update the ticket information for the parking spot
+	 * made available for parking of vehicle by customer
+	 * 
+	 * @return boolean - returns object value basically instantiated from the class Ticket.
+	 * @param ticket - instance variable of {@link #Ticket}
+	 * @throws InstantiationException 
+	 * @throws IllegalAccessException 
+	 * @exception SQLException 
+	 */	
+	public boolean updateTicket(Ticket ticket) throws IllegalAccessException, InstantiationException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -107,7 +150,7 @@ public class TicketDAO {
 			ps.setInt(3, ticket.getId());
 			ps.execute();
 			return true;
-		} catch (Exception ex) {
+		} catch (SQLException ex) {
 			logger.error("Error saving ticket info", ex);
 		} finally {
 			dataBaseConfig.closeConnection(con);

@@ -1,5 +1,17 @@
 package com.parkit.parkingsystem.constants;
 
+/**
+ * DBConstants Class - for different database queries pre-assigned
+ *      and stored in variable constants for access
+ * 
+ * @package - com.parkit.parkingsystem.constants;
+ * @project - P3 - parking system - ParkIt
+ * @see variables: {@link #GET_NEXT_PARKING_SPOT}, {@link #GET_TICKET},
+ *      {@link #GET_VEHICLE_OCCURENCES}, {@link #SAVE_TICKET},
+ *      {@link #UPDATE_PARKING_SPOT}, {@link #UPDATE_TICKET}
+ * 
+ * @author Senthil
+ */
 public class DBConstants {
 
 	public static final String GET_NEXT_PARKING_SPOT = "select min(PARKING_NUMBER) from parking where AVAILABLE = true and TYPE = ?";

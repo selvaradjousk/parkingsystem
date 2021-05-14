@@ -57,7 +57,9 @@ public class FareCalculatorService {
 		// discounted fare value for the recurrent users
 		if (isRecurrent)
 			fare -= (fare / 100 * 5);
+		
 		double computedFare = fare;
+		System.out.println("We welcome you on behalf of ParkIt and pleased to inform that you have a 5% discount for your regular visit");
 		return computedFare;
 	}
 }

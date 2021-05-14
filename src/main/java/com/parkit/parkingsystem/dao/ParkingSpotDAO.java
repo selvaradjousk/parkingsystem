@@ -1,21 +1,40 @@
 package com.parkit.parkingsystem.dao;
 
-import com.parkit.parkingsystem.config.DataBaseConfig;
-import com.parkit.parkingsystem.constants.DBConstants;
-import com.parkit.parkingsystem.constants.ParkingType;
-import com.parkit.parkingsystem.model.ParkingSpot;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.parkit.parkingsystem.config.DataBaseConfig;
+import com.parkit.parkingsystem.constants.DBConstants;
+import com.parkit.parkingsystem.constants.ParkingType;
+import com.parkit.parkingsystem.model.ParkingSpot;
+
+/**
+ * ParkingSpotDAO - Functions and Methods for dealing with availability
+ * management of parking spots /slots
+ * 
+ * @package - com.parkit.parkingsystem.dao
+ * @project - P3 - parking system - ParkIt
+ * @see Methods: {@link #ParkingSpotDAO()}, {@link #updateParking(ParkingSpot)}
+ * 
+ * @author Senthil
+ */
 public class ParkingSpotDAO {
 	private static final Logger logger = LogManager.getLogger("ParkingSpotDAO");
 
 	public DataBaseConfig dataBaseConfig = new DataBaseConfig();
 
+	/**
+	 * getNextAvailableSlot() This method helps to identify the next parking spot
+	 * available for parking of vehicle
+	 * 
+	 * @return result - returns parking spot identification number
+	 * @param parkingType - instance variable of {@link #ParkingType}
+	 * @exception Exception - java.lang.Exception
+	 */
 	public int getNextAvailableSlot(ParkingType parkingType) {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -41,6 +60,13 @@ public class ParkingSpotDAO {
 		return result;
 	}
 
+	/**
+	 * updateParking() This method helps to update the parking spot provided to the
+	 * customer for parking of vehicle
+	 * 
+	 * @param parkingSpot - instance variable of {@link #ParkingSpot}
+	 * @exception Exception - java.lang.Exception
+	 */
 	public boolean updateParking(ParkingSpot parkingSpot) {
 		// update the availability of that parking slot
 		Connection con = null;
@@ -56,8 +82,8 @@ public class ParkingSpotDAO {
 			logger.error("Error updating parking info", ex);
 			return false;
 		} finally {
-            dataBaseConfig.closeConnection(con);
-            dataBaseConfig.closePreparedStatement(ps);
+			dataBaseConfig.closeConnection(con);
+			dataBaseConfig.closePreparedStatement(ps);
 		}
 	}
 
