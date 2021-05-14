@@ -8,13 +8,27 @@ import java.sql.*;
 
 public class DataBaseTestConfig extends DataBaseConfig {
 
-	private static final Logger logger = LogManager.getLogger("DataBaseTestConfig");
+	private static final Logger logger = LogManager.getLogger("DataBaseConfig");
 
-	public Connection getConnection() throws ClassNotFoundException, SQLException {
+	public Connection getConnection() throws IllegalAccessException, InstantiationException{
+		Connection con =null;
 		logger.info("Create DB connection");
+		try {
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		return DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "rootroot");
+		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/prod", "root", "rootroot");
+    } catch (SQLException e) {
+        System.err.println("Exception occured : SQLException : "
+                + e.getMessage());
+        e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+        System.err.println("Exception occured : ClassNotFoundException : "
+                + e.getMessage());
+        e.printStackTrace();
+    }
+		
+		return con;
 	}
+
 
 	public void closeConnection(Connection con) {
 		if (con != null) {
