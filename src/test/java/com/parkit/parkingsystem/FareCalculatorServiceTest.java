@@ -13,6 +13,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Date;
 
+/**
+ * Class {@link FareCalculatorServiceTest} - Performs Unit Testing on Fare calculation process for customer of ParkIt
+ * Class Tested: {@link FareCalculatorService} 
+ * 
+ * @package - com.parkit.parkingsystem
+ * @project - P3 - parking system - ParkIt
+ * @see Tests: {@link #calculateFareCar()}
+ * 
+ * @author Senthil
+ */
 public class FareCalculatorServiceTest {
 
 	private static FareCalculatorService fareCalculatorService;
@@ -28,6 +38,14 @@ public class FareCalculatorServiceTest {
 		ticket = new Ticket();
 	}
 
+	/**
+	 * {@link #calculateFareCar()} Unit Test
+	 * <br>GIVEN: One hour of parking time for a CAR
+	 * <br>WHEN: calculation of fare service activated
+	 * <br>THEN: calculation of car fare per hour
+	 * <br> <b>Test Condition <i>PASSED</i>: </b>assertEquals <code>TRUE</code> <code><b>Test</b></code> 
+	 * <br> <b>Test Condition <i>FAILED</i>: </b>assertEquals <code>FALSE</code> <code><b>Test</b></code>
+	 */
 	@Test
 	public void calculateFareCar() {
 
