@@ -12,8 +12,11 @@ import com.parkit.parkingsystem.model.Ticket;
  * 
  * @package - com.parkit.parkingsystem.service
  * @project - P3 - parking system - ParkIt
- * @see Methods: {@link #calculateFare()}, {@link #computeFare(double duration,
- *      double selectedFareType, boolean isRecurrent)}
+ * @see Methods: {@link #checkPertinanceOfGetOutTime(Ticket ticket)},
+ *      {@link #calculateFare()},
+ *      {@link #identifyVehicleTypeForComputeFare(Ticket ticket)},
+ *      {@link #fareSetZeroValueForLessThanThirtyMinutesParking(Ticket ticket, double duration)},
+ *      {@link #computeFare(double duration, double selectedFareType, boolean isRecurrent)}
  * 
  * @author Senthil
  */
@@ -21,8 +24,8 @@ public class FareCalculatorService {
 	private static final Logger logger = LogManager.getLogger("FareCalculatorService");
 
 	/**
-	 * {@link #calculateFare()} This method calculates fare on exiting the parking by
-	 * the customer
+	 * {@link #calculateFare()} This method calculates fare on exiting the parking
+	 * by the customer
 	 * 
 	 * @param ticket      Instance of Ticket class
 	 * @param isReccurent Return value of isRecurrent variable set from the result
@@ -32,12 +35,10 @@ public class FareCalculatorService {
 	 *                                  case of unknown parking time
 	 */
 	public void calculateFare(Ticket ticket, boolean isRecurrent) {
-		if ((ticket.getOutTime() == null) || (ticket.getOutTime().before(ticket.getInTime()))) {
-			throw new IllegalArgumentException("Out time provided is incorrect:" + ticket.getOutTime().toString());
-		}
 
-		// Values for entryTime and exitTime returned from getTime() is set in
-		// milliseconds
+		checkPertinanceOfGetOutTime(ticket);
+
+		// Values for entryTime and exitTime set in milliseconds
 		double entryTime = ticket.getInTime().getTime();
 		double exitTime = ticket.getOutTime().getTime();
 
@@ -45,21 +46,27 @@ public class FareCalculatorService {
 		// TODO: Some tests are failing here. Need to check if this logic is correct
 		// *******************TASK COMPLETED*****************************************
 
-		// Duration values are computed into hours taken account of milliseconds unit
-		// terms
+		// Duration values are computed into hours from milliseconds
 		double duration = (exitTime - entryTime) / (60.0 * 60.0 * 1000);
-
-		// *******************TASK COMPLETED - 30 Minutes free**********************
-		// Fare for the parking is set to be free
-		// when the user parking time is less than 30 minutes
-		// *******************TASK COMPLETED - 30 Minutes free**********************
-
+		double selectedFare = identifyVehicleTypeForComputeFare(ticket);
+		// fareSetZeroValueForLessThanThirtyMinutesParking(ticket, duration);
 		if (duration < 0.5) {
 			ticket.setPrice(0);
 			logger.info("Parking visit is below 30 minutes, fare to pay set to free");
-			return;
-		}
+			return ;
+		}		
 
+		ticket.setPrice(computeFare(duration, selectedFare, isRecurrent));
+	}
+
+	/**
+	 * {@link #identifyVehicleTypeForComputeFare(Ticket ticket)} This method
+	 * identifies the vehicle type to compute the fare
+	 * 
+	 * @param ticket Instance of Ticket class
+	 * @throws IllegalArgumentException when Unknown Parking Type identified
+	 */
+	private double identifyVehicleTypeForComputeFare(Ticket ticket) {
 		double selectedFare = 0;
 
 		switch (ticket.getParkingSpot().getParkingType()) {
@@ -74,22 +81,52 @@ public class FareCalculatorService {
 		default:
 			throw new IllegalArgumentException("Unkown Parking Type");
 		}
+		return selectedFare;
+	}
 
-		ticket.setPrice(computeFare(duration, selectedFare, isRecurrent));
+	// *******************TASK COMPLETED - 30 Minutes free**********************
+	// Fare for the parking is set to be free
+	// when the user parking time is less than 30 minutes
+	// *******************TASK COMPLETED - 30 Minutes free**********************
+
+//	/**
+//	 * {@link #fareSetZeroValueForLessThanThirtyMinutesParking(Ticket ticket, double duration)}
+//	 * This method checks the parking duration and sets the value for far price zero
+//	 * if less than 30 minutes
+//	 * 
+//	 * @param ticket   Instance of Ticket class
+//	 * @param duration
+//	 */
+//	private void fareSetZeroValueForLessThanThirtyMinutesParking(Ticket ticket, double duration) {
+//		if (duration < 0.5) {
+//			ticket.setPrice(0);
+//			logger.info("Parking visit is below 30 minutes, fare to pay set to free");
+//			return ;
+//		}
+//	}
+
+	/**
+	 * {@link #checkPertinanceOfGetOutTime(Ticket ticket)} This method checks if
+	 * Exit time provided is correct
+	 * 
+	 * @param ticket Instance of Ticket class
+	 * @throws IllegalArgumentException when Out time provided is incorrect
+	 */
+	public void checkPertinanceOfGetOutTime(Ticket ticket) {
+		if ((ticket.getOutTime() == null) || (ticket.getOutTime().before(ticket.getInTime()))) {
+			throw new IllegalArgumentException("Out time provided is incorrect:" + ticket.getOutTime().toString());
+		}
 	}
 
 	/**
-	 * {@link #computeFare(double duration, double selectedFareType, boolean
-	 * isRecurrent)} This method called in the calculateFare() method to
-	 * recalculates fare for recurrent customer
+	 * {@link #computeFare(double duration, double selectedFareType, boolean isRecurrent)}
+	 * This method called in the calculateFare() method to recalculates fare for
+	 * recurrent customer
 	 * 
-	 * @param duration         Return value of
-	 *                         {@link #calculateFare(Ticket, boolean)}
+	 * @param duration
 	 * @param selectedFareType Return value of
-	 *                         {@link #calculateFare(Ticket, boolean)} value of
-	 *                         occurrences from the getVehicleOccurence() method
-	 * @param isRecurrent      Return value of
-	 *                         {@link #calculateFare(Ticket, boolean)}
+	 *                         {@link #identifyVehicleTypeForComputeFare(Ticket ticket)}
+	 * @param isRecurrent      Return value of getVehicleOccurence() at TicketDAO
 	 */
 	double computeFare(double duration, double selectedFareType, boolean isRecurrent) {
 		double fare = duration * selectedFareType;

@@ -4,8 +4,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-class AppTest {
+import com.parkit.parkingsystem.service.FareCalculatorService;
 
+class AppTest {
+	private static App app;
 	@Test
 	public void appLoads() {
 	}

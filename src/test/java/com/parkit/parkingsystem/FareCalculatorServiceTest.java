@@ -154,7 +154,6 @@ public class FareCalculatorServiceTest {
 
 		// THEN
 		assertThrows(NullPointerException.class, () -> fareCalculatorService.calculateFare(ticket, false));// WHEN
-		
 
 	}
 
@@ -185,10 +184,11 @@ public class FareCalculatorServiceTest {
 		// THEN
 		assertThrows(IllegalArgumentException.class, () -> fareCalculatorService.calculateFare(ticket, false)); // WHEN
 	}
-	
+
 	/**
 	 * {@link #calculateFareBikeWithNegativeDurationTime()} Unit Test <br>
-	 * GIVEN: Parking duration for the <b>BIKE</b> set to <b>NEGATIVE TIME VALUE</b> <br>
+	 * GIVEN: Parking duration for the <b>BIKE</b> set to <b>NEGATIVE TIME VALUE</b>
+	 * <br>
 	 * WHEN: calculation of fare service activated <br>
 	 * THEN: calculation of fare per hour checks for duration value compliance <br>
 	 * <b>Test Condition <i>PASSED</i>: </b>assertThrows IllegalArgumentException
