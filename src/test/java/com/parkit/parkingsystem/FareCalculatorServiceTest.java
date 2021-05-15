@@ -188,10 +188,9 @@ public class FareCalculatorServiceTest {
 	
 	/**
 	 * {@link #calculateFareBikeWithNegativeDurationTime()} Unit Test <br>
-	 * GIVEN: Parking entry time for the <b>BIKE</b> set to <b>FUTURE TIME</b> <br>
+	 * GIVEN: Parking duration for the <b>BIKE</b> set to <b>NEGATIVE TIME VALUE</b> <br>
 	 * WHEN: calculation of fare service activated <br>
-	 * THEN: calculation of fare per hour checks for entry time compliance to
-	 * current time or not <br>
+	 * THEN: calculation of fare per hour checks for duration value compliance <br>
 	 * <b>Test Condition <i>PASSED</i>: </b>assertThrows IllegalArgumentException
 	 * <code><b>TRUE</b></code> <br>
 	 * <b>Test Condition <i>FAILED</i>: </b>assertThrows IllegalArgumentException
