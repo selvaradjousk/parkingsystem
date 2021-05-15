@@ -11,6 +11,20 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Date;
 
+/**
+ * Class: {@link ParkingService} - Functions and Methods for dealing with
+ * parking availability management service
+ * 
+ * {@link #ParkingService(InputReaderUtil, ParkingSpotDAO, TicketDAO)} The
+ * constructor for ParkingService
+ * 
+ * @package - com.parkit.parkingsystem.service
+ * @project - P3 - parking system - ParkIt
+ * @see Methods: {@link #processIncomingVehicle()},
+ *      {@link #processExitingVehicle()}, {@link #getVehichleRegNumber()}, {@link #getVehichleType()}, {@link #getNextParkingNumberIfAvailable()}
+ * 
+ * @author Senthil
+ */
 public class ParkingService {
 
 	private static final Logger logger = LogManager.getLogger("ParkingService");
@@ -22,12 +36,27 @@ public class ParkingService {
 	private TicketDAO ticketDAO;
 	final static int recurentUserOccurencesThreshold = 2;
 
+	/**
+	 * {@link #ParkingService(InputReaderUtil, ParkingSpotDAO, TicketDAO)} The
+	 * constructor with instantiated classes as parameter inputs:
+	 * {@link InputReaderUtil}, {@link ParkingSpotDAO}, {@link TicketDAO}
+	 * 
+	 * @param inputReaderUtil Instance of InputReaderUtil class
+	 * @param parkingSpotDAO  Instance of ParkingSpotDAO class
+	 * @param ticketDAO       Instance of TicketDAO class
+	 */
 	public ParkingService(InputReaderUtil inputReaderUtil, ParkingSpotDAO parkingSpotDAO, TicketDAO ticketDAO) {
 		this.inputReaderUtil = inputReaderUtil;
 		this.parkingSpotDAO = parkingSpotDAO;
 		this.ticketDAO = ticketDAO;
 	}
 
+	/**
+	 * {@link #processIncomingVehicle()} The method do processing of the parking
+	 * spot availability and allocation process
+	 * 
+	 * @throws Exception when Unable to process incoming vehicle
+	 */
 	public void processIncomingVehicle() {
 		try {
 			ParkingSpot parkingSpot = getNextParkingNumberIfAvailable();
@@ -56,11 +85,29 @@ public class ParkingService {
 		}
 	}
 
+	/**
+	 * {@link #getVehichleRegNumber()} The method execute the process of collecting
+	 * vehicle registration number
+	 * 
+	 * @return readVehicleRegistrationNumber() to the method inputReaderUtil in
+	 *         InputReaderUtil Class
+	 */
 	private String getVehichleRegNumber() throws Exception {
 		System.out.println("Please type the vehicle registration number and press enter key");
 		return inputReaderUtil.readVehicleRegistrationNumber();
 	}
 
+	/**
+	 * {@link #getNextParkingNumberIfAvailable()} The method execute the process of
+	 * getting a check on the Parking spot availability for Parking
+	 * 
+	 * @return parkingSpot Provides information on the availability of parking spot
+	 *         identified
+	 * @throws Exception                when error fetching next available parking
+	 *                                  slot
+	 * @throws IllegalArgumentException when error parsing user input for type of
+	 *                                  vehicle
+	 */
 	public ParkingSpot getNextParkingNumberIfAvailable() {
 		int parkingNumber = 0;
 		ParkingSpot parkingSpot = null;
@@ -80,6 +127,13 @@ public class ParkingService {
 		return parkingSpot;
 	}
 
+	/**
+	 * {@link #getVehichleType()} The method execute the process of getting
+	 * gathering the information on the Vehicle Type that needs to be using the
+	 * Parking
+	 * 
+	 * @throws IllegalArgumentException when entered input is invalid
+	 */
 	private ParkingType getVehichleType() {
 		System.out.println("Please select vehicle type from menu");
 		System.out.println("1 CAR");
@@ -99,6 +153,13 @@ public class ParkingService {
 		}
 	}
 
+	/**
+	 * {@link #processExitingVehicle()} The method execute the process of supporting
+	 * the fare calculation and update of the information on the customer on the
+	 * database during exit
+	 * 
+	 * @throws Exception error when unable to process exiting vehicle
+	 */
 	public void processExitingVehicle() {
 		try {
 			String vehicleRegNumber = getVehichleRegNumber();

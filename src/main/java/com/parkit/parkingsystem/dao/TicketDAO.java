@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 /**
- * TicketDAO - Functions and Methods for dealing with Ticket management for
+ * Class: {@link TicketDAO} - Functions and Methods for dealing with Ticket management for
  * customers parking
  * 
  * @package - com.parkit.parkingsystem.dao

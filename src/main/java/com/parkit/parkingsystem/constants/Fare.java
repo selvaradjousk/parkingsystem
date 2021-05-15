@@ -1,7 +1,7 @@
 package com.parkit.parkingsystem.constants;
 
 /**
- * Fare Class -  For variables listed as constants to access
+ * Class: {@link Fare} -  For variables listed as constants to access
  *      pre-assigned parking fare values
  * 
  * @package - com.parkit.parkingsystem.constants;

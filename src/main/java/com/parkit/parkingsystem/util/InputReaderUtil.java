@@ -5,11 +5,30 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Scanner;
 
+/**
+ * Class: {@link InputReaderUtil} - Functions and Methods for dealing with
+ * Customer input data management service
+ * 
+ * 
+ * @package - com.parkit.parkingsystem.util
+ * @project - P3 - parking system - ParkIt
+ * @see Methods: {@link #readVehicleRegistrationNumber()},
+ *      {@link #readSelection()}
+ * 
+ * @author Senthil
+ */
 public class InputReaderUtil {
 
 	private static Scanner scan = new Scanner(System.in);
 	private static final Logger logger = LogManager.getLogger("InputReaderUtil");
 
+	/**
+	 * {@link #readSelection()} The method do reading user input from Shell for
+	 * selection of vehicle type
+	 * 
+	 * @exception Exception when error while reading user input on selection of
+	 *                      vehicle type
+	 */
 	public int readSelection() {
 		try {
 			int input = Integer.parseInt(scan.nextLine());
@@ -21,6 +40,14 @@ public class InputReaderUtil {
 		}
 	}
 
+	/**
+	 * {@link #readVehicleRegistrationNumber()} The method do reading user input
+	 * from Shell for entering of vehicle Registration number
+	 * 
+	 * @throws Exception                When error while reading user input on
+	 *                                  selection of for vehicle registration number
+	 * @throws IllegalArgumentException When invalid input provided
+	 */
 	public String readVehicleRegistrationNumber() throws Exception {
 		try {
 			String vehicleRegNumber = scan.nextLine();

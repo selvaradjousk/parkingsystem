@@ -1,7 +1,7 @@
 package com.parkit.parkingsystem.constants;
 
 /**
- * DBConstants Class - for different database queries pre-assigned
+ * Class: {@link DBConstants} - for different database queries pre-assigned
  *      and stored in variable constants for access
  * 
  * @package - com.parkit.parkingsystem.constants;

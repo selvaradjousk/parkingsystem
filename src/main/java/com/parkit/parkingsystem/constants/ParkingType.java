@@ -1,7 +1,7 @@
 package com.parkit.parkingsystem.constants;
 
 /**
- * ParkingType Class -  For variables listed as constants to access
+ * Class: {@link ParkingType} -  For variables listed as constants to access
  *      pre-assigned Vechicle types
  * 
  * @package - com.parkit.parkingsystem.constants;

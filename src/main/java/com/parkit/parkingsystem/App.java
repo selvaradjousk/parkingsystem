@@ -11,12 +11,13 @@ import com.parkit.parkingsystem.dao.ParkingSpotDAO;
 import com.parkit.parkingsystem.dao.TicketDAO;
 import com.parkit.parkingsystem.model.ParkingSpot;
 import com.parkit.parkingsystem.model.Ticket;
+import com.parkit.parkingsystem.service.FareCalculatorService;
 import com.parkit.parkingsystem.service.InteractiveShell;
 import com.parkit.parkingsystem.service.ParkingService;
 import com.parkit.parkingsystem.util.InputReaderUtil;
 
 /**
- * App.java This class deals with database connection configuration settings
+ * Class: {@link App Main Class} This class deals with database connection configuration settings
  * 
  * @package - com.parkit.parkingsystem
  * @project - P3 - parking system - ParkIt
@@ -36,7 +37,7 @@ import com.parkit.parkingsystem.util.InputReaderUtil;
  *      setters and getters parking Management datasets
  * @see Class: {@link Ticket} - Declarations of variables, instances, setters
  *      and getters Ticket Management datasets
- * @see Class: {@link FareCalculationService} - Functions and Methods for
+ * @see Class: {@link FareCalculatorService} - Functions and Methods for
  *      dealing with parking fare calculation service
  * @see Class: {@link InteractiveShell} - Functions and Methods for dealing with
  *      Application workflow service

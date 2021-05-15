@@ -10,7 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * DataBaseConfig This class deals with database connection configuration
+ * Class: {@link DataBaseConfig} This class deals with database connection configuration
  * settings
  * 
  * @package - com.parkit.parkingsystem.config
