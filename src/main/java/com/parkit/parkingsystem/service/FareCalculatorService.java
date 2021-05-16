@@ -2,7 +2,6 @@ package com.parkit.parkingsystem.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import com.parkit.parkingsystem.constants.Fare;
 import com.parkit.parkingsystem.model.Ticket;
 
@@ -136,6 +135,8 @@ public class FareCalculatorService {
 			fare -= (fare / 100 * 5);
 
 		double computedFare = fare;
+		
+		
 		System.out.println(
 				"We welcome you on behalf of ParkIt and pleased to inform that you have a 5% discount for your regular visit");
 		logger.info("Parking visit is below is reccurent, welcome note and 5 % discount displayed ");

@@ -28,14 +28,6 @@ public class DataBaseConfigIT {
 
 	static DataBaseConfig dataBaseConfig = new DataBaseConfig();
 
-	/**
-	 * Tests DataBaseConfig.getConnection
-	 * 
-	 * @throws InstantiationException
-	 * @throws IllegalAccessException
-	 * 
-	 * @see com.parkit.parkingsystem.config.DataBaseConfig#getConnection()
-	 */
 	@Test
 	/**
 	 * {@link #testGetConnection()} Integration Test on
