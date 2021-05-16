@@ -1,5 +1,8 @@
 package com.parkit.parkingsystem;
 
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
@@ -104,8 +107,8 @@ public class ParkingServiceTest {
 	 * <b>Test Condition <i>FAILED</i>: </b>verify status available
 	 * <code><b>FALSE</b></code>
 	 */
-	public void getNextParkingNumberIfAvailableTest()
-	{
+	@Test
+	public void getNextParkingNumberIfAvailableTest() {
 		// GIVEN
 		// WHEN
 		parkingService.getNextParkingNumberIfAvailable();
@@ -134,4 +137,44 @@ public class ParkingServiceTest {
 		// THEN
 		verify(parkingSpotDAO, Mockito.times(1)).updateParking(any(ParkingSpot.class));
 	}
+
+	@Test
+	public void testParkingLotExit() throws Exception {
+		// GIVEN
+		ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+
+		// inserts test ticket in database
+		Ticket testTicket = new Ticket();
+		testTicket.setParkingSpot(parkingService.getNextParkingNumberIfAvailable());
+		testTicket.setVehicleRegNumber(inputReaderUtil.readVehicleRegistrationNumber());
+		Date insertedInTime = new Date();
+		insertedInTime.setTime(System.currentTimeMillis() - (1000 * 60 * 60));
+		testTicket.setInTime(insertedInTime);
+
+		ticketDAO.saveTicket(testTicket);
+
+		// WHEN
+		parkingService.processExitingVehicle();
+
+		// THEN
+		Ticket ticket = getVehicileRegistrationNumber();
+
+		assertNotNull(ticket.getOutTime());
+		assertNotEquals(ticket.getPrice(), 0);
+	}
+	
+
+	static Ticket getVehicileRegistrationNumber() throws Exception {
+		Ticket ticket = null;
+		String registrationNumber = new String();
+		registrationNumber = inputReaderUtil.readVehicleRegistrationNumber();
+
+		ticket = ticketDAO.getTicket(registrationNumber);
+
+		if (ticket == null)
+			fail("Couldn't retrieve ticket from DB");
+
+		return ticket;
+	}
+
 }
