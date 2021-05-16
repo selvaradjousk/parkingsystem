@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ParkingService.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (16 mai 2021 06:18:29)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.service</a> &gt; <span class="el_source">ParkingService.java</span></div><h1>ParkingService.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.service;
+
+import com.parkit.parkingsystem.constants.ParkingType;
+import com.parkit.parkingsystem.dao.ParkingSpotDAO;
+import com.parkit.parkingsystem.dao.TicketDAO;
+import com.parkit.parkingsystem.model.ParkingSpot;
+import com.parkit.parkingsystem.model.Ticket;
+import com.parkit.parkingsystem.util.InputReaderUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.Date;
+
+/**
+ * Class: {@link ParkingService} - Functions and Methods for dealing with
+ * parking availability management service
+ * 
+ * {@link #ParkingService(InputReaderUtil, ParkingSpotDAO, TicketDAO)} The
+ * constructor for ParkingService
+ * 
+ * @package - com.parkit.parkingsystem.service
+ * @project - P3 - parking system - ParkIt
+ * @see Methods: {@link #processIncomingVehicle()},
+ *      {@link #processExitingVehicle()}, {@link #getVehichleRegNumber()}, {@link #getVehichleType()}, {@link #getNextParkingNumberIfAvailable()}
+ * 
+ * @author Senthil
+ */
+public class ParkingService {
+
+<span class="fc" id="L30">	private static final Logger logger = LogManager.getLogger(&quot;ParkingService&quot;);</span>
+
+<span class="fc" id="L32">	private static FareCalculatorService fareCalculatorService = new FareCalculatorService();</span>
+
+	private InputReaderUtil inputReaderUtil;
+	private ParkingSpotDAO parkingSpotDAO;
+	private TicketDAO ticketDAO;
+<span class="fc" id="L37">	final static int recurentUserOccurencesThreshold = 2;</span>
+
+	/**
+	 * {@link #ParkingService(InputReaderUtil, ParkingSpotDAO, TicketDAO)} The
+	 * constructor with instantiated classes as parameter inputs:
+	 * {@link InputReaderUtil}, {@link ParkingSpotDAO}, {@link TicketDAO}
+	 * 
+	 * @param inputReaderUtil Instance of InputReaderUtil class
+	 * @param parkingSpotDAO  Instance of ParkingSpotDAO class
+	 * @param ticketDAO       Instance of TicketDAO class
+	 */
+<span class="fc" id="L48">	public ParkingService(InputReaderUtil inputReaderUtil, ParkingSpotDAO parkingSpotDAO, TicketDAO ticketDAO) {</span>
+<span class="fc" id="L49">		this.inputReaderUtil = inputReaderUtil;</span>
+<span class="fc" id="L50">		this.parkingSpotDAO = parkingSpotDAO;</span>
+<span class="fc" id="L51">		this.ticketDAO = ticketDAO;</span>
+<span class="fc" id="L52">	}</span>
+
+	/**
+	 * {@link #processIncomingVehicle()} The method do processing of the parking
+	 * spot availability and allocation process
+	 * 
+	 * @throws Exception when Unable to process incoming vehicle
+	 */
+	public void processIncomingVehicle() {
+		try {
+<span class="fc" id="L62">			ParkingSpot parkingSpot = getNextParkingNumberIfAvailable();</span>
+<span class="pc bpc" id="L63" title="2 of 4 branches missed.">			if (parkingSpot != null &amp;&amp; parkingSpot.getId() &gt; 0) {</span>
+<span class="fc" id="L64">				String vehicleRegNumber = getVehichleRegNumber();</span>
+<span class="fc" id="L65">				parkingSpot.setAvailable(false);</span>
+<span class="fc" id="L66">				parkingSpotDAO.updateParking(parkingSpot);// allot this parking space and mark it's availability as</span>
+															// false
+
+<span class="fc" id="L69">				Date inTime = new Date();</span>
+<span class="fc" id="L70">				Ticket ticket = new Ticket();</span>
+				// ID, PARKING_NUMBER, VEHICLE_REG_NUMBER, PRICE, IN_TIME, OUT_TIME)
+				// ticket.setId(ticketID);
+<span class="fc" id="L73">				ticket.setParkingSpot(parkingSpot);</span>
+<span class="fc" id="L74">				ticket.setVehicleRegNumber(vehicleRegNumber);</span>
+<span class="fc" id="L75">				ticket.setPrice(0);</span>
+<span class="fc" id="L76">				ticket.setInTime(inTime);</span>
+<span class="fc" id="L77">				ticket.setOutTime(null);</span>
+<span class="fc" id="L78">				ticketDAO.saveTicket(ticket);</span>
+<span class="fc" id="L79">				System.out.println(&quot;Generated Ticket and saved in DB&quot;);</span>
+<span class="fc" id="L80">				System.out.println(&quot;Please park your vehicle in spot number:&quot; + parkingSpot.getId());</span>
+<span class="fc" id="L81">				System.out.println(&quot;Recorded in-time for vehicle number:&quot; + vehicleRegNumber + &quot; is:&quot; + inTime);</span>
+			}
+<span class="pc" id="L83">		} catch (Exception e) {</span>
+<span class="nc" id="L84">			logger.error(&quot;Unable to process incoming vehicle&quot;, e);</span>
+		}
+<span class="fc" id="L86">	}</span>
+
+	/**
+	 * {@link #getVehichleRegNumber()} The method execute the process of collecting
+	 * vehicle registration number
+	 * 
+	 * @return readVehicleRegistrationNumber() to the method inputReaderUtil in
+	 *         InputReaderUtil Class
+	 */
+	private String getVehichleRegNumber() throws Exception {
+<span class="fc" id="L96">		System.out.println(&quot;Please type the vehicle registration number and press enter key&quot;);</span>
+<span class="fc" id="L97">		return inputReaderUtil.readVehicleRegistrationNumber();</span>
+	}
+
+	/**
+	 * {@link #getNextParkingNumberIfAvailable()} The method execute the process of
+	 * getting a check on the Parking spot availability for Parking
+	 * 
+	 * @return parkingSpot Provides information on the availability of parking spot
+	 *         identified
+	 * @throws Exception                when error fetching next available parking
+	 *                                  slot
+	 * @throws IllegalArgumentException when error parsing user input for type of
+	 *                                  vehicle
+	 */
+	public ParkingSpot getNextParkingNumberIfAvailable() {
+<span class="fc" id="L112">		int parkingNumber = 0;</span>
+<span class="fc" id="L113">		ParkingSpot parkingSpot = null;</span>
+		try {
+<span class="fc" id="L115">			ParkingType parkingType = getVehichleType();</span>
+<span class="fc" id="L116">			parkingNumber = parkingSpotDAO.getNextAvailableSpot(parkingType);</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">			if (parkingNumber &gt; 0) {</span>
+<span class="fc" id="L118">				parkingSpot = new ParkingSpot(parkingNumber, parkingType, true);</span>
+<span class="fc" id="L119">			} else {</span>
+<span class="nc" id="L120">				throw new Exception(&quot;Error fetching parking number from DB. Parking slots might be full&quot;);</span>
+			}
+<span class="nc" id="L122">		} catch (IllegalArgumentException ie) {</span>
+<span class="nc" id="L123">			logger.error(&quot;Error parsing user input for type of vehicle&quot;, ie);</span>
+<span class="nc" id="L124">		} catch (Exception e) {</span>
+<span class="nc" id="L125">			logger.error(&quot;Error fetching next available parking slot&quot;, e);</span>
+		}
+<span class="fc" id="L127">		return parkingSpot;</span>
+	}
+
+	/**
+	 * {@link #getVehichleType()} The method execute the process of getting
+	 * gathering the information on the Vehicle Type that needs to be using the
+	 * Parking
+	 * 
+	 * @throws IllegalArgumentException when entered input is invalid
+	 */
+	private ParkingType getVehichleType() {
+<span class="fc" id="L138">		System.out.println(&quot;Please select vehicle type from menu&quot;);</span>
+<span class="fc" id="L139">		System.out.println(&quot;1 CAR&quot;);</span>
+<span class="fc" id="L140">		System.out.println(&quot;2 BIKE&quot;);</span>
+<span class="fc" id="L141">		int input = inputReaderUtil.readSelection();</span>
+<span class="pc bpc" id="L142" title="2 of 3 branches missed.">		switch (input) {</span>
+		case 1: {
+<span class="fc" id="L144">			return ParkingType.CAR;</span>
+		}
+		case 2: {
+<span class="nc" id="L147">			return ParkingType.BIKE;</span>
+		}
+		default: {
+<span class="nc" id="L150">			System.out.println(&quot;Incorrect input provided&quot;);</span>
+<span class="nc" id="L151">			throw new IllegalArgumentException(&quot;Entered input is invalid&quot;);</span>
+		}
+		}
+	}
+
+	/**
+	 * {@link #processExitingVehicle()} The method execute the process of supporting
+	 * the fare calculation and update of the information on the customer on the
+	 * database during exit
+	 * 
+	 * @throws Exception error when unable to process exiting vehicle
+	 */
+	public void processExitingVehicle() {
+		try {
+<span class="fc" id="L165">			String vehicleRegNumber = getVehichleRegNumber();</span>
+<span class="fc" id="L166">			Ticket ticket = ticketDAO.getTicket(vehicleRegNumber);</span>
+<span class="fc" id="L167">			Date outTime = new Date();</span>
+<span class="fc" id="L168">			ticket.setOutTime(outTime);</span>
+
+<span class="fc" id="L170">			int vehicleOccurence = ticketDAO.getVehicleOccurence(vehicleRegNumber);</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">			fareCalculatorService.calculateFare(ticket, vehicleOccurence &gt;= recurentUserOccurencesThreshold);</span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">			if (ticketDAO.updateTicket(ticket)) {</span>
+<span class="fc" id="L173">				ParkingSpot parkingSpot = ticket.getParkingSpot();</span>
+<span class="fc" id="L174">				parkingSpot.setAvailable(true);</span>
+<span class="fc" id="L175">				parkingSpotDAO.updateParking(parkingSpot);</span>
+
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">				if (vehicleOccurence &gt;= recurentUserOccurencesThreshold)</span>
+<span class="nc" id="L178">					System.out.println(&quot;Applied 5% discount for recurent user&quot;);</span>
+
+<span class="fc" id="L180">				System.out.println(&quot;Please pay the parking fare:&quot; + ticket.getPrice());</span>
+<span class="fc" id="L181">				System.out.println(</span>
+<span class="fc" id="L182">						&quot;Recorded out-time for vehicle number:&quot; + ticket.getVehicleRegNumber() + &quot; is:&quot; + outTime);</span>
+<span class="fc" id="L183">			} else {</span>
+<span class="nc" id="L184">				System.out.println(&quot;Unable to update ticket information. Error occurred&quot;);</span>
+			}
+<span class="nc" id="L186">		} catch (Exception e) {</span>
+<span class="nc" id="L187">			logger.error(&quot;Unable to process exiting vehicle&quot;, e);</span>
+		}
+<span class="fc" id="L189">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (16 mai 2021 06:18:29)</div></body></html>
