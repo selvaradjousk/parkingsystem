@@ -19,7 +19,7 @@ import java.sql.Timestamp;
  * customers parking
  * 
  * @package - com.parkit.parkingsystem.dao
- * @project - P3 - parking system - ParkIt
+ * @project - P4 - parking system - ParkIt
  * @see Methods: {@link #getTicket(String)}, {@link #saveTicket(Ticket)},
  *      {@link #getVehicleOccurence(String)}, {@link #updateTicket(Ticket)}
  * 
@@ -30,7 +30,7 @@ public class TicketDAO {
 	public DataBaseConfig dataBaseConfig = new DataBaseConfig();
 
 	/**
-	 * saveTicket() This method helps to save the parking spot
+	 * {@link #saveTicket()} This method helps to save the parking spot
 	 * made available for parking of vehicle by customer
 	 * 
 	 * @return boolean - returns boolean value to confirm saving process implemented successfully or not.
@@ -61,12 +61,14 @@ public class TicketDAO {
 	}
 
 	/**
-	 * getTicket() This method helps to assign ticket for the parking spot
+	 * {@link #getTicket()} This method helps to assign ticket for the parking spot
 	 * made available for parking of vehicle by customer
 	 * 
-	 * @return ticket - returns object value basically instantiated from the class Ticket.
-	 * @param vehicleRegNumber - This the input information provided by client on the vehicles registration number
-	 * @exception SQLException 
+	 * @return ticket - returns object value basically instantiated from the class
+	 *         Ticket.
+	 * @param vehicleRegNumber - This the input information provided by client on
+	 *                         the vehicles registration number
+	 * @exception SQLException
 	 */
 	public Ticket getTicket(String vehicleRegNumber) {
 		Connection con = null;

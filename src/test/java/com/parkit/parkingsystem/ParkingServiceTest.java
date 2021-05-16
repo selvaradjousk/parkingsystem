@@ -21,17 +21,15 @@ import com.parkit.parkingsystem.dao.ParkingSpotDAO;
 import com.parkit.parkingsystem.dao.TicketDAO;
 import com.parkit.parkingsystem.model.ParkingSpot;
 import com.parkit.parkingsystem.model.Ticket;
-import com.parkit.parkingsystem.service.FareCalculatorService;
 import com.parkit.parkingsystem.service.ParkingService;
 import com.parkit.parkingsystem.util.InputReaderUtil;
 
 /**
- * Class {@link ParkingServiceTest} - Performs Unit Testing on Parking
- * Services for customer of ParkIt Class Tested:
- * {@link ParkingService}
+ * Class {@link ParkingServiceTest} - Performs Unit Testing on Parking Services
+ * for customer of ParkIt Class Tested: {@link ParkingService}
  * 
  * @package - com.parkit.parkingsystem
- * @project - P3 - parking system - ParkIt
+ * @project - P4 - parking system - ParkIt
  * @see Tests: {@link #processIncomingVehicleTest()}
  * 
  * @author Senthil
@@ -74,15 +72,15 @@ public class ParkingServiceTest {
 		}
 	}
 
-
 	/**
 	 * {@link #processIncomingVehicleTest()} Unit Test <br>
 	 * GIVEN: <br>
 	 * WHEN: processing of the parking spot availability <br>
 	 * THEN: parking spot alloted ticket saved and <b>availability status</b><br>
-	 * <b>Test Condition <i>PASSED</i>: </b>verify saveTicket and updateParking <code><b>TRUE</b></code>
-	 * <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>verify saveTicket and updateParking <code><b>FALSE</b></code>
+	 * <b>Test Condition <i>PASSED</i>: </b>verify saveTicket and updateParking
+	 * <code><b>TRUE</b></code> <br>
+	 * <b>Test Condition <i>FAILED</i>: </b>verify saveTicket and updateParking
+	 * <code><b>FALSE</b></code>
 	 */
 	@Test
 	public void processIncomingVehicleTest() {
@@ -95,20 +93,20 @@ public class ParkingServiceTest {
 		verify(ticketDAO, Mockito.times(1)).saveTicket(any(Ticket.class));
 		verify(parkingSpotDAO, Mockito.times(1)).updateParking(any(ParkingSpot.class));
 	}
-	
-	/**
-	 * {@link #getNextParkingNumberIfAvailableTest()} Unit Test <br> 
-	 * GIVEN: <br>
-	 * WHEN:  check on the Parking spot availability for Parking<br>
-	 * THEN:  <b>availability status</b><br>
-	 * <b>Test Condition <i>PASSED</i>: </b>verify status available <code><b>TRUE</b></code>
-	 * <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>verify status available <code><b>FALSE</b></code>
-	 */
-	@Test
-	public void getNextParkingNumberIfAvailableTest() {
-		// GIVEN
 
+	/**
+	 * {@link #getNextParkingNumberIfAvailableTest()} Unit Test <br>
+	 * GIVEN: <br>
+	 * WHEN: check on the Parking spot availability for Parking<br>
+	 * THEN: <b>availability status</b><br>
+	 * <b>Test Condition <i>PASSED</i>: </b>verify status available
+	 * <code><b>TRUE</b></code> <br>
+	 * <b>Test Condition <i>FAILED</i>: </b>verify status available
+	 * <code><b>FALSE</b></code>
+	 */
+	public void getNextParkingNumberIfAvailableTest()
+	{
+		// GIVEN
 		// WHEN
 		parkingService.getNextParkingNumberIfAvailable();
 
@@ -116,15 +114,15 @@ public class ParkingServiceTest {
 		verify(parkingSpotDAO, Mockito.times(1)).getNextAvailableSlot(any(ParkingType.class));
 	}
 
-
 	/**
 	 * {@link #processExitingVehicleTest()} Unit Test <br>
 	 * GIVEN: <br>
 	 * WHEN: processing of the parking spot status<br>
 	 * THEN: parking spot <b>availability status updated</b><br>
-	 * <b>Test Condition <i>PASSED</i>: </b>verify updateParking <code><b>TRUE</b></code>
-	 * <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>verify updateParking <code><b>FALSE</b></code>
+	 * <b>Test Condition <i>PASSED</i>: </b>verify updateParking
+	 * <code><b>TRUE</b></code> <br>
+	 * <b>Test Condition <i>FAILED</i>: </b>verify updateParking
+	 * <code><b>FALSE</b></code>
 	 */
 	@Test
 	public void processExitingVehicleTest() {
@@ -132,7 +130,7 @@ public class ParkingServiceTest {
 
 		// WHEN
 		parkingService.processExitingVehicle();
-		
+
 		// THEN
 		verify(parkingSpotDAO, Mockito.times(1)).updateParking(any(ParkingSpot.class));
 	}
