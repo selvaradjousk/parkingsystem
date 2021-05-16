@@ -1,11 +1,28 @@
 package com.parkit.parkingsystem.integration.config;
 
-import com.parkit.parkingsystem.config.DataBaseConfig;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
+import com.parkit.parkingsystem.config.DataBaseConfig;
 
+/**
+ * Class {@link DataBaseTestConfig} - Integration Tests for database connection setting
+ *      configuration {@link DataBaseConfig}
+ * 
+ * @package - com.parkit.parkingsystem.integration.dao
+ * @project - P4 - parking system - ParkIt
+ * @see Tests: {@link #getConnection()},
+ *      {@link #closeConnection(Connection con)},
+ *      {@link #closePreparedStatement(PreparedStatement ps)}, {@link #closeResultSet(ResultSet rs)},
+ * 
+ * @author Senthil
+ */
 public class DataBaseTestConfig extends DataBaseConfig {
 
 	private static final Logger logger = LogManager.getLogger("DataBaseConfig");

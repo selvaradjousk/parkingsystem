@@ -35,7 +35,7 @@ public class ParkingSpotDAO {
 	 * @param parkingType - instance variable of {@link #ParkingType}
 	 * @exception Exception - java.lang.Exception
 	 */
-	public int getNextAvailableSlot(ParkingType parkingType) {
+	public int getNextAvailableSpot(ParkingType parkingType) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;

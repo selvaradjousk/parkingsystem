@@ -71,7 +71,7 @@ public class ParkingDataBaseIT {
 	public void testParkingACar() {
 
 		// GIVEN
-		int firstAlternateParkingSlot = parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR);
+		int firstAlternateParkingSlot = parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR);
 		ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
 
 		// WHEN
@@ -90,7 +90,7 @@ public class ParkingDataBaseIT {
 		assertFalse(ticket.getParkingSpot().isAvailable());
 
 		// GIVEN WHEN
-		int nextAlternateParkingSlot = parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR);
+		int nextAlternateParkingSlot = parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR);
 
 		// THEN
 		assertNotEquals(firstAlternateParkingSlot, nextAlternateParkingSlot);
