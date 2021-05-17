@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ParkingSpotDAOIT.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (16 mai 2021 23:40:40)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.integration.dao</a> &gt; <span class="el_source">ParkingSpotDAOIT.java</span></div><h1>ParkingSpotDAOIT.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.integration.dao;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import com.parkit.parkingsystem.constants.ParkingType;
+import com.parkit.parkingsystem.dao.ParkingSpotDAO;
+import com.parkit.parkingsystem.dao.TicketDAO;
+import com.parkit.parkingsystem.integration.config.DataBaseTestConfig;
+import com.parkit.parkingsystem.integration.service.DataBasePrepareService;
+import com.parkit.parkingsystem.model.ParkingSpot;
+
+/**
+ * Class {@link ParkingSpotDAOIT} - Tests on Functions and Methods for dealing
+ * with availability management of parking spots /slots {@link ParkingSpotDAO}
+ * 
+ * @package - com.parkit.parkingsystem.integration.dao
+ * @project - P4 - parking system - ParkIt
+ * @see Tests: {@link #testGetNextAvailableSpotForCar()},
+ *      {@link #testNextAvailableSpotForBike()},
+ *      {@link #testUpdateParkingForCar()}, {@link #testUpdateParkingForBike()},
+ * 
+ * @author Senthil
+ */
+<span class="fc" id="L29">public class ParkingSpotDAOIT {</span>
+<span class="fc" id="L30">	static DataBaseTestConfig testDB = new DataBaseTestConfig();</span>
+<span class="fc" id="L31">	static ParkingSpotDAO parkingSpotDAO = new ParkingSpotDAO();</span>
+<span class="fc" id="L32">	static DataBasePrepareService dBPrepareService = new DataBasePrepareService();</span>
+
+	@BeforeAll
+	public static void setupTests() {
+<span class="fc" id="L36">		parkingSpotDAO.dataBaseConfig = testDB;</span>
+<span class="fc" id="L37">	}</span>
+
+	@BeforeEach
+	public void setupPerTest() {
+<span class="fc" id="L41">		dBPrepareService.clearDBEntries();</span>
+<span class="fc" id="L42">	}</span>
+
+	/**
+	 * {@link #testGetNextAvailableSpotForCar()} Integration Test on
+	 * {@link ParkingSpotDAO#getNextAvailableSpot()}&lt;br&gt;
+	 * GIVEN: expected parking spot value as 2 &lt;br&gt;
+	 * WHEN: executing method to get next available parking spot &lt;br&gt;
+	 * THEN: verify the spot actual with expected values &lt;b&gt;resultSet
+	 * checked&lt;/b&gt;&lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;PASSED&lt;/i&gt;: &lt;/b&gt;assertEquals expected = 1
+	 * &lt;code&gt;&lt;b&gt;TRUE&lt;/b&gt;&lt;/code&gt; &lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;FAILED&lt;/i&gt;: &lt;/b&gt;assertEquals expected != 1
+	 * &lt;code&gt;&lt;b&gt;FALSE&lt;/b&gt;&lt;/code&gt;
+	 */
+	@Test
+	public void testGetNextAvailableSpotForCar() {
+		// GIVEN
+<span class="fc" id="L59">		final int expectedSpot = 1;</span>
+
+		// WHEN
+<span class="fc" id="L62">		int selectedSpot = parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR);</span>
+
+		// THEN
+<span class="fc" id="L65">		assertEquals(expectedSpot, selectedSpot);</span>
+<span class="fc" id="L66">	}</span>
+
+	/**
+	 * {@link #testNextAvailableSpotForBike()} Integration Test on
+	 * {@link ParkingSpotDAO#getNextAvailableSpot()}&lt;br&gt;
+	 * GIVEN: expected parking spot value as 1 &lt;br&gt;
+	 * WHEN: executing method to get next available parking spot &lt;br&gt;
+	 * THEN: verify the spot actual with expected values &lt;b&gt;resultSet
+	 * checked&lt;/b&gt;&lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;PASSED&lt;/i&gt;: &lt;/b&gt;assertEquals expected = 4
+	 * &lt;code&gt;&lt;b&gt;TRUE&lt;/b&gt;&lt;/code&gt; &lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;FAILED&lt;/i&gt;: &lt;/b&gt;assertEquals expected != 4
+	 * &lt;code&gt;&lt;b&gt;FALSE&lt;/b&gt;&lt;/code&gt;
+	 */
+	@Test
+	public void testNextAvailableSpotForBike() {
+		// GIVEN
+<span class="fc" id="L83">		final int expectedSpot = 4;</span>
+
+		// WHEN
+<span class="fc" id="L86">		int selectedSpot = parkingSpotDAO.getNextAvailableSpot(ParkingType.BIKE);</span>
+
+		// THEN
+<span class="fc" id="L89">		assertEquals(expectedSpot, selectedSpot);</span>
+<span class="fc" id="L90">	}</span>
+
+	/**
+	 * {@link #testUpdateParkingForCar()} Integration Test on
+	 * {@link ParkingSpotDAO#updateParking()}&lt;br&gt;
+	 * GIVEN: updating parking spot values &lt;br&gt;
+	 * WHEN: executing method for updating parking spot parking spot &lt;br&gt;
+	 * THEN: verify the getNextAvailableSpot(ParkingType.CAR) with expected values
+	 * &lt;b&gt;resultSet checked&lt;/b&gt;&lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;PASSED&lt;/i&gt;: &lt;/b&gt;assertEquals expected =
+	 * getNextAvailableSpot(ParkingType.CAR) &lt;code&gt;&lt;b&gt;TRUE&lt;/b&gt;&lt;/code&gt; &lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;FAILED&lt;/i&gt;: &lt;/b&gt;assertEquals expected !=
+	 * getNextAvailableSpot(ParkingType.CAR) &lt;code&gt;&lt;b&gt;FALSE&lt;/b&gt;&lt;/code&gt;
+	 */
+	@Test
+	public void testUpdateParkingForCar() {
+		// GIVEN
+<span class="fc" id="L107">		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);</span>
+
+		// WHEN
+<span class="fc" id="L110">		boolean updated = parkingSpotDAO.updateParking(parkingSpot);</span>
+
+		// THEN
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		if (updated)</span>
+<span class="fc" id="L114">			assertEquals(parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR), parkingSpot.getId() + 1);</span>
+		else
+<span class="nc" id="L116">			fail(&quot;Failed to update ticket&quot;);</span>
+<span class="fc" id="L117">	}</span>
+
+	/**
+	 * {@link #testUpdateParkingForBike()} Integration Test on
+	 * {@link ParkingSpotDAO#updateParking()}&lt;br&gt;
+	 * GIVEN: updating parking spot values &lt;br&gt;
+	 * WHEN: executing method for updating parking spot parking spot &lt;br&gt;
+	 * THEN: verify the getNextAvailableSpot(ParkingTypeBIKE) with expected values
+	 * &lt;b&gt;resultSet checked&lt;/b&gt;&lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;PASSED&lt;/i&gt;: &lt;/b&gt;assertEquals expected =
+	 * getNextAvailableSpot(ParkingType.BIKE) &lt;code&gt;&lt;b&gt;TRUE&lt;/b&gt;&lt;/code&gt; &lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;FAILED&lt;/i&gt;: &lt;/b&gt;assertEquals expected !=
+	 * getNextAvailableSpot(ParkingType.BIKE) &lt;code&gt;&lt;b&gt;FALSE&lt;/b&gt;&lt;/code&gt;
+	 */
+	@Test
+	public void testUpdateParkingForBike() {
+		// GIVEN
+<span class="fc" id="L134">		ParkingSpot parkingSpot = new ParkingSpot(4, ParkingType.BIKE, false);</span>
+
+		// WHEN
+<span class="fc" id="L137">		boolean updated = parkingSpotDAO.updateParking(parkingSpot);</span>
+
+		// THEN
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">		if (updated)</span>
+<span class="fc" id="L141">			assertEquals(parkingSpotDAO.getNextAvailableSpot(ParkingType.BIKE), parkingSpot.getId() + 1);</span>
+		else
+<span class="nc" id="L143">			fail(&quot;Failed to update ticket&quot;);</span>
+<span class="fc" id="L144">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (16 mai 2021 23:40:40)</div></body></html>

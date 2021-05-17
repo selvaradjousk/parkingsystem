@@ -1,29 +1,30 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>DataBasePrepareService.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (16 mai 2021 23:40:40)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.integration.service</a> &gt; <span class="el_source">DataBasePrepareService.java</span></div><h1>DataBasePrepareService.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.integration.service;
-
-import com.parkit.parkingsystem.constants.DBConstants;
-import com.parkit.parkingsystem.dao.TicketDAO;
-import com.parkit.parkingsystem.integration.config.DataBaseTestConfig;
-import com.parkit.parkingsystem.model.Ticket;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>DataBasePrepareService.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (17 mai 2021 13:33:29)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.integration.service</a> &gt; <span class="el_source">DataBasePrepareService.java</span></div><h1>DataBasePrepareService.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.integration.service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import com.parkit.parkingsystem.constants.DBConstants;
+import com.parkit.parkingsystem.integration.config.DataBaseTestConfig;
+import com.parkit.parkingsystem.model.Ticket;
+
 /**
- * Class: {@link DataBasePrepareService} - Functions and Methods to update the
- * availability of the parking spots on customer exit of parking in the DB
+ * &lt;b&gt;Test Class: &lt;/b&gt; {@link DataBasePrepareService} - Functions and Methods
+ * for dealing with parking availability management service
  * 
  * @package - com.parkit.parkingsystem.integration.service
  * @project - P4 - parking system - ParkIt
- * @see Methods: {@link #clearDBEntries()},
- *      {@link #insertTestTicket(Ticket testData)},
+ * @see &lt;b&gt;Tests:&lt;/b&gt;&lt;br&gt;
+ *      {@link #clearDBEntries()}: method does the insert function in the DB for
+ *      test ticket values&lt;br&gt;
+ *      {@link #insertTestTicket(Ticket testData)}: This method set parking
+ *      entries to available &amp; clear ticket entries&lt;br&gt;
  * 
  * @author Senthil
  */
-<span class="fc" id="L24">public class DataBasePrepareService {</span>
+<span class="fc" id="L25">public class DataBasePrepareService {</span>
 
-<span class="fc" id="L26">	DataBaseTestConfig dataBaseTestConfig = new DataBaseTestConfig();</span>
+<span class="fc" id="L27">	DataBaseTestConfig dataBaseTestConfig = new DataBaseTestConfig();</span>
 
 	/**
 	 * {@link #clearDBEntries()} This method set parking entries to available &amp;
@@ -32,22 +33,22 @@ import java.sql.Timestamp;
 	 * @exception Exception
 	 */
 	public void clearDBEntries() {
-<span class="fc" id="L35">		Connection connection = null;</span>
+<span class="fc" id="L36">		Connection connection = null;</span>
 		try {
-<span class="fc" id="L37">			connection = dataBaseTestConfig.getConnection();</span>
+<span class="fc" id="L38">			connection = dataBaseTestConfig.getConnection();</span>
 
 			// set parking entries to available
-<span class="fc" id="L40">			connection.prepareStatement(&quot;update parking set available = true&quot;).execute();</span>
+<span class="fc" id="L41">			connection.prepareStatement(&quot;update parking set available = true&quot;).execute();</span>
 
 			// clear ticket entries;
-<span class="fc" id="L43">			connection.prepareStatement(&quot;truncate table ticket&quot;).execute();</span>
+<span class="fc" id="L44">			connection.prepareStatement(&quot;truncate table ticket&quot;).execute();</span>
 
-<span class="pc" id="L45">		} catch (Exception e) {</span>
-<span class="nc" id="L46">			e.printStackTrace();</span>
+<span class="pc" id="L46">		} catch (Exception e) {</span>
+<span class="nc" id="L47">			e.printStackTrace();</span>
 		} finally {
-<span class="fc" id="L48">			dataBaseTestConfig.closeConnection(connection);</span>
+<span class="fc" id="L49">			dataBaseTestConfig.closeConnection(connection);</span>
 		}
-<span class="fc" id="L50">	}</span>
+<span class="fc" id="L51">	}</span>
 
 	/**
 	 * {@link #insertTestTicket(Ticket testData)} This method does the insert
@@ -56,24 +57,24 @@ import java.sql.Timestamp;
 	 * @exception Exception
 	 */
 	public void insertTestTicket(Ticket testData) {
-<span class="fc" id="L59">		Connection connection = null;</span>
+<span class="fc" id="L60">		Connection connection = null;</span>
 
 		try {
-<span class="fc" id="L62">			connection = dataBaseTestConfig.getConnection();</span>
+<span class="fc" id="L63">			connection = dataBaseTestConfig.getConnection();</span>
 
-<span class="fc" id="L64">			PreparedStatement ps = connection.prepareStatement(DBConstants.SAVE_TICKET);</span>
-<span class="fc" id="L65">			ps.setInt(1, testData.getParkingSpot().getId());</span>
-<span class="fc" id="L66">			ps.setString(2, testData.getVehicleRegNumber());</span>
-<span class="fc" id="L67">			ps.setDouble(3, testData.getPrice());</span>
-<span class="fc" id="L68">			ps.setTimestamp(4, new Timestamp(testData.getInTime().getTime()));</span>
-<span class="fc" id="L69">			ps.setTimestamp(5,</span>
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">					(testData.getOutTime() == null) ? null : (new Timestamp(testData.getOutTime().getTime())));</span>
+<span class="fc" id="L65">			PreparedStatement ps = connection.prepareStatement(DBConstants.SAVE_TICKET);</span>
+<span class="fc" id="L66">			ps.setInt(1, testData.getParkingSpot().getId());</span>
+<span class="fc" id="L67">			ps.setString(2, testData.getVehicleRegNumber());</span>
+<span class="fc" id="L68">			ps.setDouble(3, testData.getPrice());</span>
+<span class="fc" id="L69">			ps.setTimestamp(4, new Timestamp(testData.getInTime().getTime()));</span>
+<span class="fc" id="L70">			ps.setTimestamp(5,</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">					(testData.getOutTime() == null) ? null : (new Timestamp(testData.getOutTime().getTime())));</span>
 
-<span class="fc" id="L72">			ps.execute();</span>
-<span class="pc" id="L73">		} catch (Exception exception) {</span>
-<span class="nc" id="L74">			exception.printStackTrace();</span>
+<span class="fc" id="L73">			ps.execute();</span>
+<span class="pc" id="L74">		} catch (Exception exception) {</span>
+<span class="nc" id="L75">			exception.printStackTrace();</span>
 		}
-<span class="fc" id="L76">	}</span>
+<span class="fc" id="L77">	}</span>
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (16 mai 2021 23:40:40)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (17 mai 2021 13:33:29)</div></body></html>

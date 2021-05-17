@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>FareCalculatorService.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (16 mai 2021 23:40:40)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.service</a> &gt; <span class="el_source">FareCalculatorService.java</span></div><h1>FareCalculatorService.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.service;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import com.parkit.parkingsystem.constants.Fare;
+import com.parkit.parkingsystem.model.Ticket;
+
+/**
+ * Class: {@link FareCalculatorService} - Performs functions and Methods for
+ * dealing with parking fare calculation service
+ * 
+ * @package - com.parkit.parkingsystem.service
+ * @project - P3 - parking system - ParkIt
+ * @see Methods: {@link #checkPertinanceOfGetOutTime(Ticket ticket)},
+ *      {@link #calculateFare()},
+ *      {@link #identifyVehicleTypeForComputeFare(Ticket ticket)},
+ *      {@link #fareSetZeroValueForLessThanThirtyMinutesParking(Ticket ticket, double duration)},
+ *      {@link #computeFare(double duration, double selectedFareType, boolean isRecurrent)}
+ * 
+ * @author Senthil
+ */
+<span class="fc" id="L22">public class FareCalculatorService {</span>
+<span class="fc" id="L23">	private static final Logger logger = LogManager.getLogger(&quot;FareCalculatorService&quot;);</span>
+
+	/**
+	 * {@link #calculateFare()} This method calculates fare on exiting the parking
+	 * by the customer
+	 * 
+	 * @param ticket      Instance of Ticket class
+	 * @param isReccurent Return value of isRecurrent variable set from the result
+	 *                    value of occurrences from the getVehicleOccurence() method
+	 *                    of the TicketDAO class
+	 * @throws IllegalArgumentException when vehicle exit time is incorrect &amp; in
+	 *                                  case of unknown parking time
+	 */
+	public void calculateFare(Ticket ticket, boolean isRecurrent) {
+
+<span class="fc" id="L38">		checkPertinanceOfGetOutTime(ticket);</span>
+
+		// Values for entryTime and exitTime set in milliseconds
+<span class="fc" id="L41">		double entryTime = ticket.getInTime().getTime();</span>
+<span class="fc" id="L42">		double exitTime = ticket.getOutTime().getTime();</span>
+
+		// *******************TASK COMPLETED*****************************************
+		// TODO: Some tests are failing here. Need to check if this logic is correct
+		// *******************TASK COMPLETED*****************************************
+
+		// Duration values are computed into hours from milliseconds
+<span class="fc" id="L49">		double duration = (exitTime - entryTime) / (60.0 * 60.0 * 1000);</span>
+<span class="fc" id="L50">		double selectedFare = identifyVehicleTypeForComputeFare(ticket);</span>
+		// fareSetZeroValueForLessThanThirtyMinutesParking(ticket, duration);
+<span class="fc bfc" id="L52" title="All 2 branches covered.">		if (duration &lt; 0.5) {</span>
+<span class="fc" id="L53">			ticket.setPrice(0);</span>
+<span class="fc" id="L54">			logger.info(&quot;Parking visit is below 30 minutes, fare to pay set to free&quot;);</span>
+<span class="fc" id="L55">			return ;</span>
+		}		
+
+<span class="fc" id="L58">		ticket.setPrice(computeFare(duration, selectedFare, isRecurrent));</span>
+<span class="fc" id="L59">	}</span>
+
+	/**
+	 * {@link #identifyVehicleTypeForComputeFare(Ticket ticket)} This method
+	 * identifies the vehicle type to compute the fare
+	 * 
+	 * @param ticket Instance of Ticket class
+	 * @throws IllegalArgumentException when Unknown Parking Type identified
+	 */
+	private double identifyVehicleTypeForComputeFare(Ticket ticket) {
+<span class="fc" id="L69">		double selectedFare = 0;</span>
+
+<span class="pc bpc" id="L71" title="1 of 3 branches missed.">		switch (ticket.getParkingSpot().getParkingType()) {</span>
+		case CAR:
+<span class="fc" id="L73">			selectedFare = Fare.CAR_RATE_PER_HOUR;</span>
+<span class="fc" id="L74">			break;</span>
+
+		case BIKE:
+<span class="fc" id="L77">			selectedFare = Fare.BIKE_RATE_PER_HOUR;</span>
+<span class="fc" id="L78">			break;</span>
+
+		default:
+<span class="nc" id="L81">			throw new IllegalArgumentException(&quot;Unkown Parking Type&quot;);</span>
+		}
+<span class="fc" id="L83">		return selectedFare;</span>
+	}
+
+	// *******************TASK COMPLETED - 30 Minutes free**********************
+	// Fare for the parking is set to be free
+	// when the user parking time is less than 30 minutes
+	// *******************TASK COMPLETED - 30 Minutes free**********************
+
+//	/**
+//	 * {@link #fareSetZeroValueForLessThanThirtyMinutesParking(Ticket ticket, double duration)}
+//	 * This method checks the parking duration and sets the value for far price zero
+//	 * if less than 30 minutes
+//	 * 
+//	 * @param ticket   Instance of Ticket class
+//	 * @param duration
+//	 */
+//	private void fareSetZeroValueForLessThanThirtyMinutesParking(Ticket ticket, double duration) {
+//		if (duration &lt; 0.5) {
+//			ticket.setPrice(0);
+//			logger.info(&quot;Parking visit is below 30 minutes, fare to pay set to free&quot;);
+//			return ;
+//		}
+//	}
+
+	/**
+	 * {@link #checkPertinanceOfGetOutTime(Ticket ticket)} This method checks if
+	 * Exit time provided is correct
+	 * 
+	 * @param ticket Instance of Ticket class
+	 * @throws IllegalArgumentException when Out time provided is incorrect
+	 */
+	public void checkPertinanceOfGetOutTime(Ticket ticket) {
+<span class="pc bpc" id="L115" title="1 of 4 branches missed.">		if ((ticket.getOutTime() == null) || (ticket.getOutTime().before(ticket.getInTime()))) {</span>
+<span class="fc" id="L116">			throw new IllegalArgumentException(&quot;Out time provided is incorrect:&quot; + ticket.getOutTime().toString());</span>
+		}
+<span class="fc" id="L118">	}</span>
+
+	/**
+	 * {@link #computeFare(double duration, double selectedFareType, boolean isRecurrent)}
+	 * This method called in the calculateFare() method to recalculates fare for
+	 * recurrent customer
+	 * 
+	 * @param duration
+	 * @param selectedFareType Return value of
+	 *                         {@link #identifyVehicleTypeForComputeFare(Ticket ticket)}
+	 * @param isRecurrent      Return value of getVehicleOccurence() at TicketDAO
+	 */
+	double computeFare(double duration, double selectedFareType, boolean isRecurrent) {
+<span class="fc" id="L131">		double fare = duration * selectedFareType;</span>
+
+		// discounted fare value for the recurrent users
+<span class="fc bfc" id="L134" title="All 2 branches covered.">		if (isRecurrent)</span>
+<span class="fc" id="L135">			fare -= (fare / 100 * 5);</span>
+
+<span class="fc" id="L137">		double computedFare = fare;</span>
+		
+		
+<span class="fc" id="L140">		System.out.println(</span>
+<span class="fc" id="L141">				&quot;We welcome you on behalf of ParkIt and pleased to inform that you have a 5% discount for your regular visit&quot;);</span>
+<span class="fc" id="L142">		logger.info(&quot;Parking visit is below is reccurent, welcome note and 5 % discount displayed &quot;);</span>
+<span class="fc" id="L143">		return computedFare;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (16 mai 2021 23:40:40)</div></body></html>

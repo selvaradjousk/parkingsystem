@@ -33,6 +33,7 @@ import com.parkit.parkingsystem.config.DataBaseConfig;
  * 
  * @author Senthil
  */
+@DisplayName("Parking DB Configuration - Integration Testing")
 public class DataBaseConfigIT {
 
 	static DataBaseConfig dataBaseConfig = new DataBaseConfig();
@@ -133,8 +134,8 @@ public class DataBaseConfigIT {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	@Test
 	@DisplayName("Parking DB Configuration - Integration Testing - Closing Prepared Statement")
+	@Test
 	public void testClosePreparedStatement()
 			throws IllegalAccessException, InstantiationException, ClassNotFoundException, SQLException {
 		// GIVEN
