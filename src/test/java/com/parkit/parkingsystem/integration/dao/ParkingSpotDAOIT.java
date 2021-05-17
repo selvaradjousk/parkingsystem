@@ -28,6 +28,7 @@ import com.parkit.parkingsystem.model.ParkingSpot;
  * 
  * @author Senthil
  */
+@DisplayName("Vehicle Parking Data Access Object - Integration Testing ")
 public class ParkingSpotDAOIT {
 	static DataBaseTestConfig testDB = new DataBaseTestConfig();
 	static ParkingSpotDAO parkingSpotDAO = new ParkingSpotDAO();
