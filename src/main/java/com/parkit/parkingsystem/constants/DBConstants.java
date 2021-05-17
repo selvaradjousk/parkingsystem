@@ -1,11 +1,9 @@
 package com.parkit.parkingsystem.constants;
 
 /**
- * Class: {@link DBConstants} - for different database queries pre-assigned
- *      and stored in variable constants for access
+ * Class: {@link DBConstants} - store DB constant values.<br>
+ * <b>Project: <b> P3 - parking system - ParkIt<br>
  * 
- * @package - com.parkit.parkingsystem.constants;
- * @project - P3 - parking system - ParkIt
  * @see variables: {@link #GET_NEXT_PARKING_SPOT}, {@link #GET_TICKET},
  *      {@link #GET_VEHICLE_OCCURENCES}, {@link #SAVE_TICKET},
  *      {@link #UPDATE_PARKING_SPOT}, {@link #UPDATE_TICKET}

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>FareCalculatorService.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (17 mai 2021 13:33:29)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.service</a> &gt; <span class="el_source">FareCalculatorService.java</span></div><h1>FareCalculatorService.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.service;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>FareCalculatorService.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (17 mai 2021 20:51:59)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.service</a> &gt; <span class="el_source">FareCalculatorService.java</span></div><h1>FareCalculatorService.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -6,11 +6,9 @@ import com.parkit.parkingsystem.constants.Fare;
 import com.parkit.parkingsystem.model.Ticket;
 
 /**
- * Class: {@link FareCalculatorService} - Performs functions and Methods for
- * dealing with parking fare calculation service
+ * Class: {@link FareCalculatorService} - Fare Computation Service.&lt;br&gt;
+ * &lt;b&gt;Project: &lt;b&gt; P3 - parking system - ParkIt&lt;br&gt;
  * 
- * @package - com.parkit.parkingsystem.service
- * @project - P3 - parking system - ParkIt
  * @see Methods: {@link #checkPertinanceOfGetOutTime(Ticket ticket)},
  *      {@link #calculateFare()},
  *      {@link #identifyVehicleTypeForComputeFare(Ticket ticket)},
@@ -19,8 +17,8 @@ import com.parkit.parkingsystem.model.Ticket;
  * 
  * @author Senthil
  */
-<span class="fc" id="L22">public class FareCalculatorService {</span>
-<span class="fc" id="L23">	private static final Logger logger = LogManager.getLogger(&quot;FareCalculatorService&quot;);</span>
+<span class="fc" id="L20">public class FareCalculatorService {</span>
+<span class="fc" id="L21">	private static final Logger logger = LogManager.getLogger(&quot;FareCalculatorService&quot;);</span>
 
 	/**
 	 * {@link #calculateFare()} This method calculates fare on exiting the parking
@@ -35,28 +33,28 @@ import com.parkit.parkingsystem.model.Ticket;
 	 */
 	public void calculateFare(Ticket ticket, boolean isRecurrent) {
 
-<span class="fc" id="L38">		checkPertinanceOfGetOutTime(ticket);</span>
+<span class="fc" id="L36">		checkPertinanceOfGetOutTime(ticket);</span>
 
 		// Values for entryTime and exitTime set in milliseconds
-<span class="fc" id="L41">		double entryTime = ticket.getInTime().getTime();</span>
-<span class="fc" id="L42">		double exitTime = ticket.getOutTime().getTime();</span>
+<span class="fc" id="L39">		double entryTime = ticket.getInTime().getTime();</span>
+<span class="fc" id="L40">		double exitTime = ticket.getOutTime().getTime();</span>
 
 		// *******************TASK COMPLETED*****************************************
 		// TODO: Some tests are failing here. Need to check if this logic is correct
 		// *******************TASK COMPLETED*****************************************
 
 		// Duration values are computed into hours from milliseconds
-<span class="fc" id="L49">		double duration = (exitTime - entryTime) / (60.0 * 60.0 * 1000);</span>
-<span class="fc" id="L50">		double selectedFare = identifyVehicleTypeForComputeFare(ticket);</span>
+<span class="fc" id="L47">		double duration = (exitTime - entryTime) / (60.0 * 60.0 * 1000);</span>
+<span class="fc" id="L48">		double selectedFare = identifyVehicleTypeForComputeFare(ticket);</span>
 		// fareSetZeroValueForLessThanThirtyMinutesParking(ticket, duration);
-<span class="fc bfc" id="L52" title="All 2 branches covered.">		if (duration &lt; 0.5) {</span>
-<span class="fc" id="L53">			ticket.setPrice(0);</span>
-<span class="fc" id="L54">			logger.info(&quot;Parking visit is below 30 minutes, fare to pay set to free&quot;);</span>
-<span class="fc" id="L55">			return ;</span>
-		}		
+<span class="fc bfc" id="L50" title="All 2 branches covered.">		if (duration &lt; 0.5) {</span>
+<span class="fc" id="L51">			ticket.setPrice(0);</span>
+<span class="fc" id="L52">			logger.info(&quot;Parking visit is below 30 minutes, fare to pay set to free&quot;);</span>
+<span class="fc" id="L53">			return;</span>
+		}
 
-<span class="fc" id="L58">		ticket.setPrice(computeFare(duration, selectedFare, isRecurrent));</span>
-<span class="fc" id="L59">	}</span>
+<span class="fc" id="L56">		ticket.setPrice(computeFare(duration, selectedFare, isRecurrent));</span>
+<span class="fc" id="L57">	}</span>
 
 	/**
 	 * {@link #identifyVehicleTypeForComputeFare(Ticket ticket)} This method
@@ -66,21 +64,21 @@ import com.parkit.parkingsystem.model.Ticket;
 	 * @throws IllegalArgumentException when Unknown Parking Type identified
 	 */
 	private double identifyVehicleTypeForComputeFare(Ticket ticket) {
-<span class="fc" id="L69">		double selectedFare = 0;</span>
+<span class="fc" id="L67">		double selectedFare = 0;</span>
 
-<span class="pc bpc" id="L71" title="1 of 3 branches missed.">		switch (ticket.getParkingSpot().getParkingType()) {</span>
+<span class="pc bpc" id="L69" title="1 of 3 branches missed.">		switch (ticket.getParkingSpot().getParkingType()) {</span>
 		case CAR:
-<span class="fc" id="L73">			selectedFare = Fare.CAR_RATE_PER_HOUR;</span>
-<span class="fc" id="L74">			break;</span>
+<span class="fc" id="L71">			selectedFare = Fare.CAR_RATE_PER_HOUR;</span>
+<span class="fc" id="L72">			break;</span>
 
 		case BIKE:
-<span class="fc" id="L77">			selectedFare = Fare.BIKE_RATE_PER_HOUR;</span>
-<span class="fc" id="L78">			break;</span>
+<span class="fc" id="L75">			selectedFare = Fare.BIKE_RATE_PER_HOUR;</span>
+<span class="fc" id="L76">			break;</span>
 
 		default:
-<span class="nc" id="L81">			throw new IllegalArgumentException(&quot;Unkown Parking Type&quot;);</span>
+<span class="nc" id="L79">			throw new IllegalArgumentException(&quot;Unkown Parking Type&quot;);</span>
 		}
-<span class="fc" id="L83">		return selectedFare;</span>
+<span class="fc" id="L81">		return selectedFare;</span>
 	}
 
 	// *******************TASK COMPLETED - 30 Minutes free**********************
@@ -112,10 +110,10 @@ import com.parkit.parkingsystem.model.Ticket;
 	 * @throws IllegalArgumentException when Out time provided is incorrect
 	 */
 	public void checkPertinanceOfGetOutTime(Ticket ticket) {
-<span class="pc bpc" id="L115" title="1 of 4 branches missed.">		if ((ticket.getOutTime() == null) || (ticket.getOutTime().before(ticket.getInTime()))) {</span>
-<span class="fc" id="L116">			throw new IllegalArgumentException(&quot;Out time provided is incorrect:&quot; + ticket.getOutTime().toString());</span>
+<span class="pc bpc" id="L113" title="1 of 4 branches missed.">		if ((ticket.getOutTime() == null) || (ticket.getOutTime().before(ticket.getInTime()))) {</span>
+<span class="fc" id="L114">			throw new IllegalArgumentException(&quot;Out time provided is incorrect:&quot; + ticket.getOutTime().toString());</span>
 		}
-<span class="fc" id="L118">	}</span>
+<span class="fc" id="L116">	}</span>
 
 	/**
 	 * {@link #computeFare(double duration, double selectedFareType, boolean isRecurrent)}
@@ -128,19 +126,18 @@ import com.parkit.parkingsystem.model.Ticket;
 	 * @param isRecurrent      Return value of getVehicleOccurence() at TicketDAO
 	 */
 	double computeFare(double duration, double selectedFareType, boolean isRecurrent) {
-<span class="fc" id="L131">		double fare = duration * selectedFareType;</span>
+<span class="fc" id="L129">		double fare = duration * selectedFareType;</span>
 
 		// discounted fare value for the recurrent users
-<span class="fc bfc" id="L134" title="All 2 branches covered.">		if (isRecurrent)</span>
-<span class="fc" id="L135">			fare -= (fare / 100 * 5);</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">		if (isRecurrent)</span>
+<span class="fc" id="L133">			fare -= (fare / 100 * 5);</span>
 
-<span class="fc" id="L137">		double computedFare = fare;</span>
-		
-		
-<span class="fc" id="L140">		System.out.println(</span>
-<span class="fc" id="L141">				&quot;We welcome you on behalf of ParkIt and pleased to inform that you have a 5% discount for your regular visit&quot;);</span>
-<span class="fc" id="L142">		logger.info(&quot;Parking visit is below is reccurent, welcome note and 5 % discount displayed &quot;);</span>
-<span class="fc" id="L143">		return computedFare;</span>
+<span class="fc" id="L135">		double computedFare = fare;</span>
+
+<span class="fc" id="L137">		System.out.println(</span>
+<span class="fc" id="L138">				&quot;We welcome you on behalf of ParkIt and pleased to inform that you have a 5% discount for your regular visit&quot;);</span>
+<span class="fc" id="L139">		logger.info(&quot;Parking visit is below is reccurent, welcome note and 5 % discount displayed &quot;);</span>
+<span class="fc" id="L140">		return computedFare;</span>
 	}
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (17 mai 2021 13:33:29)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (17 mai 2021 20:51:59)</div></body></html>

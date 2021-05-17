@@ -1,25 +1,24 @@
 package com.parkit.parkingsystem.dao;
 
-import com.parkit.parkingsystem.config.DataBaseConfig;
-import com.parkit.parkingsystem.constants.DBConstants;
-import com.parkit.parkingsystem.constants.ParkingType;
-import com.parkit.parkingsystem.model.ParkingSpot;
-import com.parkit.parkingsystem.model.Ticket;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.parkit.parkingsystem.config.DataBaseConfig;
+import com.parkit.parkingsystem.constants.DBConstants;
+import com.parkit.parkingsystem.constants.ParkingType;
+import com.parkit.parkingsystem.model.ParkingSpot;
+import com.parkit.parkingsystem.model.Ticket;
+
 /**
- * Class: {@link TicketDAO} - Functions and Methods for dealing with Ticket management for
- * customers parking
+ * Class: {@link TicketDAO} - Ticket Data Access Objects.<br>
+ * <b>Project: <b> P3 - parking system - ParkIt<br>
  * 
- * @package - com.parkit.parkingsystem.dao
- * @project - P4 - parking system - ParkIt
  * @see Methods: {@link #getTicket(String)}, {@link #saveTicket(Ticket)},
  *      {@link #getVehicleOccurence(String)}, {@link #updateTicket(Ticket)}
  * 
@@ -30,12 +29,13 @@ public class TicketDAO {
 	public DataBaseConfig dataBaseConfig = new DataBaseConfig();
 
 	/**
-	 * {@link #saveTicket()} This method helps to save the parking spot
-	 * made available for parking of vehicle by customer
+	 * {@link #saveTicket()} This method helps to save the parking spot made
+	 * available for parking of vehicle by customer
 	 * 
-	 * @return boolean - returns boolean value to confirm saving process implemented successfully or not.
+	 * @return boolean - returns boolean value to confirm saving process implemented
+	 *         successfully or not.
 	 * @param ticket - instance variable of {@link #Ticket}
-	 * @exception SQLException 
+	 * @exception SQLException
 	 */
 	public boolean saveTicket(Ticket ticket) {
 		Connection con = null;
@@ -101,11 +101,14 @@ public class TicketDAO {
 	}
 
 	/**
-	 * getVehicleOccurence() This method helps to calculate the number of parking visits of the vehicle by customer
+	 * getVehicleOccurence() This method helps to calculate the number of parking
+	 * visits of the vehicle by customer
 	 * 
-	 * @return occurrences - returns value on the number of recurrent visits made by customer.
-	 * @param vehicleRegNumber - This the input information provided by client on the vehicles registration number
-	 * @exception SQLException 
+	 * @return occurrences - returns value on the number of recurrent visits made by
+	 *         customer.
+	 * @param vehicleRegNumber - This the input information provided by client on
+	 *                         the vehicles registration number
+	 * @exception SQLException
 	 */
 	public int getVehicleOccurence(String vehicleRegNumber) {
 		Connection con = null;
@@ -132,15 +135,16 @@ public class TicketDAO {
 	}
 
 	/**
-	 * updateTicket() This method helps to update the ticket information for the parking spot
-	 * made available for parking of vehicle by customer
+	 * updateTicket() This method helps to update the ticket information for the
+	 * parking spot made available for parking of vehicle by customer
 	 * 
-	 * @return boolean - returns object value basically instantiated from the class Ticket.
+	 * @return boolean - returns object value basically instantiated from the class
+	 *         Ticket.
 	 * @param ticket - instance variable of {@link #Ticket}
-	 * @throws InstantiationException 
-	 * @throws IllegalAccessException 
-	 * @exception SQLException 
-	 */	
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @exception SQLException
+	 */
 	public boolean updateTicket(Ticket ticket) throws IllegalAccessException, InstantiationException {
 		Connection con = null;
 		PreparedStatement ps = null;

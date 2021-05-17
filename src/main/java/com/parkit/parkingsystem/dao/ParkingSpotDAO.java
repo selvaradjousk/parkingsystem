@@ -13,11 +13,9 @@ import com.parkit.parkingsystem.constants.ParkingType;
 import com.parkit.parkingsystem.model.ParkingSpot;
 
 /**
- * Class: {@link ParkingSpotDAO} - Functions and Methods for dealing with availability
- * management of parking spots /slots
+ * Class: {@link ParkingSpotDAO} - Parking spot Data Access Objects.<br>
+ * <b>Project: <b> P3 - parking system - ParkIt<br>
  * 
- * @package - com.parkit.parkingsystem.dao
- * @project - P3 - parking system - ParkIt
  * @see Methods: {@link #ParkingSpotDAO()}, {@link #updateParking(ParkingSpot)}
  * 
  * @author Senthil

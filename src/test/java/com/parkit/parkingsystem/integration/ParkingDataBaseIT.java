@@ -35,10 +35,9 @@ import com.parkit.parkingsystem.util.InputReaderUtil;
 /**
  * <b>Test Class: </b> {@link ParkingDataBaseIT} - Performs Integration Test on
  * Parking Database <br>
- * <b>Class Tested:</b> {@link ParkingSpotDAO}
+ * <b>Class Tested:</b> {@link ParkingSpotDAO}.<br>
+ * <b>Project: <b> P3 - parking system - ParkIt<br>
  * 
- * @package - com.parkit.parkingsystem
- * @project - P4 - parking system - ParkIt
  * @see <b>Tests:</b><br>
  *      {@link #testParkingLotExitIT()}: Parking Database Testing - Parking Lot
  *      Status on Exit<br>

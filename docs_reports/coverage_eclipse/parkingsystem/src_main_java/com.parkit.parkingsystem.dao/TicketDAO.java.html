@@ -1,12 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>TicketDAO.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (17 mai 2021 13:33:29)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.dao</a> &gt; <span class="el_source">TicketDAO.java</span></div><h1>TicketDAO.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.dao;
-
-import com.parkit.parkingsystem.config.DataBaseConfig;
-import com.parkit.parkingsystem.constants.DBConstants;
-import com.parkit.parkingsystem.constants.ParkingType;
-import com.parkit.parkingsystem.model.ParkingSpot;
-import com.parkit.parkingsystem.model.Ticket;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>TicketDAO.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (17 mai 2021 20:51:59)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.dao</a> &gt; <span class="el_source">TicketDAO.java</span></div><h1>TicketDAO.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,28 +6,36 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.parkit.parkingsystem.config.DataBaseConfig;
+import com.parkit.parkingsystem.constants.DBConstants;
+import com.parkit.parkingsystem.constants.ParkingType;
+import com.parkit.parkingsystem.model.ParkingSpot;
+import com.parkit.parkingsystem.model.Ticket;
+
 /**
- * Class: {@link TicketDAO} - Functions and Methods for dealing with Ticket management for
- * customers parking
+ * Class: {@link TicketDAO} - Ticket Data Access Objects.&lt;br&gt;
+ * &lt;b&gt;Project: &lt;b&gt; P3 - parking system - ParkIt&lt;br&gt;
  * 
- * @package - com.parkit.parkingsystem.dao
- * @project - P4 - parking system - ParkIt
  * @see Methods: {@link #getTicket(String)}, {@link #saveTicket(Ticket)},
  *      {@link #getVehicleOccurence(String)}, {@link #updateTicket(Ticket)}
  * 
  * @author Senthil
  */
-<span class="fc" id="L28">public class TicketDAO {</span>
-<span class="fc" id="L29">	private static final Logger logger = LogManager.getLogger(&quot;TicketDAO&quot;);</span>
-<span class="fc" id="L30">	public DataBaseConfig dataBaseConfig = new DataBaseConfig();</span>
+<span class="fc" id="L27">public class TicketDAO {</span>
+<span class="fc" id="L28">	private static final Logger logger = LogManager.getLogger(&quot;TicketDAO&quot;);</span>
+<span class="fc" id="L29">	public DataBaseConfig dataBaseConfig = new DataBaseConfig();</span>
 
 	/**
-	 * {@link #saveTicket()} This method helps to save the parking spot
-	 * made available for parking of vehicle by customer
+	 * {@link #saveTicket()} This method helps to save the parking spot made
+	 * available for parking of vehicle by customer
 	 * 
-	 * @return boolean - returns boolean value to confirm saving process implemented successfully or not.
+	 * @return boolean - returns boolean value to confirm saving process implemented
+	 *         successfully or not.
 	 * @param ticket - instance variable of {@link #Ticket}
-	 * @exception SQLException 
+	 * @exception SQLException
 	 */
 	public boolean saveTicket(Ticket ticket) {
 <span class="fc" id="L41">		Connection con = null;</span>
@@ -101,63 +101,67 @@ import java.sql.Timestamp;
 	}
 
 	/**
-	 * getVehicleOccurence() This method helps to calculate the number of parking visits of the vehicle by customer
+	 * getVehicleOccurence() This method helps to calculate the number of parking
+	 * visits of the vehicle by customer
 	 * 
-	 * @return occurrences - returns value on the number of recurrent visits made by customer.
-	 * @param vehicleRegNumber - This the input information provided by client on the vehicles registration number
-	 * @exception SQLException 
+	 * @return occurrences - returns value on the number of recurrent visits made by
+	 *         customer.
+	 * @param vehicleRegNumber - This the input information provided by client on
+	 *                         the vehicles registration number
+	 * @exception SQLException
 	 */
 	public int getVehicleOccurence(String vehicleRegNumber) {
-<span class="fc" id="L111">		Connection con = null;</span>
-<span class="fc" id="L112">		PreparedStatement ps = null;</span>
-<span class="fc" id="L113">		ResultSet rs = null;</span>
-<span class="fc" id="L114">		int occurences = 0;</span>
+<span class="fc" id="L114">		Connection con = null;</span>
+<span class="fc" id="L115">		PreparedStatement ps = null;</span>
+<span class="fc" id="L116">		ResultSet rs = null;</span>
+<span class="fc" id="L117">		int occurences = 0;</span>
 
 		try {
-<span class="fc" id="L117">			con = dataBaseConfig.getConnection();</span>
-<span class="fc" id="L118">			ps = con.prepareStatement(DBConstants.GET_VEHICLE_OCCURENCES);</span>
-<span class="fc" id="L119">			ps.setString(1, vehicleRegNumber);</span>
-<span class="fc" id="L120">			rs = ps.executeQuery();</span>
+<span class="fc" id="L120">			con = dataBaseConfig.getConnection();</span>
+<span class="fc" id="L121">			ps = con.prepareStatement(DBConstants.GET_VEHICLE_OCCURENCES);</span>
+<span class="fc" id="L122">			ps.setString(1, vehicleRegNumber);</span>
+<span class="fc" id="L123">			rs = ps.executeQuery();</span>
 
-<span class="pc bpc" id="L122" title="1 of 2 branches missed.">			if (rs.next())</span>
-<span class="fc" id="L123">				occurences = rs.getInt(1);</span>
-<span class="pc" id="L124">		} catch (SQLException ex) {</span>
-<span class="nc" id="L125">			logger.error(&quot;Error fetching vehicle occurence&quot;, ex);</span>
-<span class="nc" id="L126">		} finally {</span>
-<span class="fc" id="L127">			dataBaseConfig.closeConnection(con);</span>
-<span class="fc" id="L128">			dataBaseConfig.closePreparedStatement(ps);</span>
-<span class="fc" id="L129">			dataBaseConfig.closeResultSet(rs);</span>
-<span class="fc" id="L130">			return occurences;</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">			if (rs.next())</span>
+<span class="fc" id="L126">				occurences = rs.getInt(1);</span>
+<span class="pc" id="L127">		} catch (SQLException ex) {</span>
+<span class="nc" id="L128">			logger.error(&quot;Error fetching vehicle occurence&quot;, ex);</span>
+<span class="nc" id="L129">		} finally {</span>
+<span class="fc" id="L130">			dataBaseConfig.closeConnection(con);</span>
+<span class="fc" id="L131">			dataBaseConfig.closePreparedStatement(ps);</span>
+<span class="fc" id="L132">			dataBaseConfig.closeResultSet(rs);</span>
+<span class="fc" id="L133">			return occurences;</span>
 		}
 	}
 
 	/**
-	 * updateTicket() This method helps to update the ticket information for the parking spot
-	 * made available for parking of vehicle by customer
+	 * updateTicket() This method helps to update the ticket information for the
+	 * parking spot made available for parking of vehicle by customer
 	 * 
-	 * @return boolean - returns object value basically instantiated from the class Ticket.
+	 * @return boolean - returns object value basically instantiated from the class
+	 *         Ticket.
 	 * @param ticket - instance variable of {@link #Ticket}
-	 * @throws InstantiationException 
-	 * @throws IllegalAccessException 
-	 * @exception SQLException 
-	 */	
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @exception SQLException
+	 */
 	public boolean updateTicket(Ticket ticket) throws IllegalAccessException, InstantiationException {
-<span class="fc" id="L145">		Connection con = null;</span>
-<span class="fc" id="L146">		PreparedStatement ps = null;</span>
+<span class="fc" id="L149">		Connection con = null;</span>
+<span class="fc" id="L150">		PreparedStatement ps = null;</span>
 		try {
-<span class="fc" id="L148">			con = dataBaseConfig.getConnection();</span>
-<span class="fc" id="L149">			ps = con.prepareStatement(DBConstants.UPDATE_TICKET);</span>
-<span class="fc" id="L150">			ps.setDouble(1, ticket.getPrice());</span>
-<span class="fc" id="L151">			ps.setTimestamp(2, new Timestamp(ticket.getOutTime().getTime()));</span>
-<span class="fc" id="L152">			ps.setInt(3, ticket.getId());</span>
-<span class="fc" id="L153">			ps.execute();</span>
-<span class="fc" id="L154">			return true;</span>
-<span class="nc" id="L155">		} catch (SQLException ex) {</span>
-<span class="nc" id="L156">			logger.error(&quot;Error saving ticket info&quot;, ex);</span>
+<span class="fc" id="L152">			con = dataBaseConfig.getConnection();</span>
+<span class="fc" id="L153">			ps = con.prepareStatement(DBConstants.UPDATE_TICKET);</span>
+<span class="fc" id="L154">			ps.setDouble(1, ticket.getPrice());</span>
+<span class="fc" id="L155">			ps.setTimestamp(2, new Timestamp(ticket.getOutTime().getTime()));</span>
+<span class="fc" id="L156">			ps.setInt(3, ticket.getId());</span>
+<span class="fc" id="L157">			ps.execute();</span>
+<span class="fc" id="L158">			return true;</span>
+<span class="nc" id="L159">		} catch (SQLException ex) {</span>
+<span class="nc" id="L160">			logger.error(&quot;Error saving ticket info&quot;, ex);</span>
 		} finally {
-<span class="fc" id="L158">			dataBaseConfig.closeConnection(con);</span>
+<span class="fc" id="L162">			dataBaseConfig.closeConnection(con);</span>
 		}
-<span class="nc" id="L160">		return false;</span>
+<span class="nc" id="L164">		return false;</span>
 	}
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (17 mai 2021 13:33:29)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (17 mai 2021 20:51:59)</div></body></html>

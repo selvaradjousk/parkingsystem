@@ -6,11 +6,9 @@ import com.parkit.parkingsystem.constants.Fare;
 import com.parkit.parkingsystem.model.Ticket;
 
 /**
- * Class: {@link FareCalculatorService} - Performs functions and Methods for
- * dealing with parking fare calculation service
+ * Class: {@link FareCalculatorService} - Fare Computation Service.<br>
+ * <b>Project: <b> P3 - parking system - ParkIt<br>
  * 
- * @package - com.parkit.parkingsystem.service
- * @project - P3 - parking system - ParkIt
  * @see Methods: {@link #checkPertinanceOfGetOutTime(Ticket ticket)},
  *      {@link #calculateFare()},
  *      {@link #identifyVehicleTypeForComputeFare(Ticket ticket)},
@@ -52,8 +50,8 @@ public class FareCalculatorService {
 		if (duration < 0.5) {
 			ticket.setPrice(0);
 			logger.info("Parking visit is below 30 minutes, fare to pay set to free");
-			return ;
-		}		
+			return;
+		}
 
 		ticket.setPrice(computeFare(duration, selectedFare, isRecurrent));
 	}
@@ -135,8 +133,7 @@ public class FareCalculatorService {
 			fare -= (fare / 100 * 5);
 
 		double computedFare = fare;
-		
-		
+
 		System.out.println(
 				"We welcome you on behalf of ParkIt and pleased to inform that you have a 5% discount for your regular visit");
 		logger.info("Parking visit is below is reccurent, welcome note and 5 % discount displayed ");

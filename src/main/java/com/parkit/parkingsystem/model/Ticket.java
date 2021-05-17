@@ -3,10 +3,8 @@ package com.parkit.parkingsystem.model;
 import java.util.Date;
 
 /**
- * Class: {@link Ticket} - Declarations of variables, instances, setters and getters Ticket
- * Management datasets (id, parking spot, vehicleRegNumber, price, inTime,
- * outTime)
- * 
+ * Class: {@link Ticket} - Ticket Data Objects.<br> 
+ * <b>Project: <b> P3 - parking system - ParkIt<br> 
  * @package - com.parkit.parkingsystem.model
  * 
  * @author Senthil

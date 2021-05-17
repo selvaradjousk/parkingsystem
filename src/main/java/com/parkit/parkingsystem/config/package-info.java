@@ -1,6 +1,6 @@
 
 /**
- * This package contains the classes for DB configuration<br>
+ * This package contains the classes for DB configuration.<br>
  * 
  * @author Senthil
  *

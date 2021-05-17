@@ -1,6 +1,6 @@
 
 /**
- * This module is the base for the ParkIt - Parking system Application<br>
+ * This module is the base for the ParkIt - Parking system Application.<br>
  * 
  * <b>Sub-packages: </b><br>
  * @see com.parkit.parkingsystem.config
@@ -18,7 +18,7 @@
  * @see com.parkit.parkingsystem.integration.service
  * @see com.parkit.parkingsystem.unittest.service
  * 
- * @project - P4 - parking system - ParkIt
+ * <b>Project: <b> P3 - parking system - ParkIt<br>
  * 
  * @author Senthil
  *

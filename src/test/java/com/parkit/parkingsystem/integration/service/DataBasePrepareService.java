@@ -10,10 +10,9 @@ import com.parkit.parkingsystem.model.Ticket;
 
 /**
  * <b>Test Class: </b> {@link DataBasePrepareService} - Functions and Methods
- * for dealing with parking availability management service
+ * for dealing with parking availability management service.<br>
+ * <b>Project: <b> P3 - parking system - ParkIt<br>
  * 
- * @package - com.parkit.parkingsystem.integration.service
- * @project - P4 - parking system - ParkIt
  * @see <b>Tests:</b><br>
  *      {@link #clearDBEntries()}: method does the insert function in the DB for
  *      test ticket values<br>

@@ -1,11 +1,9 @@
 package com.parkit.parkingsystem.constants;
 
 /**
- * Class: {@link Fare} -  For variables listed as constants to access
- *      pre-assigned parking fare values
+ * Class: {@link Fare} - DB constants on Fare.<br>
+ * <b>Project: <b> P3 - parking system - ParkIt<br>
  * 
- * @package - com.parkit.parkingsystem.constants;
- * @project - P3 - parking system - ParkIt
  * @see variables: {@link #BIKE_RATE_PER_HOUR}, {@link #CAR_RATE_PER_HOUR}
  * 
  * @author Senthil

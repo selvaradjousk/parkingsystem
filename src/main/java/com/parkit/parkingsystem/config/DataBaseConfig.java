@@ -10,11 +10,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Class: {@link DataBaseConfig} This class deals with database connection configuration
- * settings
+ * Class: {@link DataBaseConfig} Deals with DB connection configuration
+ * settings..<br>
+ * <b>Project: <b> P3 - parking system - ParkIt<br>
  * 
- * @package - com.parkit.parkingsystem.config
- * @project - P3 - parking system - ParkIt
  * @see Methods: {@link #getConnection()},
  *      {@link #closeConnection(Connection)},{@link #closePreparedStatement(PreparedStatement)},
  *      {@link #closeResultSet(ResultSet)}

@@ -17,10 +17,9 @@ import com.parkit.parkingsystem.config.DataBaseConfig;
 /**
  * <b>Test Class: </b> {@link DataBaseConfigIT} - Integration Testing For
  * database connection configuration setting <br>
- * <b>Class Tested:</b>{@link DataBaseConfig}
+ * <b>Class Tested:</b>{@link DataBaseConfig}.<br>
+ * <b>Project: <b> P3 - parking system - ParkIt<br>
  * 
- * @package - com.parkit.parkingsystem.integration.config
- * @project - P4 - parking system - ParkIt
  * @see <b>Tests:</b><br>
  *      {@link #testGetConnection()}}: Parking DB Configuration - Integration
  *      Testing - Get Connection<br>

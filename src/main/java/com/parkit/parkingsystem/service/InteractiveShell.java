@@ -7,11 +7,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Class: {@link InteractiveShell} - Functions and Methods for dealing with
- * Application workflow service
+ * Class: {@link InteractiveShell} - Application workflow services..<br>
+ * <b>Project: <b> P3 - parking system - ParkIt<br>
  * 
- * @package - com.parkit.parkingsystem.service
- * @project - P3 - parking system - ParkIt
  * @see Methods: {@link #loadInterface()}, {@link #loadMenu()}
  * 
  * @author Senthil

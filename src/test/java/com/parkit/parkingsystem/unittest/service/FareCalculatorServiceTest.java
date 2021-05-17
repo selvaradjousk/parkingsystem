@@ -28,10 +28,9 @@ import com.parkit.parkingsystem.service.FareCalculatorService;
 /**
  * <b>Test Class: </b> {@link FareCalculatorServiceTest} - Performs Unit Testing
  * on Fare calculation process for customer of ParkIt <br>
- * <b>Class Tested:</b> {@link FareCalculatorService}
+ * <b>Class Tested:</b> {@link FareCalculatorService}.<br>
+ * <b>Project: <b> P3 - parking system - ParkIt<br>
  * 
- * @package - com.parkit.parkingsystem
- * @project - P3 - parking system - ParkIt
  * @see <b>Tests:</b><br>
  *      {@link #calculateFareCar(long minutesParked, double priceFactor)}:
  *      Parking Fare: CAR one hours + in minutes <br>

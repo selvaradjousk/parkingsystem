@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ParkingSpotDAOIT.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (17 mai 2021 13:33:29)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.integration.dao</a> &gt; <span class="el_source">ParkingSpotDAOIT.java</span></div><h1>ParkingSpotDAOIT.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.integration.dao;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ParkingSpotDAOIT.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (17 mai 2021 20:51:59)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.integration.dao</a> &gt; <span class="el_source">ParkingSpotDAOIT.java</span></div><h1>ParkingSpotDAOIT.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.integration.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -18,10 +18,9 @@ import com.parkit.parkingsystem.model.ParkingSpot;
  * &lt;b&gt;Test Class: &lt;/b&gt; {@link ParkingSpotDAOIT} - Parking Spot Data Access
  * Object - Tests on Functions and Methods for dealing with availability
  * management of parking spots / slots &lt;br&gt;
- * &lt;b&gt;Class Tested:&lt;/b&gt;{@link ParkingSpotDAO}
+ * &lt;b&gt;Class Tested:&lt;/b&gt;{@link ParkingSpotDAO}.&lt;br&gt;
+ * &lt;b&gt;Project: &lt;b&gt; P3 - parking system - ParkIt&lt;br&gt;
  * 
- * @package - com.parkit.parkingsystem.integration.dao
- * @project - P4 - parking system - ParkIt
  * @see &lt;b&gt;Tests:&lt;/b&gt;&lt;br&gt;
  *      {@link #testGetNextAvailableSpotForCar()}: Parking Spot - Integration
  *      Testing - Car Spot availability&lt;br&gt;
@@ -35,20 +34,20 @@ import com.parkit.parkingsystem.model.ParkingSpot;
  * @author Senthil
  */
 @DisplayName(&quot;Vehicle Parking Spot Data Access Object - Integration Testing &quot;)
-<span class="fc" id="L38">public class ParkingSpotDAOIT {</span>
-<span class="fc" id="L39">	static DataBaseTestConfig testDB = new DataBaseTestConfig();</span>
-<span class="fc" id="L40">	static ParkingSpotDAO parkingSpotDAO = new ParkingSpotDAO();</span>
-<span class="fc" id="L41">	static DataBasePrepareService dBPrepareService = new DataBasePrepareService();</span>
+<span class="fc" id="L37">public class ParkingSpotDAOIT {</span>
+<span class="fc" id="L38">	static DataBaseTestConfig testDB = new DataBaseTestConfig();</span>
+<span class="fc" id="L39">	static ParkingSpotDAO parkingSpotDAO = new ParkingSpotDAO();</span>
+<span class="fc" id="L40">	static DataBasePrepareService dBPrepareService = new DataBasePrepareService();</span>
 
 	@BeforeAll
 	public static void setupTests() {
-<span class="fc" id="L45">		parkingSpotDAO.dataBaseConfig = testDB;</span>
-<span class="fc" id="L46">	}</span>
+<span class="fc" id="L44">		parkingSpotDAO.dataBaseConfig = testDB;</span>
+<span class="fc" id="L45">	}</span>
 
 	@BeforeEach
 	public void setupPerTest() {
-<span class="fc" id="L50">		dBPrepareService.clearDBEntries();</span>
-<span class="fc" id="L51">	}</span>
+<span class="fc" id="L49">		dBPrepareService.clearDBEntries();</span>
+<span class="fc" id="L50">	}</span>
 
 	/**
 	 * {@link #testGetNextAvailableSpotForCar()} Integration Test on
@@ -66,14 +65,14 @@ import com.parkit.parkingsystem.model.ParkingSpot;
 	@Test
 	public void testGetNextAvailableSpotForCar() {
 		// GIVEN
-<span class="fc" id="L69">		final int expectedSpot = 1;</span>
+<span class="fc" id="L68">		final int expectedSpot = 1;</span>
 
 		// WHEN
-<span class="fc" id="L72">		int selectedSpot = parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR);</span>
+<span class="fc" id="L71">		int selectedSpot = parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR);</span>
 
 		// THEN
-<span class="fc" id="L75">		assertEquals(expectedSpot, selectedSpot, &quot;Result: Both spot not similar&quot;);</span>
-<span class="fc" id="L76">	}</span>
+<span class="fc" id="L74">		assertEquals(expectedSpot, selectedSpot, &quot;Result: Both spot not similar&quot;);</span>
+<span class="fc" id="L75">	}</span>
 
 	/**
 	 * {@link #testNextAvailableSpotForBike()} Integration Test on
@@ -91,14 +90,14 @@ import com.parkit.parkingsystem.model.ParkingSpot;
 	@Test
 	public void testNextAvailableSpotForBike() {
 		// GIVEN
-<span class="fc" id="L94">		final int expectedSpot = 4;</span>
+<span class="fc" id="L93">		final int expectedSpot = 4;</span>
 
 		// WHEN
-<span class="fc" id="L97">		int selectedSpot = parkingSpotDAO.getNextAvailableSpot(ParkingType.BIKE);</span>
+<span class="fc" id="L96">		int selectedSpot = parkingSpotDAO.getNextAvailableSpot(ParkingType.BIKE);</span>
 
 		// THEN
-<span class="fc" id="L100">		assertEquals(expectedSpot, selectedSpot, &quot;Result: Both spot not similar&quot;);</span>
-<span class="fc" id="L101">	}</span>
+<span class="fc" id="L99">		assertEquals(expectedSpot, selectedSpot, &quot;Result: Both spot not similar&quot;);</span>
+<span class="fc" id="L100">	}</span>
 
 	/**
 	 * {@link #testUpdateParkingForCar()} Integration Test on
@@ -116,18 +115,18 @@ import com.parkit.parkingsystem.model.ParkingSpot;
 	@Test
 	public void testUpdateParkingForCar() {
 		// GIVEN
-<span class="fc" id="L119">		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);</span>
+<span class="fc" id="L118">		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);</span>
 
 		// WHEN
-<span class="fc" id="L122">		boolean updated = parkingSpotDAO.updateParking(parkingSpot);</span>
+<span class="fc" id="L121">		boolean updated = parkingSpotDAO.updateParking(parkingSpot);</span>
 
 		// THEN
-<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (updated)</span>
-<span class="fc" id="L126">			assertEquals(parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR), parkingSpot.getId() + 1,</span>
-<span class="fc" id="L127">					&quot;Result: Both spot not similar&quot;);</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		if (updated)</span>
+<span class="fc" id="L125">			assertEquals(parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR), parkingSpot.getId() + 1,</span>
+<span class="fc" id="L126">					&quot;Result: Both spot not similar&quot;);</span>
 		else
-<span class="nc" id="L129">			fail(&quot;Failed to update ticket&quot;);</span>
-<span class="fc" id="L130">	}</span>
+<span class="nc" id="L128">			fail(&quot;Failed to update ticket&quot;);</span>
+<span class="fc" id="L129">	}</span>
 
 	/**
 	 * {@link #testUpdateParkingForBike()} Integration Test on
@@ -145,17 +144,17 @@ import com.parkit.parkingsystem.model.ParkingSpot;
 	@Test
 	public void testUpdateParkingForBike() {
 		// GIVEN
-<span class="fc" id="L148">		ParkingSpot parkingSpot = new ParkingSpot(4, ParkingType.BIKE, false);</span>
+<span class="fc" id="L147">		ParkingSpot parkingSpot = new ParkingSpot(4, ParkingType.BIKE, false);</span>
 
 		// WHEN
-<span class="fc" id="L151">		boolean updated = parkingSpotDAO.updateParking(parkingSpot);</span>
+<span class="fc" id="L150">		boolean updated = parkingSpotDAO.updateParking(parkingSpot);</span>
 
 		// THEN
-<span class="pc bpc" id="L154" title="1 of 2 branches missed.">		if (updated)</span>
-<span class="fc" id="L155">			assertEquals(parkingSpotDAO.getNextAvailableSpot(ParkingType.BIKE), parkingSpot.getId() + 1,</span>
-<span class="fc" id="L156">					&quot;Result: Both spot not similar&quot;);</span>
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">		if (updated)</span>
+<span class="fc" id="L154">			assertEquals(parkingSpotDAO.getNextAvailableSpot(ParkingType.BIKE), parkingSpot.getId() + 1,</span>
+<span class="fc" id="L155">					&quot;Result: Both spot not similar&quot;);</span>
 		else
-<span class="nc" id="L158">			fail(&quot;Failed to update ticket&quot;);</span>
-<span class="fc" id="L159">	}</span>
+<span class="nc" id="L157">			fail(&quot;Failed to update ticket&quot;);</span>
+<span class="fc" id="L158">	}</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (17 mai 2021 13:33:29)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (17 mai 2021 20:51:59)</div></body></html>

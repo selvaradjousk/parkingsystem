@@ -1,15 +1,11 @@
 package com.parkit.parkingsystem.model;
 
-import java.sql.SQLException;
-
 import com.parkit.parkingsystem.constants.ParkingType;
 
 /**
- * Class: {@link ParkingSpot} - Declarations of variables, instances, setters and getters
- * parking Management datasets
+ * Class: {@link ParkingSpot} - Model data on Parking spot.<br>
+ * <b>Project: <b> P3 - parking system - ParkIt<br>
  * 
- * @package - package com.parkit.parkingsystem.model;
- * @project - P3 - parking system - ParkIt
  * @see Methods: {@link #ParkingSpot(int, ParkingType, boolean)},
  *      {@link #getId()}, {@link #getId()}, {@link #setId(int)},
  *      {@link #number}, {@link #parkingType},

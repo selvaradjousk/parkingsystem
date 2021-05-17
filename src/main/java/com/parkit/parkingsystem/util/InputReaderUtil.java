@@ -6,12 +6,9 @@ import org.apache.logging.log4j.Logger;
 import java.util.Scanner;
 
 /**
- * Class: {@link InputReaderUtil} - Functions and Methods for dealing with
- * Customer input data management service
+ * Class: {@link InputReaderUtil} - Customer input data management service.<br>
+ * <b>Project: <b> P3 - parking system - ParkIt<br>
  * 
- * 
- * @package - com.parkit.parkingsystem.util
- * @project - P3 - parking system - ParkIt
  * @see Methods: {@link #readVehicleRegistrationNumber()},
  *      {@link #readSelection()}
  * 

@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>FareCalculatorServiceTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (17 mai 2021 20:51:59)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.unittest.service</a> &gt; <span class="el_source">FareCalculatorServiceTest.java</span></div><h1>FareCalculatorServiceTest.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.unittest.service;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Date;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import com.parkit.parkingsystem.constants.Fare;
+import com.parkit.parkingsystem.constants.ParkingType;
+import com.parkit.parkingsystem.model.ParkingSpot;
+import com.parkit.parkingsystem.model.Ticket;
+import com.parkit.parkingsystem.service.FareCalculatorService;
+
+/**
+ * &lt;b&gt;Test Class: &lt;/b&gt; {@link FareCalculatorServiceTest} - Performs Unit Testing
+ * on Fare calculation process for customer of ParkIt &lt;br&gt;
+ * &lt;b&gt;Class Tested:&lt;/b&gt; {@link FareCalculatorService}.&lt;br&gt;
+ * &lt;b&gt;Project: &lt;b&gt; P3 - parking system - ParkIt&lt;br&gt;
+ * 
+ * @see &lt;b&gt;Tests:&lt;/b&gt;&lt;br&gt;
+ *      {@link #calculateFareCar(long minutesParked, double priceFactor)}:
+ *      Parking Fare: CAR one hours + in minutes &lt;br&gt;
+ *      {@link #calculateFareBike(long minutesParked, double priceFactor)}:
+ *      Parking Fare: BIKE one hours + in minutes &lt;br&gt;
+ *      {@link #calculateFareRecurentUserCar(long minutesParked, double priceFactor)}:
+ *      Parking Fare: CAR recurrent user &lt;br&gt;
+ *      {@link #calculateFareUnkownType()}: Parking Fare: ERROR-CHECK Unknown
+ *      Type of Vehicle &lt;br&gt;
+ *      {@link #calculateFareBikeWithFutureInTime()}: Parking Fare: ERROR-CHECK
+ *      Bike With Future In Time &lt;br&gt;
+ *      {@link #calculateFareBikeWithNegativeDurationTime()}: Parking Fare:
+ *      ERROR-CHECK Bike Negative Duration Park Time &lt;br&gt;
+ *      {@link #calculateFareBikeWithLessThanThirtyMinutesParkingTime(int arg)}
+ *      : Parking Fare: Bike &lt; 30 minutes parking time &lt;br&gt;
+ *      {@link #calculateFareCarWithLessThanThirtyMinutesParkingTime(int arg)}:
+ *      Parking Fare: CAR &lt; 30 minutes parking time &lt;br&gt;
+ *      {@link #calculateFareBikeWithLessThanOneHourParkingTime(int minutes, double priceConversionFactor)}:
+ *      Parking Fare: BIKE &lt; 1 hour parking time &lt;br&gt;
+ *      {@link #calculateFareCarWithLessThanOneHourParkingTime(int minutes, double priceConversionFactor)}:
+ *      Parking Fare: CAR &lt; 1 hour parking time &lt;br&gt;
+ *      {@link #calculateFareCarWithMoreThanADayParkingTime(long daysParked, double estimatedPrice)}:
+ *      Parking Fare: CAR &gt;= 1 day parking time &lt;br&gt;
+ *      {@link #calculateFareBikeWithMoreThanADayParkingTime(long daysParked, double estimatedPrice)}:
+ *      Parking Fare: BIKE &gt;= 1 day parking time &lt;br&gt;
+ * 
+ * @author Senthil
+ */
+@DisplayName(&quot;Vehicle Parking Fare Calculation Service &quot;)
+@ExtendWith(MockitoExtension.class)
+//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@MockitoSettings(strictness = Strictness.LENIENT)
+<span class="fc" id="L66">public class FareCalculatorServiceTest {</span>
+
+	private static FareCalculatorService fareCalculatorService;
+	private Ticket ticket;
+
+	@BeforeAll
+	private static void setUp() {
+<span class="fc" id="L73">		fareCalculatorService = new FareCalculatorService();</span>
+<span class="fc" id="L74">	}</span>
+
+	@BeforeEach
+	private void setUpPerTest() {
+<span class="fc" id="L78">		ticket = new Ticket();</span>
+<span class="fc" id="L79">	}</span>
+
+	/**
+	 * {@link #calculateFareCar(long minutesParked, double priceFactor)} Unit Test
+	 * &lt;br&gt;
+	 * GIVEN: One hour and plus of parking time for a &lt;b&gt;CAR&lt;/b&gt; &lt;br&gt;
+	 * WHEN: calculation of fare service activated &lt;br&gt;
+	 * THEN: calculation of &lt;b&gt;CAR&lt;/b&gt; fare per hour &lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;PASSED&lt;/i&gt;: &lt;/b&gt;assertEquals &lt;code&gt;&lt;b&gt;TRUE&lt;/b&gt;&lt;/code&gt;
+	 * &lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;FAILED&lt;/i&gt;: &lt;/b&gt;assertEquals &lt;code&gt;&lt;b&gt;FALSE&lt;/b&gt;&lt;/code&gt;
+	 */
+	@DisplayName(&quot;Parking Fare: CAR one hours + in minutes &quot;)
+	@ParameterizedTest(name = &quot;Duration of Parking: {0} minutes&quot;)
+	@CsvSource({ &quot;60, 1&quot;, &quot;90, 1.5&quot;, &quot;120, 2&quot;, &quot;180, 3&quot;, &quot;240, 4&quot;, &quot;300, 5&quot; })
+	public void calculateFareCar(long minutesParked, double priceFactor) {
+
+		// GIVEN
+<span class="fc" id="L97">		Date inTime = new Date();</span>
+<span class="fc" id="L98">		inTime.setTime(System.currentTimeMillis() - (minutesParked * 60 * 1000));</span>
+<span class="fc" id="L99">		Date outTime = new Date();</span>
+<span class="fc" id="L100">		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);</span>
+
+<span class="fc" id="L102">		ticket.setInTime(inTime);</span>
+<span class="fc" id="L103">		ticket.setOutTime(outTime);</span>
+<span class="fc" id="L104">		ticket.setParkingSpot(parkingSpot);</span>
+
+		// WHEN
+<span class="fc" id="L107">		fareCalculatorService.calculateFare(ticket, false);</span>
+
+		// THEN
+<span class="fc" id="L110">		assertEquals(priceFactor * Fare.CAR_RATE_PER_HOUR, ticket.getPrice(),</span>
+<span class="fc" id="L111">				&quot;Result: estimated and actual price match&quot;);</span>
+<span class="fc" id="L112">	}</span>
+
+	/**
+	 * {@link #calculateFareBike(long minutesParked, double priceFactor)} Unit Test
+	 * &lt;br&gt;
+	 * GIVEN: One hour and plus of parking time for a &lt;b&gt;CAR&lt;/b&gt; &lt;br&gt;
+	 * WHEN: calculation of fare service activated &lt;br&gt;
+	 * THEN: calculation of &lt;b&gt;BIKE&lt;/b&gt; fare per hour &lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;PASSED&lt;/i&gt;: &lt;/b&gt;assertEquals &lt;code&gt;&lt;b&gt;TRUE&lt;/b&gt;&lt;/code&gt;
+	 * &lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;FAILED&lt;/i&gt;: &lt;/b&gt;assertEquals &lt;code&gt;&lt;b&gt;FALSE&lt;/b&gt;&lt;/code&gt;
+	 */
+	@DisplayName(&quot;Parking Fare: BIKE one hours + in minutes &quot;)
+	@ParameterizedTest(name = &quot;Duration of Parking: {0} minutes&quot;)
+	@CsvSource({ &quot;60, 1&quot;, &quot;90, 1.5&quot;, &quot;120, 2&quot;, &quot;180, 3&quot;, &quot;240, 4&quot;, &quot;300, 5&quot; })
+	public void calculateFareBike(long minutesParked, double priceFactor) {
+
+		// GIVEN
+<span class="fc" id="L130">		Date inTime = new Date();</span>
+<span class="fc" id="L131">		inTime.setTime(System.currentTimeMillis() - (minutesParked * 60 * 1000));</span>
+<span class="fc" id="L132">		Date outTime = new Date();</span>
+<span class="fc" id="L133">		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.BIKE, false);</span>
+
+<span class="fc" id="L135">		ticket.setInTime(inTime);</span>
+<span class="fc" id="L136">		ticket.setOutTime(outTime);</span>
+<span class="fc" id="L137">		ticket.setParkingSpot(parkingSpot);</span>
+
+		// WHEN
+<span class="fc" id="L140">		fareCalculatorService.calculateFare(ticket, false);</span>
+
+<span class="fc" id="L142">		BigDecimal bd = new BigDecimal(priceFactor * Fare.BIKE_RATE_PER_HOUR).setScale(3, RoundingMode.HALF_UP);</span>
+<span class="fc" id="L143">		double estimate = bd.doubleValue();</span>
+
+		// THEN
+<span class="fc" id="L146">		assertEquals(estimate, ticket.getPrice(), &quot;Result: estimated and actual price match&quot;);</span>
+<span class="fc" id="L147">	}</span>
+
+	/**
+	 * {@link #calculateFareRecurentUserCar(long minutesParked, double priceFactor)}
+	 * Unit Test &lt;br&gt;
+	 * GIVEN: Five hour of parking time for a &lt;b&gt;CAR&lt;/b&gt; &lt;br&gt;
+	 * WHEN: calculation of fare service activated &lt;br&gt;
+	 * THEN: calculation of &lt;b&gt;Recurrence of user&lt;/b&gt; tested &lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;PASSED&lt;/i&gt;: &lt;/b&gt;assertEquals fare = 7.125€
+	 * &lt;code&gt;&lt;b&gt;TRUE&lt;/b&gt;&lt;/code&gt; &lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;FAILED&lt;/i&gt;: &lt;/b&gt;assertEquals fare != 7.125€
+	 * &lt;code&gt;&lt;b&gt;FALSE&lt;/b&gt;&lt;/code&gt;
+	 */
+	@DisplayName(&quot;Parking Fare: CAR recurrent user &quot;)
+	@ParameterizedTest(name = &quot;Duration of Parking: {0} minutes&quot;)
+	@CsvSource({ &quot;60, 1&quot;, &quot;120, 2&quot;, &quot;180, 3&quot;, &quot;240, 4&quot;, &quot;300, 5&quot; })
+	public void calculateFareRecurentUserCar(long minutesParked, double priceFactor) {
+
+		// GIVEN
+<span class="fc" id="L166">		Date inTime = new Date();</span>
+<span class="fc" id="L167">		inTime.setTime(System.currentTimeMillis() - (minutesParked * 60 * 1000));</span>
+<span class="fc" id="L168">		Date outTime = new Date();</span>
+<span class="fc" id="L169">		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);</span>
+
+<span class="fc" id="L171">		ticket.setInTime(inTime);</span>
+<span class="fc" id="L172">		ticket.setOutTime(outTime);</span>
+<span class="fc" id="L173">		ticket.setParkingSpot(parkingSpot);</span>
+
+		// WHEN
+<span class="fc" id="L176">		fareCalculatorService.calculateFare(ticket, true);</span>
+
+<span class="fc" id="L178">		BigDecimal bd = new BigDecimal(priceFactor * Fare.CAR_RATE_PER_HOUR * 0.95).setScale(3, RoundingMode.HALF_UP);</span>
+<span class="fc" id="L179">		double estimate = bd.doubleValue();</span>
+
+		// THEN
+<span class="fc" id="L182">		assertEquals(estimate, ticket.getPrice(), &quot;Result: estimated and actual price match&quot;);</span>
+<span class="fc" id="L183">	}</span>
+
+	/**
+	 * {@link #calculateFareUnkownType()} Unit Test &lt;br&gt;
+	 * GIVEN: One hour of parking time for a &lt;b&gt;UNKNOWN VEHICLE TYPE&lt;/b&gt; &lt;br&gt;
+	 * WHEN: calculation of fare service activated &lt;br&gt;
+	 * THEN: Identify &lt;b&gt;UNKNOWN VEHICLE TYPE&lt;/b&gt; &lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;PASSED&lt;/i&gt;: &lt;/b&gt;assertThrows NullPointerException
+	 * &lt;code&gt;&lt;b&gt;TRUE&lt;/b&gt;&lt;/code&gt; &lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;FAILED&lt;/i&gt;: &lt;/b&gt;assertThrows NullPointerException
+	 * &lt;code&gt;&lt;b&gt;FALSE&lt;/b&gt;&lt;/code&gt;
+	 */
+	@DisplayName(&quot;Parking Fare: ERROR-CHECK Unknown Type of Vehicle &quot;)
+	@Test
+	public void calculateFareUnkownType() {
+
+		// GIVEN
+<span class="fc" id="L200">		Date inTime = new Date();</span>
+<span class="fc" id="L201">		inTime.setTime(System.currentTimeMillis() - (60 * 60 * 1000));</span>
+<span class="fc" id="L202">		Date outTime = new Date();</span>
+<span class="fc" id="L203">		ParkingSpot parkingSpot = new ParkingSpot(1, null, false);</span>
+
+<span class="fc" id="L205">		ticket.setInTime(inTime);</span>
+<span class="fc" id="L206">		ticket.setOutTime(outTime);</span>
+<span class="fc" id="L207">		ticket.setParkingSpot(parkingSpot);</span>
+
+		// THEN
+<span class="pc" id="L210">		assertThrows(NullPointerException.class, () -&gt; fareCalculatorService.calculateFare(ticket, false),</span>
+<span class="fc" id="L211">				&quot;Result: exception thrown&quot;);// WHEN</span>
+
+<span class="fc" id="L213">	}</span>
+
+	/**
+	 * {@link #calculateFareBikeWithFutureInTime()} Unit Test &lt;br&gt;
+	 * GIVEN: Parking entry time for the &lt;b&gt;BIKE&lt;/b&gt; set to &lt;b&gt;FUTURE TIME&lt;/b&gt; &lt;br&gt;
+	 * WHEN: calculation of fare service activated &lt;br&gt;
+	 * THEN: calculation of fare per hour checks for entry time compliance to
+	 * current time or not &lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;PASSED&lt;/i&gt;: &lt;/b&gt;assertThrows IllegalArgumentException
+	 * &lt;code&gt;&lt;b&gt;TRUE&lt;/b&gt;&lt;/code&gt; &lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;FAILED&lt;/i&gt;: &lt;/b&gt;assertThrows IllegalArgumentException
+	 * &lt;code&gt;&lt;b&gt;FALSE&lt;/b&gt;&lt;/code&gt;
+	 */
+	@DisplayName(&quot;Parking Fare: ERROR-CHECK Bike With Future In Time &quot;)
+	@Test
+	public void calculateFareBikeWithFutureInTime() {
+
+		// GIVEN
+<span class="fc" id="L231">		Date inTime = new Date();</span>
+<span class="fc" id="L232">		inTime.setTime(System.currentTimeMillis() + (60 * 60 * 1000));</span>
+<span class="fc" id="L233">		Date outTime = new Date();</span>
+<span class="fc" id="L234">		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.BIKE, false);</span>
+
+<span class="fc" id="L236">		ticket.setInTime(inTime);</span>
+<span class="fc" id="L237">		ticket.setOutTime(outTime);</span>
+<span class="fc" id="L238">		ticket.setParkingSpot(parkingSpot);</span>
+
+		// THEN
+<span class="pc" id="L241">		assertThrows(IllegalArgumentException.class, () -&gt; fareCalculatorService.calculateFare(ticket, false)); // WHEN</span>
+<span class="fc" id="L242">	}</span>
+
+	/**
+	 * {@link #calculateFareBikeWithNegativeDurationTime()} Unit Test &lt;br&gt;
+	 * GIVEN: Parking duration for the &lt;b&gt;BIKE&lt;/b&gt; set to &lt;b&gt;NEGATIVE TIME VALUE&lt;/b&gt;
+	 * &lt;br&gt;
+	 * WHEN: calculation of fare service activated &lt;br&gt;
+	 * THEN: calculation of fare per hour checks for duration value compliance &lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;PASSED&lt;/i&gt;: &lt;/b&gt;assertThrows IllegalArgumentException
+	 * &lt;code&gt;&lt;b&gt;TRUE&lt;/b&gt;&lt;/code&gt; &lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;FAILED&lt;/i&gt;: &lt;/b&gt;assertThrows IllegalArgumentException
+	 * &lt;code&gt;&lt;b&gt;FALSE&lt;/b&gt;&lt;/code&gt;
+	 */
+	@DisplayName(&quot;Parking Fare: ERROR-CHECK Bike Negative Duration Park Time &quot;)
+	@Test
+	public void calculateFareBikeWithNegativeDurationTime() {
+
+		// GIVEN
+<span class="fc" id="L260">		Date inTime = new Date();</span>
+//		inTime.setTime(System.currentTimeMillis() + (60 * 60 * 1000));
+//		Date outTime = new Date();
+<span class="fc" id="L263">		inTime.setTime(System.currentTimeMillis());</span>
+<span class="fc" id="L264">		Date outTime = new Date();</span>
+<span class="fc" id="L265">		outTime.setTime(System.currentTimeMillis() - (60 * 60 * 1000));</span>
+<span class="fc" id="L266">		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.BIKE, false);</span>
+
+<span class="fc" id="L268">		ticket.setInTime(inTime);</span>
+<span class="fc" id="L269">		ticket.setOutTime(outTime);</span>
+<span class="fc" id="L270">		ticket.setParkingSpot(parkingSpot);</span>
+
+		// THEN
+<span class="pc" id="L273">		assertThrows(IllegalArgumentException.class, () -&gt; fareCalculatorService.calculateFare(ticket, false),</span>
+<span class="fc" id="L274">				&quot;Result: Exception thrown&quot;); // WHEN</span>
+<span class="fc" id="L275">	}</span>
+
+	/**
+	 * {@link #calculateFareBikeWithLessThanThirtyMinutesParkingTime(int arg)} Unit
+	 * Test &lt;br&gt;
+	 * GIVEN: Parking exit time for the &lt;b&gt;BIKE&lt;/b&gt; set to &lt;b&gt;less than 30
+	 * minutes&lt;/b&gt; &lt;br&gt;
+	 * WHEN: calculation of fare service activated &lt;br&gt;
+	 * THEN: calculation of fare service checks for duration threshold below 30
+	 * minutes &lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;PASSED&lt;/i&gt;: &lt;/b&gt;assertEquals fare = 0€
+	 * &lt;code&gt;&lt;b&gt;TRUE&lt;/b&gt;&lt;/code&gt; &lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;FAILED&lt;/i&gt;: &lt;/b&gt;assertEquals fare != 0€
+	 * &lt;code&gt;&lt;b&gt;FALSE&lt;/b&gt;&lt;/code&gt;
+	 */
+	@DisplayName(&quot;Parking Fare: Bike &lt; 30 minutes parking time &quot;)
+	@ParameterizedTest(name = &quot;Duration of bike parking: {0} Minute(s) - Free parking less than 30 minutes&quot;)
+	@ValueSource(ints = { 1, 15, 29 })
+	public void calculateFareBikeWithLessThanThirtyMinutesParkingTime(int arg) {
+
+		// GIVEN
+<span class="fc" id="L296">		Date inTime = new Date();</span>
+<span class="fc" id="L297">		inTime.setTime(System.currentTimeMillis() - (arg * 60 * 1000));// less than 30 minutes parking time should give</span>
+																		// NO parking fare - free parking
+<span class="fc" id="L299">		Date outTime = new Date();</span>
+<span class="fc" id="L300">		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.BIKE, false);</span>
+
+<span class="fc" id="L302">		ticket.setInTime(inTime);</span>
+<span class="fc" id="L303">		ticket.setOutTime(outTime);</span>
+<span class="fc" id="L304">		ticket.setParkingSpot(parkingSpot);</span>
+
+		// WHEN
+<span class="fc" id="L307">		fareCalculatorService.calculateFare(ticket, false);</span>
+
+		// THEN
+<span class="fc" id="L310">		assertEquals((0.0 * Fare.BIKE_RATE_PER_HOUR), ticket.getPrice(), &quot;Result: estimated and actual price match&quot;);</span>
+<span class="fc" id="L311">	}</span>
+
+	/**
+	 * {@link #calculateFareCarWithLessThanThirtyMinutesParkingTime(int arg)} Unit
+	 * Test &lt;br&gt;
+	 * GIVEN: Parking exit time for the &lt;b&gt;CAR&lt;/b&gt; set to &lt;b&gt;less than 30
+	 * minutes&lt;/b&gt; &lt;br&gt;
+	 * WHEN: calculation of fare service activated &lt;br&gt;
+	 * THEN: calculation of fare service checks for duration threshold below 30
+	 * minutes &lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;PASSED&lt;/i&gt;: &lt;/b&gt;assertEquals fare = 0€
+	 * &lt;code&gt;&lt;b&gt;TRUE&lt;/b&gt;&lt;/code&gt; &lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;FAILED&lt;/i&gt;: &lt;/b&gt;assertEquals fare != 0€
+	 * &lt;code&gt;&lt;b&gt;FALSE&lt;/b&gt;&lt;/code&gt;
+	 */
+	@DisplayName(&quot;Parking Fare: CAR &lt; 30 minutes parking time &quot;)
+	@ParameterizedTest(name = &quot;Duration of Car parking: {0} Minute(s) - Free parking less than 30 minutes&quot;)
+	@ValueSource(ints = { 1, 15, 29 })
+	public void calculateFareCarWithLessThanThirtyMinutesParkingTime(int arg) {
+
+		// GIVEN
+<span class="fc" id="L332">		Date inTime = new Date();</span>
+<span class="fc" id="L333">		inTime.setTime(System.currentTimeMillis() - (arg * 60 * 1000));// less than 30 minutes parking time should give</span>
+																		// NO parking fare - free parking
+<span class="fc" id="L335">		Date outTime = new Date();</span>
+<span class="fc" id="L336">		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);</span>
+
+<span class="fc" id="L338">		ticket.setInTime(inTime);</span>
+<span class="fc" id="L339">		ticket.setOutTime(outTime);</span>
+<span class="fc" id="L340">		ticket.setParkingSpot(parkingSpot);</span>
+
+		// WHEN
+<span class="fc" id="L343">		fareCalculatorService.calculateFare(ticket, false);</span>
+
+		// THEN
+<span class="fc" id="L346">		assertEquals((0.0 * Fare.CAR_RATE_PER_HOUR), ticket.getPrice(), &quot;Result: estimated and actual price match&quot;);</span>
+<span class="fc" id="L347">	}</span>
+
+	/**
+	 * {@link calculateFareBikeWithLessThanOneHourParkingTime() Unit Test &lt;br&gt;
+	 * GIVEN: Parking exit time for the &lt;b&gt;BIKE&lt;/b&gt; set to less than One hour and
+	 * more than 30 minutes i.e. &lt;b&gt;45 minutes&lt;/b&gt; &lt;br&gt;
+	 * WHEN: calculation of fare service activated &lt;br&gt;
+	 * THEN: calculation of fare service checks for duration threshold below One
+	 * hour &lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;PASSED&lt;/i&gt;: &lt;/b&gt;assertEquals fare = &quot;0.75 *
+	 * Fare.CAR_RATE_PER_HOUR&quot; &lt;code&gt;&lt;b&gt;TRUE&lt;/b&gt;&lt;/code&gt; &lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;FAILED&lt;/i&gt;: &lt;/b&gt;assertEquals fare != &quot;0.75 *
+	 * Fare.CAR_RATE_PER_HOUR&quot; &lt;code&gt;&lt;b&gt;FALSE&lt;/b&gt;&lt;/code&gt;
+	 */
+	@DisplayName(&quot;Parking Fare: BIKE &lt; 1 hour parking time &quot;)
+	@ParameterizedTest(name = &quot;Duration of Bike parking: {0} Minute(s) i.e less than one hour&quot;)
+	@CsvSource({ &quot;30, 0.5&quot;, &quot;45, 0.75&quot;, &quot;54, 0.9&quot; })
+	public void calculateFareBikeWithLessThanOneHourParkingTime(int minutes, double priceConversionFactor) {
+
+		// GIVEN
+<span class="fc" id="L367">		Date inTime = new Date();</span>
+<span class="fc" id="L368">		inTime.setTime(System.currentTimeMillis() - (minutes * 60 * 1000));// 45 minutes parking time should give 3/4th</span>
+																			// parking fare
+<span class="fc" id="L370">		Date outTime = new Date();</span>
+<span class="fc" id="L371">		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.BIKE, false);</span>
+
+<span class="fc" id="L373">		ticket.setInTime(inTime);</span>
+<span class="fc" id="L374">		ticket.setOutTime(outTime);</span>
+<span class="fc" id="L375">		ticket.setParkingSpot(parkingSpot);</span>
+
+		// WHEN
+<span class="fc" id="L378">		fareCalculatorService.calculateFare(ticket, false);</span>
+
+		// THEN
+<span class="fc" id="L381">		assertEquals((priceConversionFactor * Fare.BIKE_RATE_PER_HOUR), ticket.getPrice(),</span>
+<span class="fc" id="L382">				&quot;Result: estimated and actual price match&quot;);</span>
+<span class="fc" id="L383">	}</span>
+
+	/**
+	 * {@link #calculateFareCarWithLessThanOneHourParkingTime(int minutes, double priceConversionFactor)}
+	 * Unit Test &lt;br&gt;
+	 * GIVEN: Parking exit time for the &lt;b&gt;CAR&lt;/b&gt; set to less than One hour and
+	 * more than 30 minutes i.e. &lt;b&gt;45 minutes&lt;/b&gt; &lt;br&gt;
+	 * WHEN: calculation of fare service activated &lt;br&gt;
+	 * THEN: calculation of fare service checks for duration threshold below One
+	 * hour &lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;PASSED&lt;/i&gt;: &lt;/b&gt;assertEquals fare = &quot;0.75 *
+	 * Fare.CAR_RATE_PER_HOUR&quot; &lt;code&gt;&lt;b&gt;TRUE&lt;/b&gt;&lt;/code&gt; &lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;FAILED&lt;/i&gt;: &lt;/b&gt;assertEquals fare != &quot;0.75 *
+	 * Fare.CAR_RATE_PER_HOUR&quot; &lt;code&gt;&lt;b&gt;FALSE&lt;/b&gt;&lt;/code&gt;
+	 */
+	@DisplayName(&quot;Parking Fare: CAR &lt; 1 hour parking time &quot;)
+	@ParameterizedTest(name = &quot;Duration of car parking: {0} Minute(s) i.e less than one hour&quot;)
+	@CsvSource({ &quot;30, 0.5&quot;, &quot;45, 0.75&quot;, &quot;54, 0.9&quot; })
+	public void calculateFareCarWithLessThanOneHourParkingTime(int minutes, double priceConversionFactor) {
+
+		// GIVEN
+<span class="fc" id="L404">		Date inTime = new Date();</span>
+<span class="fc" id="L405">		inTime.setTime(System.currentTimeMillis() - (minutes * 60 * 1000));// 45 minutes parking time should give 3/4th</span>
+																			// parking fare
+<span class="fc" id="L407">		Date outTime = new Date();</span>
+<span class="fc" id="L408">		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);</span>
+
+<span class="fc" id="L410">		ticket.setInTime(inTime);</span>
+<span class="fc" id="L411">		ticket.setOutTime(outTime);</span>
+<span class="fc" id="L412">		ticket.setParkingSpot(parkingSpot);</span>
+
+		// WHEN
+<span class="fc" id="L415">		fareCalculatorService.calculateFare(ticket, false);</span>
+
+		// THEN
+<span class="fc" id="L418">		assertEquals((priceConversionFactor * Fare.CAR_RATE_PER_HOUR), ticket.getPrice(),</span>
+<span class="fc" id="L419">				&quot;Result: estimated and actual price match&quot;);</span>
+<span class="fc" id="L420">	}</span>
+
+	/**
+	 * {@link #calculateFareCarWithMoreThanADayParkingTime(long daysParked, double estimatedPrice)}
+	 * Unit Test &lt;br&gt;
+	 * GIVEN: Parking exit time for the &lt;b&gt;CAR&lt;/b&gt; set to more than a day i.e. &lt;b&gt;24
+	 * hours&lt;/b&gt; &lt;br&gt;
+	 * WHEN: calculation of fare service activated &lt;br&gt;
+	 * THEN: calculation of fare service checks for duration threshold for One day
+	 * and more &lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;PASSED&lt;/i&gt;: &lt;/b&gt;assertEquals (24 *
+	 * Fare.CAR_RATE_PER_HOUR) &lt;code&gt;&lt;b&gt;TRUE&lt;/b&gt;&lt;/code&gt; &lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;FAILED&lt;/i&gt;: &lt;/b&gt;assertEquals (24 *
+	 * Fare.CAR_RATE_PER_HOUR) &lt;code&gt;&lt;b&gt;FALSE&lt;/b&gt;&lt;/code&gt;
+	 */
+	@DisplayName(&quot;Parking Fare: CAR &gt;= 1 day parking time &quot;)
+	@ParameterizedTest(name = &quot;Duration of Parking: {0} Day(s)&quot;)
+	@CsvSource({ &quot;1, 24&quot;, &quot;2, 48&quot;, &quot;3, 72&quot;, &quot;5, 120&quot;, &quot;10, 240&quot;, &quot;15, 360&quot; })
+	public void calculateFareCarWithMoreThanADayParkingTime(long daysParked, double estimatedPrice) {
+
+		// GIVEN
+<span class="fc" id="L441">		Date inTime = new Date();</span>
+<span class="fc" id="L442">		inTime.setTime(System.currentTimeMillis() - (daysParked * 24 * 60 * 60 * 1000));// 24 hours parking time should</span>
+																						// give 24 *
+		// parking fare per hour
+<span class="fc" id="L445">		Date outTime = new Date();</span>
+<span class="fc" id="L446">		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);</span>
+
+<span class="fc" id="L448">		ticket.setInTime(inTime);</span>
+<span class="fc" id="L449">		ticket.setOutTime(outTime);</span>
+<span class="fc" id="L450">		ticket.setParkingSpot(parkingSpot);</span>
+
+		// WHEN
+<span class="fc" id="L453">		fareCalculatorService.calculateFare(ticket, false);</span>
+
+		// THEN
+<span class="fc" id="L456">		assertEquals((estimatedPrice * Fare.CAR_RATE_PER_HOUR), ticket.getPrice(),</span>
+<span class="fc" id="L457">				&quot;Result: estimated and actual price match&quot;);</span>
+<span class="fc" id="L458">	}</span>
+
+	/**
+	 * {@link #calculateFareBikeWithMoreThanADayParkingTime(long daysParked, double estimatedPrice)}
+	 * Unit Test &lt;br&gt;
+	 * GIVEN: Parking exit time for the &lt;b&gt;BIKE&lt;/b&gt; set to more than a day i.e.
+	 * &lt;b&gt;24 hours&lt;/b&gt; &lt;br&gt;
+	 * WHEN: calculation of fare service activated &lt;br&gt;
+	 * THEN: calculation of fare service checks for duration threshold for One day
+	 * and more &lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;PASSED&lt;/i&gt;: &lt;/b&gt;assertEquals (24 *
+	 * Fare.CAR_RATE_PER_HOUR) &lt;code&gt;&lt;b&gt;TRUE&lt;/b&gt;&lt;/code&gt; &lt;br&gt;
+	 * &lt;b&gt;Test Condition &lt;i&gt;FAILED&lt;/i&gt;: &lt;/b&gt;assertEquals (24 *
+	 * Fare.CAR_RATE_PER_HOUR) &lt;code&gt;&lt;b&gt;FALSE&lt;/b&gt;&lt;/code&gt;
+	 */
+	@DisplayName(&quot;Parking Fare: BIKE &gt;= 1 day parking time &quot;)
+	@ParameterizedTest(name = &quot;Duration of Parking: {0} Day(s)&quot;)
+	@CsvSource({ &quot;1, 24&quot;, &quot;2, 48&quot;, &quot;3, 72&quot;, &quot;5, 120&quot;, &quot;10, 240&quot;, &quot;15, 360&quot; })
+	public void calculateFareBikeWithMoreThanADayParkingTime(long daysParked, double estimatedPrice) {
+
+		// GIVEN
+<span class="fc" id="L479">		Date inTime = new Date();</span>
+<span class="fc" id="L480">		inTime.setTime(System.currentTimeMillis() - (daysParked * 24 * 60 * 60 * 1000));// 24 hours parking time should</span>
+																						// give 24 *
+		// parking fare per hour
+<span class="fc" id="L483">		Date outTime = new Date();</span>
+<span class="fc" id="L484">		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.BIKE, false);</span>
+
+<span class="fc" id="L486">		ticket.setInTime(inTime);</span>
+<span class="fc" id="L487">		ticket.setOutTime(outTime);</span>
+<span class="fc" id="L488">		ticket.setParkingSpot(parkingSpot);</span>
+
+		// WHEN
+<span class="fc" id="L491">		fareCalculatorService.calculateFare(ticket, false);</span>
+
+		// THEN
+<span class="fc" id="L494">		assertEquals((estimatedPrice * Fare.BIKE_RATE_PER_HOUR), ticket.getPrice(),</span>
+<span class="fc" id="L495">				&quot;Result: estimated and actual price match&quot;);</span>
+<span class="fc" id="L496">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (17 mai 2021 20:51:59)</div></body></html>
