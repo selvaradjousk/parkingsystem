@@ -34,16 +34,21 @@ import com.parkit.parkingsystem.service.ParkingService;
 import com.parkit.parkingsystem.util.InputReaderUtil;
 
 /**
- * Class {@link ParkingServiceTest} - Performs Integration Test on Parking Services
- * for customer of ParkIt Class Tested: {@link ParkingService}
+ * <b>Test Class: </b> {@link ParkingServiceTest} - Performs Integration Test on
+ * Parking Services for customer of ParkIt<br>
+ * <b>Class Tested:</b> {@link ParkingService}
  * 
  * @package - com.parkit.parkingsystem
  * @project - P4 - parking system - ParkIt
  * @see <b>Tests:</b><br>
- * {@link #testParkingLotExit()}: Parking Service Testing - Parking Lot Status on Exit<br>
- * {@link #processExitingVehicleTest()}: Parking Service Testing - Vehicle Exit Process Test <br>
- * {@link #getNextParkingNumberIfAvailableTest()}: Parking Service Testing - Check availability of Next parking spot freely <br>
- * {@link #processIncomingVehicleTest()}: Parking Service Testing - Test Incoming process of vehicle <br>
+ *      {@link #testParkingLotExit()}: Parking Service Testing - Parking Lot
+ *      Status on Exit<br>
+ *      {@link #processExitingVehicleTest()}: Parking Service Testing - Vehicle
+ *      Exit Process Test <br>
+ *      {@link #getNextParkingNumberIfAvailableTest()}: Parking Service Testing
+ *      - Check availability of Next parking spot freely <br>
+ *      {@link #processIncomingVehicleTest()}: Parking Service Testing - Test
+ *      Incoming process of vehicle <br>
  * 
  * @author Senthil
  */
@@ -114,10 +119,10 @@ public class ParkingServiceTest {
 	 * GIVEN: <br>
 	 * WHEN: check on the Parking spot availability for Parking<br>
 	 * THEN: <b>availability status</b><br>
-	 * <b>Test Condition <i>PASSED</i>: </b>verify next parking spot status availability
-	 * <code><b>TRUE</b></code> <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>verify next parking spot status availability
-	 * <code><b>FALSE</b></code>
+	 * <b>Test Condition <i>PASSED</i>: </b>verify next parking spot status
+	 * availability <code><b>TRUE</b></code> <br>
+	 * <b>Test Condition <i>FAILED</i>: </b>verify next parking spot status
+	 * availability <code><b>FALSE</b></code>
 	 */
 	@DisplayName("Parking Service Testing - Availability of Next parking spot ")
 	@Test

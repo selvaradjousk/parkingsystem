@@ -24,17 +24,24 @@ import com.parkit.parkingsystem.model.ParkingSpot;
 import com.parkit.parkingsystem.model.Ticket;
 
 /**
- * Class {@link TicketDAOIT} - Vehicle Ticket Data Access Object - Integration Testing on Functions and Methods for dealing with Ticket
- * management for customers parking {@link TicketDAO}
+ * <b>Test Class: </b> {@link TicketDAOIT} - Vehicle Ticket Data Access Object -
+ * Integration Testing on Functions and Methods for dealing with Ticket
+ * management for customers parking <br>
+ * <b>Class Tested:</b> {@link TicketDAO}
  * 
  * @package - com.parkit.parkingsystem.integration.dao
  * @project - P4 - parking system - ParkIt
  * @see <b>Tests:</b><br>
- * {@link #testSaveTicket()}: Ticket DAO - Integration Testing - Save Ticket function<br>
- * {@link #testGetTicket()}: Ticket DAO - Integration Testing - getting Ticket function<br>
- * {@link #testUpdateTicket()}: Ticket DAO - Integration Testing - Ticket update function<br>
- * {@link #testGetVehicleOccurence()}: Ticket DAO - Integration Testing - Client recurrence check function<br>
- * {@link #createTestingTicket(String vehicleRegNumber)}: Support method for testing methods<br>
+ *      {@link #testSaveTicket()}: Ticket DAO - Integration Testing - Save
+ *      Ticket function<br>
+ *      {@link #testGetTicket()}: Ticket DAO - Integration Testing - getting
+ *      Ticket function<br>
+ *      {@link #testUpdateTicket()}: Ticket DAO - Integration Testing - Ticket
+ *      update function<br>
+ *      {@link #testGetVehicleOccurence()}: Ticket DAO - Integration Testing -
+ *      Client recurrence check function<br>
+ *      {@link #createTestingTicket(String vehicleRegNumber)}: Support method
+ *      for testing methods<br>
  * 
  * @author Senthil
  */
@@ -127,7 +134,8 @@ public class TicketDAOIT {
 
 		// THEN
 		assertNotEquals(null, gettingTicket, "Result: Actual Ticket status not null");
-		assertEquals(testVehicleRegNumber, gettingTicket.getVehicleRegNumber(), "Result: Both Ticket Registration elements matches");
+		assertEquals(testVehicleRegNumber, gettingTicket.getVehicleRegNumber(),
+				"Result: Both Ticket Registration elements matches");
 	}
 
 	/**
@@ -163,7 +171,8 @@ public class TicketDAOIT {
 		if (!updateRequest)
 			fail("Failed ticket update");
 
-		assertEquals(testTicketDAO.getTicket(testVehicleRegNumber).getPrice(), testTicket.getPrice(), "Result: Both Fare Price values matches");
+		assertEquals(testTicketDAO.getTicket(testVehicleRegNumber).getPrice(), testTicket.getPrice(),
+				"Result: Both Fare Price values matches");
 	}
 
 	/**
@@ -172,10 +181,10 @@ public class TicketDAOIT {
 	 * GIVEN: set count value for vehicle registration number<br>
 	 * WHEN: inserting test tickets into DB update<br>
 	 * THEN:test<b>getting vehicle occurrence frequency value</b><br>
-	 * <b>Test Condition <i>PASSED</i>: </b>assertEquals expected = occurrences frequency
-	 * <code><b>TRUE</b></code> <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected != occurrences frequency
-	 * <code><b>FALSE</b></code>
+	 * <b>Test Condition <i>PASSED</i>: </b>assertEquals expected = occurrences
+	 * frequency <code><b>TRUE</b></code> <br>
+	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected != occurrences
+	 * frequency <code><b>FALSE</b></code>
 	 */
 	@DisplayName("Ticket DAO - Integration Testing - Client reccurence check function")
 	@Test

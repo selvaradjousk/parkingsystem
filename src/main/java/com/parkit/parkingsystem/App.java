@@ -17,34 +17,55 @@ import com.parkit.parkingsystem.service.ParkingService;
 import com.parkit.parkingsystem.util.InputReaderUtil;
 
 /**
- * Class: {@link App Main Class} This class deals with database connection configuration settings
+ * Class: {@link App Main Class} This class deals with database connection
+ * configuration settings
  * 
  * @package - com.parkit.parkingsystem
  * @project - P3 - parking system - ParkIt
- * @see Class: {@link DataBaseConfig} - For database connection setting
+ * @see <b>Class: </b> {@link DataBaseConfig} - For database connection setting
  *      configuration
- * @see Class: {@link DBConstants} - For different database queries pre-assigned
- *      and stored in variable constants for access
- * @see Class: {@link Fare} - For variables listed as constants to access
- *      pre-assigned parking fare values
- * @see Class: {@link ParkingType} - For variables listed as constants to access
- *      pre-assigned Vechicle types
- * @see Class: {@link ParkingSpotDAO} - Functions and Methods for dealing with
- *      availability management of parking spots /slots
- * @see Class: {@link TicketDAO} - Functions and Methods for dealing with Ticket
- *      management for customers parking
- * @see Class: {@link ParkingSpot} - Declarations of variables, instances,
- *      setters and getters parking Management datasets
- * @see Class: {@link Ticket} - Declarations of variables, instances, setters
- *      and getters Ticket Management datasets
- * @see Class: {@link FareCalculatorService} - Functions and Methods for
+ * @see <b>Class: </b> {@link DBConstants} - For different database queries
+ *      pre-assigned and stored in variable constants for access
+ * @see <b>Class: </b> {@link Fare} - For variables listed as constants to
+ *      access pre-assigned parking fare values
+ * @see <b>Class: </b> {@link ParkingType} - For variables listed as constants
+ *      to access pre-assigned Vechicle types
+ * @see <b>Class: </b> {@link ParkingSpotDAO} - Functions and Methods for
+ *      dealing with availability management of parking spots /slots
+ * @see <b>Class: </b> {@link TicketDAO} - Functions and Methods for dealing
+ *      with Ticket management for customers parking
+ * @see <b>Class: </b> {@link ParkingSpot} - Declarations of variables,
+ *      instances, setters and getters parking Management datasets
+ * @see <b>Class: </b> {@link Ticket} - Declarations of variables, instances,
+ *      setters and getters Ticket Management datasets
+ * @see <b>Class: </b> {@link FareCalculatorService} - Functions and Methods for
  *      dealing with parking fare calculation service
- * @see Class: {@link InteractiveShell} - Functions and Methods for dealing with
- *      Application workflow service
- * @see Class: {@link ParkingService} - Functions and Methods for dealing with
- *      parking availability management service
- * @see Class: {@link InputReaderUtil} - Functions and Methods for dealing with
- *      Customer input data management service
+ * @see <b>Class: </b> {@link InteractiveShell} - Functions and Methods for
+ *      dealing with Application workflow service
+ * @see <b>Class: </b> {@link ParkingService} - Functions and Methods for
+ *      dealing with parking availability management service
+ * @see <b>Class: </b> {@link InputReaderUtil} - Functions and Methods for
+ *      dealing with Customer input data management service<br>
+ *      
+ * @see <b>Test Class:</b>{@link com.parkit.parkingsystem.integration.service.DataBasePrepareService DataBasePrepareService} - Functions and
+ *      Methods for dealing with parking availability management service <br>
+ * @see <b>Test Class:</b>{@link com.parkit.parkingsystem.integration.dao.TicketDAOIT TicketDAOIT} - Vehicle Ticket Data Access Object -
+ *      Integration Testing on Functions and Methods for dealing with Ticket
+ *      management for customers parking <br>
+ * @see <b>Test Class:</b>{@link com.parkit.parkingsystem.integration.dao.ParkingSpotDAOIT ParkingSpotDAOIT} - Parking Spot Data Access Object
+ *      - Tests on Functions and Methods for dealing with availability
+ *      management of parking spots / slots <br>
+ * @see <b>Test Class:</b>{@link com.parkit.parkingsystem.integration.config.DataBaseTestConfig DataBaseTestConfig} - Integration Tests for
+ *      database connection configuration setting <br>
+ * @see <b>Test Class:</b>{@link com.parkit.parkingsystem.integration.config.DataBaseConfigIT DataBaseConfigIT} - Integration Testing For
+ *      database connection configuration setting <br>
+ * @see <b>Test Class:</b>{@link com.parkit.parkingsystem.integration.ParkingDataBaseIT ParkingDataBaseIT} - Performs Integration Test on
+ *      Parking Database <br>
+ * @see <b>Test Class:</b>{@link ParkingServiceTest} - Performs Integration Test on
+ *      Parking Services for customer of ParkIt<br>
+ * @see <b>Test Class:</b>{@link FareCalculatorServiceTest} - Performs Unit Testing
+ *      on Fare calculation process for customer of ParkIt <br>
+ * 
  * @author Senthil
  *
  */

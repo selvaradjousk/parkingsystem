@@ -12,14 +12,16 @@ import org.apache.logging.log4j.Logger;
 import com.parkit.parkingsystem.config.DataBaseConfig;
 
 /**
- * Class {@link DataBaseTestConfig} - Integration Tests for database connection setting
- *      configuration {@link DataBaseConfig}
+ * <b>Test Class: </b> {@link DataBaseTestConfig} - Integration Tests for
+ * database connection configuration setting <br>
+ * <b>Class Tested:</b>{@link DataBaseConfig}
  * 
  * @package - com.parkit.parkingsystem.integration.dao
  * @project - P4 - parking system - ParkIt
  * @see Tests: {@link #getConnection()},
  *      {@link #closeConnection(Connection con)},
- *      {@link #closePreparedStatement(PreparedStatement ps)}, {@link #closeResultSet(ResultSet rs)},
+ *      {@link #closePreparedStatement(PreparedStatement ps)},
+ *      {@link #closeResultSet(ResultSet rs)},
  * 
  * @author Senthil
  */
@@ -27,25 +29,22 @@ public class DataBaseTestConfig extends DataBaseConfig {
 
 	private static final Logger logger = LogManager.getLogger("DataBaseConfig");
 
-	public Connection getConnection() throws IllegalAccessException, InstantiationException{
-		Connection con =null;
+	public Connection getConnection() throws IllegalAccessException, InstantiationException {
+		Connection con = null;
 		logger.info("Create DB connection");
 		try {
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/prod", "root", "rootroot");
-    } catch (SQLException e) {
-        System.err.println("Exception occured : SQLException : "
-                + e.getMessage());
-        e.printStackTrace();
-    } catch (ClassNotFoundException e) {
-        System.err.println("Exception occured : ClassNotFoundException : "
-                + e.getMessage());
-        e.printStackTrace();
-    }
-		
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/prod", "root", "rootroot");
+		} catch (SQLException e) {
+			System.err.println("Exception occured : SQLException : " + e.getMessage());
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			System.err.println("Exception occured : ClassNotFoundException : " + e.getMessage());
+			e.printStackTrace();
+		}
+
 		return con;
 	}
-
 
 	public void closeConnection(Connection con) {
 		if (con != null) {

@@ -26,9 +26,9 @@ import com.parkit.parkingsystem.model.Ticket;
 import com.parkit.parkingsystem.service.FareCalculatorService;
 
 /**
- * Class {@link FareCalculatorServiceTest} - Performs Unit Testing on Fare
- * calculation process for customer of ParkIt Class Tested:
- * {@link FareCalculatorService}
+ * <b>Test Class: </b> {@link FareCalculatorServiceTest} - Performs Unit Testing
+ * on Fare calculation process for customer of ParkIt <br>
+ * <b>Class Tested:</b> {@link FareCalculatorService}
  * 
  * @package - com.parkit.parkingsystem
  * @project - P3 - parking system - ParkIt
@@ -108,7 +108,8 @@ public class FareCalculatorServiceTest {
 		fareCalculatorService.calculateFare(ticket, false);
 
 		// THEN
-		assertEquals(priceFactor * Fare.CAR_RATE_PER_HOUR, ticket.getPrice(),"Result: estimated and actual price match");
+		assertEquals(priceFactor * Fare.CAR_RATE_PER_HOUR, ticket.getPrice(),
+				"Result: estimated and actual price match");
 	}
 
 	/**
@@ -143,7 +144,7 @@ public class FareCalculatorServiceTest {
 		double estimate = bd.doubleValue();
 
 		// THEN
-		assertEquals(estimate, ticket.getPrice(),"Result: estimated and actual price match");
+		assertEquals(estimate, ticket.getPrice(), "Result: estimated and actual price match");
 	}
 
 	/**
@@ -179,7 +180,7 @@ public class FareCalculatorServiceTest {
 		double estimate = bd.doubleValue();
 
 		// THEN
-		assertEquals(estimate, ticket.getPrice(),"Result: estimated and actual price match");
+		assertEquals(estimate, ticket.getPrice(), "Result: estimated and actual price match");
 	}
 
 	/**
@@ -207,7 +208,8 @@ public class FareCalculatorServiceTest {
 		ticket.setParkingSpot(parkingSpot);
 
 		// THEN
-		assertThrows(NullPointerException.class, () -> fareCalculatorService.calculateFare(ticket, false),"Result: exception thrown");// WHEN
+		assertThrows(NullPointerException.class, () -> fareCalculatorService.calculateFare(ticket, false),
+				"Result: exception thrown");// WHEN
 
 	}
 
@@ -269,7 +271,8 @@ public class FareCalculatorServiceTest {
 		ticket.setParkingSpot(parkingSpot);
 
 		// THEN
-		assertThrows(IllegalArgumentException.class, () -> fareCalculatorService.calculateFare(ticket, false),"Result: Exception thrown"); // WHEN
+		assertThrows(IllegalArgumentException.class, () -> fareCalculatorService.calculateFare(ticket, false),
+				"Result: Exception thrown"); // WHEN
 	}
 
 	/**
@@ -305,7 +308,7 @@ public class FareCalculatorServiceTest {
 		fareCalculatorService.calculateFare(ticket, false);
 
 		// THEN
-		assertEquals((0.0 * Fare.BIKE_RATE_PER_HOUR), ticket.getPrice(),"Result: estimated and actual price match");
+		assertEquals((0.0 * Fare.BIKE_RATE_PER_HOUR), ticket.getPrice(), "Result: estimated and actual price match");
 	}
 
 	/**
@@ -341,7 +344,7 @@ public class FareCalculatorServiceTest {
 		fareCalculatorService.calculateFare(ticket, false);
 
 		// THEN
-		assertEquals((0.0 * Fare.CAR_RATE_PER_HOUR), ticket.getPrice(),"Result: estimated and actual price match");
+		assertEquals((0.0 * Fare.CAR_RATE_PER_HOUR), ticket.getPrice(), "Result: estimated and actual price match");
 	}
 
 	/**
@@ -376,7 +379,8 @@ public class FareCalculatorServiceTest {
 		fareCalculatorService.calculateFare(ticket, false);
 
 		// THEN
-		assertEquals((priceConversionFactor * Fare.BIKE_RATE_PER_HOUR), ticket.getPrice(),"Result: estimated and actual price match");
+		assertEquals((priceConversionFactor * Fare.BIKE_RATE_PER_HOUR), ticket.getPrice(),
+				"Result: estimated and actual price match");
 	}
 
 	/**
@@ -412,7 +416,8 @@ public class FareCalculatorServiceTest {
 		fareCalculatorService.calculateFare(ticket, false);
 
 		// THEN
-		assertEquals((priceConversionFactor * Fare.CAR_RATE_PER_HOUR), ticket.getPrice(),"Result: estimated and actual price match");
+		assertEquals((priceConversionFactor * Fare.CAR_RATE_PER_HOUR), ticket.getPrice(),
+				"Result: estimated and actual price match");
 	}
 
 	/**
@@ -449,14 +454,15 @@ public class FareCalculatorServiceTest {
 		fareCalculatorService.calculateFare(ticket, false);
 
 		// THEN
-		assertEquals((estimatedPrice * Fare.CAR_RATE_PER_HOUR), ticket.getPrice(),"Result: estimated and actual price match");
+		assertEquals((estimatedPrice * Fare.CAR_RATE_PER_HOUR), ticket.getPrice(),
+				"Result: estimated and actual price match");
 	}
 
 	/**
 	 * {@link #calculateFareBikeWithMoreThanADayParkingTime(long daysParked, double estimatedPrice)}
 	 * Unit Test <br>
-	 * GIVEN: Parking exit time for the <b>BIKE</b> set to more than a day i.e. <b>24
-	 * hours</b> <br>
+	 * GIVEN: Parking exit time for the <b>BIKE</b> set to more than a day i.e.
+	 * <b>24 hours</b> <br>
 	 * WHEN: calculation of fare service activated <br>
 	 * THEN: calculation of fare service checks for duration threshold for One day
 	 * and more <br>
@@ -486,7 +492,8 @@ public class FareCalculatorServiceTest {
 		fareCalculatorService.calculateFare(ticket, false);
 
 		// THEN
-		assertEquals((estimatedPrice * Fare.BIKE_RATE_PER_HOUR), ticket.getPrice(),"Result: estimated and actual price match");
+		assertEquals((estimatedPrice * Fare.BIKE_RATE_PER_HOUR), ticket.getPrice(),
+				"Result: estimated and actual price match");
 	}
 
 }

@@ -1,13 +1,12 @@
 package com.parkit.parkingsystem;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import com.parkit.parkingsystem.service.FareCalculatorService;
-
 class AppTest {
 	private static App app;
+
 	@Test
 	public void appLoads() {
 	}
@@ -21,5 +20,5 @@ class AppTest {
 	public void appLoading() {
 		App app = new App();
 		assertTrue(app.equals(app));
-	}	
+	}
 }

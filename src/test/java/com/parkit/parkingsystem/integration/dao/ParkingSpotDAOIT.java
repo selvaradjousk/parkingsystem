@@ -15,20 +15,26 @@ import com.parkit.parkingsystem.integration.service.DataBasePrepareService;
 import com.parkit.parkingsystem.model.ParkingSpot;
 
 /**
- * Class {@link ParkingSpotDAOIT} - Tests on Functions and Methods for dealing
- * with availability management of parking spots /slots {@link ParkingSpotDAO}
+ * <b>Test Class: </b> {@link ParkingSpotDAOIT} - Parking Spot Data Access
+ * Object - Tests on Functions and Methods for dealing with availability
+ * management of parking spots / slots <br>
+ * <b>Class Tested:</b>{@link ParkingSpotDAO}
  * 
  * @package - com.parkit.parkingsystem.integration.dao
  * @project - P4 - parking system - ParkIt
  * @see <b>Tests:</b><br>
- * {@link #testGetNextAvailableSpotForCar()}: Parking Spot - Integration Testing - Car Spot availability<br>
- * {@link #testNextAvailableSpotForBike()}: Parking Spot - Integration Testing - Bike Spot availability<br>
- * {@link #testUpdateParkingForCar()}: Parking Spot - Integration Testing - CAR Update Spot status<br>
- * {@link #testUpdateParkingForBike()} Parking Spot - Integration Testing - BIKE Update Spot status<br>
+ *      {@link #testGetNextAvailableSpotForCar()}: Parking Spot - Integration
+ *      Testing - Car Spot availability<br>
+ *      {@link #testNextAvailableSpotForBike()}: Parking Spot - Integration
+ *      Testing - Bike Spot availability<br>
+ *      {@link #testUpdateParkingForCar()}: Parking Spot - Integration Testing -
+ *      CAR Update Spot status<br>
+ *      {@link #testUpdateParkingForBike()} Parking Spot - Integration Testing -
+ *      BIKE Update Spot status<br>
  * 
  * @author Senthil
  */
-@DisplayName("Vehicle Parking Data Access Object - Integration Testing ")
+@DisplayName("Vehicle Parking Spot Data Access Object - Integration Testing ")
 public class ParkingSpotDAOIT {
 	static DataBaseTestConfig testDB = new DataBaseTestConfig();
 	static ParkingSpotDAO parkingSpotDAO = new ParkingSpotDAO();
@@ -117,7 +123,8 @@ public class ParkingSpotDAOIT {
 
 		// THEN
 		if (updated)
-			assertEquals(parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR), parkingSpot.getId() + 1, "Result: Both spot not similar");
+			assertEquals(parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR), parkingSpot.getId() + 1,
+					"Result: Both spot not similar");
 		else
 			fail("Failed to update ticket");
 	}
@@ -145,7 +152,8 @@ public class ParkingSpotDAOIT {
 
 		// THEN
 		if (updated)
-			assertEquals(parkingSpotDAO.getNextAvailableSpot(ParkingType.BIKE), parkingSpot.getId() + 1, "Result: Both spot not similar");
+			assertEquals(parkingSpotDAO.getNextAvailableSpot(ParkingType.BIKE), parkingSpot.getId() + 1,
+					"Result: Both spot not similar");
 		else
 			fail("Failed to update ticket");
 	}

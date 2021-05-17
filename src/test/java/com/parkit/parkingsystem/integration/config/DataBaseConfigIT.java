@@ -1,6 +1,5 @@
 package com.parkit.parkingsystem.integration.config;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -16,16 +15,21 @@ import org.junit.jupiter.api.DisplayName;
 import com.parkit.parkingsystem.config.DataBaseConfig;
 
 /**
- * Class {@link DataBaseConfigIT} - Integration Testing For database connection
- * setting configuration {@link DataBaseConfig}
+ * <b>Test Class: </b> {@link DataBaseConfigIT} - Integration Testing For
+ * database connection configuration setting <br>
+ * <b>Class Tested:</b>{@link DataBaseConfig}
  * 
  * @package - com.parkit.parkingsystem.integration.config
  * @project - P4 - parking system - ParkIt
  * @see <b>Tests:</b><br>
- * {@link #testGetConnection()}}: Parking DB Configuration - Integration Testing - Get Connection<br>
- * {@link #testCloseConnection()}: Parking DB Configuration - Integration Testing - Closing Connection<br>
- * {@link #testClosePreparedStatement()}: Parking DB Configuration - Integration Testing - Closing Prepared Statement<br>
- * {@link #testCloseResultSet()}: Parking DB Configuration - Integration Testing - Closing ResultSet<br>
+ *      {@link #testGetConnection()}}: Parking DB Configuration - Integration
+ *      Testing - Get Connection<br>
+ *      {@link #testCloseConnection()}: Parking DB Configuration - Integration
+ *      Testing - Closing Connection<br>
+ *      {@link #testClosePreparedStatement()}: Parking DB Configuration -
+ *      Integration Testing - Closing Prepared Statement<br>
+ *      {@link #testCloseResultSet()}: Parking DB Configuration - Integration
+ *      Testing - Closing ResultSet<br>
  * 
  * @author Senthil
  */
@@ -33,15 +37,16 @@ public class DataBaseConfigIT {
 
 	static DataBaseConfig dataBaseConfig = new DataBaseConfig();
 
-
 	/**
 	 * {@link #testGetConnection()} Integration Test on
 	 * {@link DataBaseConfig#getConnection()()}<br>
 	 * GIVEN: connection values set<br>
 	 * WHEN: executing get Connection <br>
 	 * THEN: expected Connection status <b>checked</b><br>
-	 * <b>Test Condition <i>PASSED</i>: </b>assertEquals expected = testConnection.isClosed() <code><b>TRUE</b></code> <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected != testConnection.isClosed() <code><b>FALSE</b></code>
+	 * <b>Test Condition <i>PASSED</i>: </b>assertEquals expected =
+	 * testConnection.isClosed() <code><b>TRUE</b></code> <br>
+	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected !=
+	 * testConnection.isClosed() <code><b>FALSE</b></code>
 	 * 
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
@@ -64,14 +69,14 @@ public class DataBaseConfigIT {
 		if (testConnection == null)
 			fail("Couldn't retrieve connection");
 
-		assertEquals(expectedConnectionClosed, testConnection.isClosed(), "Result: expected and actual Connection status match");
+		assertEquals(expectedConnectionClosed, testConnection.isClosed(),
+				"Result: expected and actual Connection status match");
 
 		DatabaseMetaData metaData = testConnection.getMetaData();
 
 		assertEquals(expectedDatabaseUrl, metaData.getURL(), "Result: expected and actual Database URLs match");
 		testConnection.close();
 	}
-
 
 	/**
 	 * {@link #testCloseConnection()} Integration Test on
@@ -106,7 +111,8 @@ public class DataBaseConfigIT {
 		dataBaseConfig.closeConnection(testConnection);
 
 		// THEN
-		assertEquals(expectedConnectionClosed, testConnection.isClosed(), "Result: expected and actual Connections status match");
+		assertEquals(expectedConnectionClosed, testConnection.isClosed(),
+				"Result: expected and actual Connections status match");
 		testConnection.close();
 
 	}
@@ -143,7 +149,8 @@ public class DataBaseConfigIT {
 		dataBaseConfig.closePreparedStatement(testStatement);
 
 		// THEN
-		assertEquals(expectedStatementClosed, testStatement.isClosed(), "Result: expected and actual Prepared Statements status match");
+		assertEquals(expectedStatementClosed, testStatement.isClosed(),
+				"Result: expected and actual Prepared Statements status match");
 		testConnection.close();
 		testStatement.close();
 
@@ -184,7 +191,8 @@ public class DataBaseConfigIT {
 
 		// THEN
 
-		assertEquals(expectedResultSetClosed, testResults.isClosed(), "Result: expected and actual ResultSets status match");
+		assertEquals(expectedResultSetClosed, testResults.isClosed(),
+				"Result: expected and actual ResultSets status match");
 
 		testConnection.close();
 		testStatement.close();

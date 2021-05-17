@@ -1,23 +1,24 @@
 package com.parkit.parkingsystem.integration.service;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.Timestamp;
+
 import com.parkit.parkingsystem.constants.DBConstants;
-import com.parkit.parkingsystem.dao.TicketDAO;
 import com.parkit.parkingsystem.integration.config.DataBaseTestConfig;
 import com.parkit.parkingsystem.model.Ticket;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-
 /**
- * Class: {@link DataBasePrepareService} - Functions and Methods to update the
- * availability of the parking spots on customer exit of parking in the DB
+ * <b>Test Class: </b> {@link DataBasePrepareService} - Functions and Methods
+ * for dealing with parking availability management service
  * 
  * @package - com.parkit.parkingsystem.integration.service
  * @project - P4 - parking system - ParkIt
- * @see Methods: {@link #clearDBEntries()},
- *      {@link #insertTestTicket(Ticket testData)},
+ * @see <b>Tests:</b><br>
+ *      {@link #clearDBEntries()}: method does the insert function in the DB for
+ *      test ticket values<br>
+ *      {@link #insertTestTicket(Ticket testData)}: This method set parking
+ *      entries to available & clear ticket entries<br>
  * 
  * @author Senthil
  */
