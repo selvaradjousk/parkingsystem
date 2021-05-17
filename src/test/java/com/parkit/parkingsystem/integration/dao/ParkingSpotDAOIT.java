@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.parkit.parkingsystem.constants.ParkingType;
 import com.parkit.parkingsystem.dao.ParkingSpotDAO;
-import com.parkit.parkingsystem.dao.TicketDAO;
 import com.parkit.parkingsystem.integration.config.DataBaseTestConfig;
 import com.parkit.parkingsystem.integration.service.DataBasePrepareService;
 import com.parkit.parkingsystem.model.ParkingSpot;
@@ -20,9 +20,11 @@ import com.parkit.parkingsystem.model.ParkingSpot;
  * 
  * @package - com.parkit.parkingsystem.integration.dao
  * @project - P4 - parking system - ParkIt
- * @see Tests: {@link #testGetNextAvailableSpotForCar()},
- *      {@link #testNextAvailableSpotForBike()},
- *      {@link #testUpdateParkingForCar()}, {@link #testUpdateParkingForBike()},
+ * @see <b>Tests:</b><br>
+ * {@link #testGetNextAvailableSpotForCar()}: Parking Spot - Integration Testing - Car Spot availability<br>
+ * {@link #testNextAvailableSpotForBike()}: Parking Spot - Integration Testing - Bike Spot availability<br>
+ * {@link #testUpdateParkingForCar()}: Parking Spot - Integration Testing - CAR Update Spot status<br>
+ * {@link #testUpdateParkingForBike()} Parking Spot - Integration Testing - BIKE Update Spot status<br>
  * 
  * @author Senthil
  */
@@ -53,6 +55,7 @@ public class ParkingSpotDAOIT {
 	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected != 1
 	 * <code><b>FALSE</b></code>
 	 */
+	@DisplayName("Parking Spot - Integration Testing - CAR Spot availability ")
 	@Test
 	public void testGetNextAvailableSpotForCar() {
 		// GIVEN
@@ -62,7 +65,7 @@ public class ParkingSpotDAOIT {
 		int selectedSpot = parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR);
 
 		// THEN
-		assertEquals(expectedSpot, selectedSpot);
+		assertEquals(expectedSpot, selectedSpot, "Result: Both spot not similar");
 	}
 
 	/**
@@ -77,6 +80,7 @@ public class ParkingSpotDAOIT {
 	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected != 4
 	 * <code><b>FALSE</b></code>
 	 */
+	@DisplayName("Parking Spot - Integration Testing - BIKE Spot availability ")
 	@Test
 	public void testNextAvailableSpotForBike() {
 		// GIVEN
@@ -86,7 +90,7 @@ public class ParkingSpotDAOIT {
 		int selectedSpot = parkingSpotDAO.getNextAvailableSpot(ParkingType.BIKE);
 
 		// THEN
-		assertEquals(expectedSpot, selectedSpot);
+		assertEquals(expectedSpot, selectedSpot, "Result: Both spot not similar");
 	}
 
 	/**
@@ -101,6 +105,7 @@ public class ParkingSpotDAOIT {
 	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected !=
 	 * getNextAvailableSpot(ParkingType.CAR) <code><b>FALSE</b></code>
 	 */
+	@DisplayName("Parking Spot - Integration Testing - CAR Update Spot status ")
 	@Test
 	public void testUpdateParkingForCar() {
 		// GIVEN
@@ -111,7 +116,7 @@ public class ParkingSpotDAOIT {
 
 		// THEN
 		if (updated)
-			assertEquals(parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR), parkingSpot.getId() + 1);
+			assertEquals(parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR), parkingSpot.getId() + 1, "Result: Both spot not similar");
 		else
 			fail("Failed to update ticket");
 	}
@@ -128,6 +133,7 @@ public class ParkingSpotDAOIT {
 	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected !=
 	 * getNextAvailableSpot(ParkingType.BIKE) <code><b>FALSE</b></code>
 	 */
+	@DisplayName("Parking Spot - Integration Testing - BIKE Update Spot status ")
 	@Test
 	public void testUpdateParkingForBike() {
 		// GIVEN
@@ -138,7 +144,7 @@ public class ParkingSpotDAOIT {
 
 		// THEN
 		if (updated)
-			assertEquals(parkingSpotDAO.getNextAvailableSpot(ParkingType.BIKE), parkingSpot.getId() + 1);
+			assertEquals(parkingSpotDAO.getNextAvailableSpot(ParkingType.BIKE), parkingSpot.getId() + 1, "Result: Both spot not similar");
 		else
 			fail("Failed to update ticket");
 	}
