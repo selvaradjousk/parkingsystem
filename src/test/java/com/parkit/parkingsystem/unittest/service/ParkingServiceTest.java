@@ -209,6 +209,9 @@ public class ParkingServiceTest {
 		assertTrue(parkingSpot.isAvailable(), "Return: availability-YES updated");
 
 	}
+	
+	
+	
 
 	static Ticket getVehicileRegistrationNumber() throws Exception {
 		Ticket ticket = null;

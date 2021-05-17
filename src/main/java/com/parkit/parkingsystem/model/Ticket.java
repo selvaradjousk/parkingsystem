@@ -1,10 +1,12 @@
 package com.parkit.parkingsystem.model;
 
 import java.util.Date;
+import java.util.Optional;
 
 /**
- * Class: {@link Ticket} - Ticket Data Objects.<br> 
- * <b>Project: <b> P3 - parking system - ParkIt<br> 
+ * Class: {@link Ticket} - Ticket Data Objects.<br>
+ * <b>Project: <b> P3 - parking system - ParkIt<br>
+ * 
  * @package - com.parkit.parkingsystem.model
  * 
  * @author Senthil
@@ -109,7 +111,7 @@ public class Ticket {
 	 * @return price - returns the instance parameter attribute value.
 	 */
 	public Date getInTime() {
-		return inTime;
+		return this.inTime == null ? null : new Date(this.inTime.getTime());
 	}
 
 	/**
@@ -119,7 +121,8 @@ public class Ticket {
 	 * @return inTime - returns value assigned to its attribute.
 	 */
 	public void setInTime(Date inTime) {
-		this.inTime = inTime;
+		this.inTime = Optional.ofNullable(inTime).map(Date::getTime).map(Date::new).orElse(null); // new
+																									// Date(inTime.getTime());
 	}
 
 	/**
@@ -129,7 +132,7 @@ public class Ticket {
 	 * @return outTime - returns the instance parameter attribute value.
 	 */
 	public Date getOutTime() {
-		return outTime;
+		return this.outTime == null ? null : new Date(this.outTime.getTime());
 	}
 
 	/**
@@ -139,6 +142,7 @@ public class Ticket {
 	 * @return outTime - returns value assigned to its attribute.
 	 */
 	public void setOutTime(Date outTime) {
-		this.outTime = outTime;
+		this.outTime = Optional.ofNullable(outTime).map(Date::getTime).map(Date::new).orElse(null);// new
+																									// Date(outTime.getTime());
 	}
 }

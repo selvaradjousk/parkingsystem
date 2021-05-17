@@ -33,6 +33,7 @@ public class DataBasePrepareService {
 	 */
 	public void clearDBEntries() {
 		Connection connection = null;
+		 PreparedStatement preparedStatement = null;
 		try {
 			connection = dataBaseTestConfig.getConnection();
 
@@ -46,6 +47,7 @@ public class DataBasePrepareService {
 			e.printStackTrace();
 		} finally {
 			dataBaseTestConfig.closeConnection(connection);
+			dataBaseTestConfig.closePreparedStatement(preparedStatement);
 		}
 	}
 
