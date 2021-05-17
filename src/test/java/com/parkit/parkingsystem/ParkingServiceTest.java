@@ -89,7 +89,7 @@ public class ParkingServiceTest {
 	/**
 	 * {@link #processIncomingVehicleTest()} Integration Test <br>
 	 * GIVEN: <br>
-	 * WHEN: processing of the parking spot availability <br>
+	 * WHEN: processing of the incoming vehicle<br>
 	 * THEN: parking spot alloted ticket saved and <b>availability status</b><br>
 	 * <b>Test Condition <i>PASSED</i>: </b>verify saveTicket and updateParking
 	 * <code><b>TRUE</b></code> <br>
@@ -114,9 +114,9 @@ public class ParkingServiceTest {
 	 * GIVEN: <br>
 	 * WHEN: check on the Parking spot availability for Parking<br>
 	 * THEN: <b>availability status</b><br>
-	 * <b>Test Condition <i>PASSED</i>: </b>verify status available
+	 * <b>Test Condition <i>PASSED</i>: </b>verify next parking spot status availability
 	 * <code><b>TRUE</b></code> <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>verify status available
+	 * <b>Test Condition <i>FAILED</i>: </b>verify next parking spot status availability
 	 * <code><b>FALSE</b></code>
 	 */
 	@DisplayName("Parking Service Testing - Availability of Next parking spot ")
@@ -133,8 +133,8 @@ public class ParkingServiceTest {
 	/**
 	 * {@link #processExitingVehicleTest()} Integration Test <br>
 	 * GIVEN: <br>
-	 * WHEN: processing of the parking spot status<br>
-	 * THEN: parking spot <b>availability status updated</b><br>
+	 * WHEN: processing of Vehicle Exit Process<br>
+	 * THEN: Parking <b>availability status updated</b><br>
 	 * <b>Test Condition <i>PASSED</i>: </b>verify updateParking
 	 * <code><b>TRUE</b></code> <br>
 	 * <b>Test Condition <i>FAILED</i>: </b>verify updateParking
@@ -155,11 +155,11 @@ public class ParkingServiceTest {
 	/**
 	 * {@link #testParkingLotExit()} Integration Test <br>
 	 * GIVEN: <br>
-	 * WHEN: processing of the parking spot status<br>
-	 * THEN: parking spot <b>availability status updated</b><br>
-	 * <b>Test Condition <i>PASSED</i>: </b>verify updateParking
+	 * WHEN: processing of the parking lot<br>
+	 * THEN: parking spot <b>processing exiting vehicle process</b><br>
+	 * <b>Test Condition <i>PASSED</i>: </b>assertNull with getOutime
 	 * <code><b>TRUE</b></code> <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>verify updateParking
+	 * <b>Test Condition <i>FAILED</i>: </b>assertNull with getOutime
 	 * <code><b>FALSE</b></code>
 	 */
 	@DisplayName("Parking Service Testing - Parking Lot Status on Exit ")

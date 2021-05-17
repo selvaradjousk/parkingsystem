@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -21,6 +22,7 @@ import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.parkit.parkingsystem.ParkingServiceTest;
 import com.parkit.parkingsystem.constants.ParkingType;
 import com.parkit.parkingsystem.dao.ParkingSpotDAO;
 import com.parkit.parkingsystem.dao.TicketDAO;
@@ -31,6 +33,21 @@ import com.parkit.parkingsystem.model.Ticket;
 import com.parkit.parkingsystem.service.ParkingService;
 import com.parkit.parkingsystem.util.InputReaderUtil;
 
+/**
+ * Class {@link ParkingServiceTest} - Performs Integration Test on Parking
+ * Services for customer of ParkIt Class Tested: {@link ParkingService}
+ * 
+ * @package - com.parkit.parkingsystem
+ * @project - P4 - parking system - ParkIt
+ * @see <b>Tests:</b><br>
+ *      {@link #testParkingLotExitIT()}: Parking Database Testing - Parking Lot
+ *      Status on Exit<br>
+ *      {@link #testParkingACar()}}: Parking Database Testing - Availability of
+ *      alternate parking spot <br>
+ * 
+ * @author Senthil
+ */
+@DisplayName("Vehicle Parking Database - Testing ")
 @ExtendWith(MockitoExtension.class)
 public class ParkingDataBaseIT {
 
@@ -65,6 +82,17 @@ public class ParkingDataBaseIT {
 
 	}
 
+	/**
+	 * {@link #testParkingACar()} Integration Test <br>
+	 * GIVEN: <br>
+	 * WHEN: check on the alternate Parking spot availability for Parking<br>
+	 * THEN: <b>availability status</b><br>
+	 * <b>Test Condition <i>PASSED</i>: </b>verify alternate available parking spot
+	 * are not same <code><b>TRUE</b></code> <br>
+	 * <b>Test Condition <i>FAILED</i>: </b>verify alternate available parking spot
+	 * are not same <code><b>FALSE</b></code>
+	 */
+	@DisplayName("Parking Database Testing - Availability of alternate parking spot ")
 	@Test
 	public void testParkingACar() {
 
@@ -91,11 +119,22 @@ public class ParkingDataBaseIT {
 		int nextAlternateParkingSlot = parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR);
 
 		// THEN
-		assertNotEquals(firstAlternateParkingSlot, nextAlternateParkingSlot);
+		assertNotEquals(firstAlternateParkingSlot, nextAlternateParkingSlot, "Result: Both spot not similar");
 	}
 
+	/**
+	 * {@link #testParkingLotExitIT()} Integration Test <br>
+	 * GIVEN: <br>
+	 * WHEN: processing of the parking Lot<br>
+	 * THEN: parking spot <b>processing exiting vehicle process</b><br>
+	 * <b>Test Condition <i>PASSED</i>: </b>assertNull with getOutime
+	 * <code><b>TRUE</b></code> <br>
+	 * <b>Test Condition <i>FAILED</i>: </b>assertNull with getOutime
+	 * <code><b>FALSE</b></code>
+	 */
+	@DisplayName("Parking Service Testing - Parking Lot Status on Exit ")
 	@Test
-	public void testParkingLotExit() throws InterruptedException {
+	public void testParkingLotExitIT() throws InterruptedException {
 
 		// GIVEN
 		testParkingACar();
@@ -119,10 +158,8 @@ public class ParkingDataBaseIT {
 		parkingService.processExitingVehicle();
 
 		// THEN
-		assertNotNull(ticket);
+		assertNotNull(ticket, "Return: Ticket issued");
 
 	}
-	
-	
 
 }
