@@ -61,9 +61,9 @@ import com.parkit.parkingsystem.util.InputReaderUtil;
  *      database connection configuration setting <br>
  * @see <b>Test Class:</b>{@link com.parkit.parkingsystem.integration.ParkingDataBaseIT ParkingDataBaseIT} - Performs Integration Test on
  *      Parking Database <br>
- * @see <b>Test Class:</b>{@link ParkingServiceTest} - Performs Integration Test on
+ * @see <b>Test Class:</b>{@link com.parkit.parkingsystem.integration.service.ParkingServiceTest ParkingServiceTest} - Performs Integration Test on
  *      Parking Services for customer of ParkIt<br>
- * @see <b>Test Class:</b>{@link FareCalculatorServiceTest} - Performs Unit Testing
+ * @see <b>Test Class:</b>{@link com.parkit.parkingsystem.integration.service.FareCalculatorServiceTest FareCalculatorServiceTest} - Performs Unit Testing
  *      on Fare calculation process for customer of ParkIt <br>
  * 
  * @author Senthil
