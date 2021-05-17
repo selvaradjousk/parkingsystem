@@ -1,6 +1,7 @@
 package com.parkit.parkingsystem.integration.config;
 
-import static org.junit.Assert.assertEquals;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.sql.Connection;
@@ -10,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 
 import com.parkit.parkingsystem.config.DataBaseConfig;
 
@@ -19,8 +21,11 @@ import com.parkit.parkingsystem.config.DataBaseConfig;
  * 
  * @package - com.parkit.parkingsystem.integration.config
  * @project - P4 - parking system - ParkIt
- * @see Tests: {@link #testGetConnection()}, {@link #testCloseConnection()},
- *      {@link #testClosePreparedStatement()}, {@link #testCloseResultSet()},
+ * @see <b>Tests:</b><br>
+ * {@link #testGetConnection()}}: Parking DB Configuration - Integration Testing - Get Connection<br>
+ * {@link #testCloseConnection()}: Parking DB Configuration - Integration Testing - Closing Connection<br>
+ * {@link #testClosePreparedStatement()}: Parking DB Configuration - Integration Testing - Closing Prepared Statement<br>
+ * {@link #testCloseResultSet()}: Parking DB Configuration - Integration Testing - Closing ResultSet<br>
  * 
  * @author Senthil
  */
@@ -28,7 +33,7 @@ public class DataBaseConfigIT {
 
 	static DataBaseConfig dataBaseConfig = new DataBaseConfig();
 
-	@Test
+
 	/**
 	 * {@link #testGetConnection()} Integration Test on
 	 * {@link DataBaseConfig#getConnection()()}<br>
@@ -43,6 +48,8 @@ public class DataBaseConfigIT {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
+	@DisplayName("Parking DB Configuration - Integration Testing - Get Connection")
+	@Test
 	public void testGetConnection()
 			throws SQLException, ClassNotFoundException, IllegalAccessException, InstantiationException {
 		// GIVEN
@@ -57,11 +64,11 @@ public class DataBaseConfigIT {
 		if (testConnection == null)
 			fail("Couldn't retrieve connection");
 
-		assertEquals(expectedConnectionClosed, testConnection.isClosed());
+		assertEquals(expectedConnectionClosed, testConnection.isClosed(), "Result: expected and actual Connection status match");
 
 		DatabaseMetaData metaData = testConnection.getMetaData();
 
-		assertEquals(expectedDatabaseUrl, metaData.getURL());
+		assertEquals(expectedDatabaseUrl, metaData.getURL(), "Result: expected and actual Database URLs match");
 		testConnection.close();
 	}
 
@@ -82,6 +89,7 @@ public class DataBaseConfigIT {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
+	@DisplayName("Parking DB Configuration - Integration Testing - Closing Connection")
 	@Test
 	public void testCloseConnection()
 			throws SQLException, ClassNotFoundException, IllegalAccessException, InstantiationException {
@@ -98,7 +106,7 @@ public class DataBaseConfigIT {
 		dataBaseConfig.closeConnection(testConnection);
 
 		// THEN
-		assertEquals(expectedConnectionClosed, testConnection.isClosed());
+		assertEquals(expectedConnectionClosed, testConnection.isClosed(), "Result: expected and actual Connections status match");
 		testConnection.close();
 
 	}
@@ -120,7 +128,7 @@ public class DataBaseConfigIT {
 	 * @throws SQLException
 	 */
 	@Test
-
+	@DisplayName("Parking DB Configuration - Integration Testing - Closing Prepared Statement")
 	public void testClosePreparedStatement()
 			throws IllegalAccessException, InstantiationException, ClassNotFoundException, SQLException {
 		// GIVEN
@@ -135,7 +143,7 @@ public class DataBaseConfigIT {
 		dataBaseConfig.closePreparedStatement(testStatement);
 
 		// THEN
-		assertEquals(expectedStatementClosed, testStatement.isClosed());
+		assertEquals(expectedStatementClosed, testStatement.isClosed(), "Result: expected and actual Prepared Statements status match");
 		testConnection.close();
 		testStatement.close();
 
@@ -157,6 +165,7 @@ public class DataBaseConfigIT {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
+	@DisplayName("Parking DB Configuration - Integration Testing - Closing ResultSet")
 	@Test
 	public void testCloseResultSet()
 			throws IllegalAccessException, InstantiationException, ClassNotFoundException, SQLException {
@@ -175,7 +184,7 @@ public class DataBaseConfigIT {
 
 		// THEN
 
-		assertEquals(expectedResultSetClosed, testResults.isClosed());
+		assertEquals(expectedResultSetClosed, testResults.isClosed(), "Result: expected and actual ResultSets status match");
 
 		testConnection.close();
 		testStatement.close();

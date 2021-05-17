@@ -34,8 +34,8 @@ import com.parkit.parkingsystem.service.ParkingService;
 import com.parkit.parkingsystem.util.InputReaderUtil;
 
 /**
- * Class {@link ParkingServiceTest} - Performs Integration Test on Parking
- * Services for customer of ParkIt Class Tested: {@link ParkingService}
+ * Class {@link ParkingDataBaseIT} - Performs Integration Test on Parking
+ * Database - Tested: {@link ParkingSpotDAO}
  * 
  * @package - com.parkit.parkingsystem
  * @project - P4 - parking system - ParkIt
