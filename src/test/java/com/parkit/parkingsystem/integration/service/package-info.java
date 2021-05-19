@@ -1,5 +1,5 @@
 /**
- * This package contains the classes for integration testing on services>
+ * This package contains the classes for integration testing on services.
  * 
  * @author Senthil
  *

@@ -1,6 +1,5 @@
-
 /**
- * This package contains the classes for storing and accessing the constants>
+ * This package contains the classes for storing and accessing the constants.
  * 
  * @author Senthil
  *

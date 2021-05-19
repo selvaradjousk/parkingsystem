@@ -1,5 +1,5 @@
 /**
- * This package contains the classes for unit testing on services>
+ * This package contains the classes for unit testing on services.
  * 
  * @author Senthil
  *

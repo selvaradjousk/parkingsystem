@@ -4,7 +4,7 @@ import com.parkit.parkingsystem.constants.ParkingType;
 
 /**
  * Class: {@link ParkingSpot} - Model data on Parking spot.<br>
- * <b>Project: <b> P3 - parking system - ParkIt<br>
+ * <b>Project: </b> P3 - parking system - ParkIt<br>
  * 
  * @see Methods: {@link #ParkingSpot(int, ParkingType, boolean)},
  *      {@link #getId()}, {@link #getId()}, {@link #setId(int)},
@@ -16,8 +16,20 @@ import com.parkit.parkingsystem.constants.ParkingType;
  * @author Senthil
  */
 public class ParkingSpot {
+
+	/**
+	 * Parking spot number.
+	 */
 	private int number;
+
+	/**
+	 * The vehicle parking type.
+	 */
 	private ParkingType parkingType;
+
+	/**
+	 * Availability of a parking spot.
+	 */
 	private boolean isAvailable;
 
 	/**
@@ -26,7 +38,9 @@ public class ParkingSpot {
 	 * 
 	 * @return boolean - returns object value basically instantiated from the class
 	 *         Ticket.
-	 * @param ticket - instance variable of {@link #Ticket}
+	 * @param num          Parking spot number
+	 * @param the          vehicle parking type
+	 * @param availability of a parking spot
 	 */
 	public ParkingSpot(int number, ParkingType parkingType, boolean isAvailable) {
 		this.number = number;

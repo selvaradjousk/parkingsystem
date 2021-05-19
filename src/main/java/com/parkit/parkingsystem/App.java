@@ -7,7 +7,7 @@ import com.parkit.parkingsystem.service.InteractiveShell;
 
 /**
  * Class: {@link App} Main class for application ParkIt.<br>
- * <b>Project: <b> P3 - parking system - ParkIt<br>
+ * <b>Project: </b> P3 - parking system - ParkIt<br>
  * 
  * @see <b>Class: </b> {@link DataBaseConfig} Database connection<br>
  * @see <b>Class: </b> {@link DBConstants} - Database constants<br>
@@ -58,10 +58,13 @@ import com.parkit.parkingsystem.service.InteractiveShell;
  *
  */
 public class App {
+	  /**
+	   * Logger for the application.
+	   */
 	private static final Logger logger = LogManager.getLogger("App");
 
 	/**
-	 * @param args
+	 * @param args no arguments defined.
 	 */
 	public static void main(String[] args) {
 		logger.info("Initializing Parking System");

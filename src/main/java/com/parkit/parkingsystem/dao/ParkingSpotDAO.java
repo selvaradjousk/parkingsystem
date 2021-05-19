@@ -14,15 +14,22 @@ import com.parkit.parkingsystem.model.ParkingSpot;
 
 /**
  * Class: {@link ParkingSpotDAO} - Parking spot Data Access Objects.<br>
- * <b>Project: <b> P3 - parking system - ParkIt<br>
+ * <b>Project: </b> P3 - parking system - ParkIt<br>
  * 
  * @see Methods: {@link #ParkingSpotDAO()}, {@link #updateParking(ParkingSpot)}
  * 
  * @author Senthil
  */
 public class ParkingSpotDAO {
+
+	/**
+	 * Logger for ParkingSpotDao.
+	 */
 	private static final Logger logger = LogManager.getLogger("ParkingSpotDAO");
 
+	/**
+	 * Instance dataBaseConfig of DataBaseConfig to connect to DataBase.
+	 */
 	public DataBaseConfig dataBaseConfig = new DataBaseConfig();
 
 	/**
@@ -45,9 +52,7 @@ public class ParkingSpotDAO {
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				result = rs.getInt(1);
-				;
 			}
-
 		} catch (Exception ex) {
 			logger.error("Error fetching next available slot", ex);
 		} finally {

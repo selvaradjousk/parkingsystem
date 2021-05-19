@@ -1,5 +1,5 @@
 /**
- * This package contains the classes for Services>
+ * This package contains the classes for Services.
  * 
  * @author Senthil
  *

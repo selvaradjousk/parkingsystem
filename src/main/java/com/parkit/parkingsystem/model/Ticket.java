@@ -12,16 +12,39 @@ import java.util.Optional;
  * @author Senthil
  */
 public class Ticket {
+
+	/**
+	 * Ticket Identifier.
+	 */
 	private int id;
+
+	/**
+	 * Parking Spot for the vehicle.
+	 */
 	private ParkingSpot parkingSpot;
+	
+	/**
+	 * Vehicle registration number.
+	 */
 	private String vehicleRegNumber;
+	
+	/**
+	 * Fare price of parking.
+	 */
 	private double price;
+	
+	/**
+	 * Entry Time.
+	 */
 	private Date inTime;
+	
+	/**
+	 * Exit Time.
+	 */
 	private Date outTime;
 
 	/**
-	 * getID() getter for attribute - id getter is used to protect the data during
-	 * class instance creation.
+	 * getID() getter for attribute - id getter.
 	 * 
 	 * @return id - returns the instance parameter attribute value.
 	 */
@@ -30,8 +53,7 @@ public class Ticket {
 	}
 
 	/**
-	 * setId() setter id attribute - setID with parameter id type integer. setter is
-	 * used to protect the data during class instance creation.
+	 * setId() setter id attribute.
 	 * 
 	 * @return id - returns value assigned to its attribute.
 	 */
@@ -40,43 +62,35 @@ public class Ticket {
 	}
 
 	/**
-	 * getID() getter for attribute method- getParkingSpot() with parameter type
-	 * ParkingSpot. getter is used to protect the data during class instance
-	 * creation.
+	 * getID() getter for attribute method.
 	 * 
-	 * @return parkingSpot - returns the instance parameter attributes and values of
-	 *         class ParkingSpot instantiated.
+	 * @param spot parking spot.
+	 * @return parkingSpot - returns the instance parameter attributes.
 	 */
 	public ParkingSpot getParkingSpot() {
 		return parkingSpot;
 	}
 
 	/**
-	 * setParkingSpot() setter for ParkingSpot() Constructor parameter instance of -
-	 * ParkingSpot. setter is used to protect the data during class instance
-	 * creation.
+	 * setParkingSpot() setter for ParkingSpot() Constructor.
 	 * 
-	 * @return parkingSpot - returns value assigned to the attributes of ParkingSpot
-	 *         instance.
+	 * @return parkingSpot - returns value assigned instance.
 	 */
 	public void setParkingSpot(ParkingSpot parkingSpot) {
 		this.parkingSpot = parkingSpot;
 	}
 
 	/**
-	 * getVehicleRegNumber() getter for attribute - vehicleRegNumber getter is used
-	 * to protect the data during class instance creation.
+	 * getVehicleRegNumber() getter for attribute - vehicleRegNumber.
 	 * 
-	 * @return vehicleRegNumber - returns the instance parameter attribute value.
+	 * @return vehicleRegNumber - returns the attribute value.
 	 */
 	public String getVehicleRegNumber() {
 		return vehicleRegNumber;
 	}
 
 	/**
-	 * setVehicleRegNumber() setter vehicleRegNumber attribute - with parameter
-	 * vehicleRegNumber type string. setter is used to protect the data during class
-	 * instance creation.
+	 * setVehicleRegNumber() setter vehicle Reg Number attribute.
 	 * 
 	 * @return vehicleRegNumber - returns value assigned to its attribute.
 	 */
@@ -95,8 +109,7 @@ public class Ticket {
 	}
 
 	/**
-	 * setPrice() setter price attribute - with parameter price type double. setter
-	 * is used to protect the data during class instance creation.
+	 * setPrice() setter price attribute - with parameter price type double.
 	 * 
 	 * @return price - returns value assigned to its attribute.
 	 */
@@ -105,8 +118,7 @@ public class Ticket {
 	}
 
 	/**
-	 * getPrice() getter for attribute - price getter is used to protect the data
-	 * during class instance creation.
+	 * getPrice() getter for attribute - price value getter.
 	 * 
 	 * @return price - returns the instance parameter attribute value.
 	 */
@@ -115,8 +127,7 @@ public class Ticket {
 	}
 
 	/**
-	 * setInTime() setter inTime attribute - with parameter inTime type Date. setter
-	 * is used to protect the data during class instance creation.
+	 * setInTime() setter inTime attribute - with parameter inTime type Date.
 	 * 
 	 * @return inTime - returns value assigned to its attribute.
 	 */

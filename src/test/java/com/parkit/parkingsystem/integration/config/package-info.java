@@ -1,5 +1,5 @@
 /**
- * This package contains the classes for integration tests on configuration settings>
+ * This package contains the classes for integration tests on configuration settings.
  * 
  * @author Senthil
  *

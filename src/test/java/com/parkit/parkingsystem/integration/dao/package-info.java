@@ -1,5 +1,5 @@
 /**
- * This package contains the classes for testing DAOs>
+ * This package contains the classes for testing DAOs.
  * 
  * @author Senthil
  *

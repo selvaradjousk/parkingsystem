@@ -1,5 +1,5 @@
 /**
- * This package contains the classes for integration tests on Parking DB>
+ * This package contains the classes for integration tests on Parking DB.
  * 
  * @author Senthil
  *

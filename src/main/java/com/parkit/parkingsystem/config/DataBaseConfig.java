@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 /**
  * Class: {@link DataBaseConfig} Deals with DB connection configuration
  * settings..<br>
- * <b>Project: <b> P3 - parking system - ParkIt<br>
+ * <b>Project: </b> P3 - parking system - ParkIt<br>
  * 
  * @see Methods: {@link #getConnection()},
  *      {@link #closeConnection(Connection)},{@link #closePreparedStatement(PreparedStatement)},
@@ -21,7 +21,9 @@ import org.apache.logging.log4j.Logger;
  * @author Senthil
  */
 public class DataBaseConfig {
-
+	/**
+	 * Logger for DatabaseConfig class.
+	 */
 	private static final Logger logger = LogManager.getLogger("DataBaseConfig");
 
 	/**

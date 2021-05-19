@@ -7,7 +7,7 @@ import com.parkit.parkingsystem.model.Ticket;
 
 /**
  * Class: {@link FareCalculatorService} - Fare Computation Service.<br>
- * <b>Project: <b> P3 - parking system - ParkIt<br>
+ * <b>Project: </b> P3 - parking system - ParkIt<br>
  * 
  * @see Methods: {@link #checkPertinanceOfGetOutTime(Ticket ticket)},
  *      {@link #calculateFare()},
@@ -18,41 +18,43 @@ import com.parkit.parkingsystem.model.Ticket;
  * @author Senthil
  */
 public class FareCalculatorService {
+	
+	/**
+	 * Logger for FareClaculator Service class.
+	 * 
+	 */
 	private static final Logger logger = LogManager.getLogger("FareCalculatorService");
 
 	/**
-	 * {@link #calculateFare()} This method calculates fare on exiting the parking
-	 * by the customer
+	 * {@link #calculateFare()} Calculates fare on exiting the parking.
 	 * 
-	 * @param ticket      Instance of Ticket class
-	 * @param isReccurent Return value of isRecurrent variable set from the result
-	 *                    value of occurrences from the getVehicleOccurence() method
-	 *                    of the TicketDAO class
-	 * @throws IllegalArgumentException when vehicle exit time is incorrect & in
-	 *                                  case of unknown parking time
+	 * @param ticket      Instance of Ticket class.
+	 * @param isReccurent Return value of isRecurrent variable set.
+	 * @throws IllegalArgumentException when vehicle exit time is incorrect.
 	 */
 	public void calculateFare(Ticket ticket, boolean isRecurrent) {
-
+		
+		// This method checks if Exit time provided is correct.
 		checkPertinanceOfGetOutTime(ticket);
 
-		// Values for entryTime and exitTime set in milliseconds
+		// Values for entryTime and exitTime set in milliseconds.
 		double entryTime = ticket.getInTime().getTime();
 		double exitTime = ticket.getOutTime().getTime();
 
-		// *******************TASK COMPLETED*****************************************
-		// TODO: Some tests are failing here. Need to check if this logic is correct
-		// *******************TASK COMPLETED*****************************************
-
-		// Duration values are computed into hours from milliseconds
+		// Duration values are computed into hours from milliseconds.
 		double duration = (exitTime - entryTime) / (60.0 * 60.0 * 1000);
+		
+		// identifyVehicleTypeForComputeFare(ticket) stored in selectedFare.
 		double selectedFare = identifyVehicleTypeForComputeFare(ticket);
-		// fareSetZeroValueForLessThanThirtyMinutesParking(ticket, duration);
+		
+		// 30 minutes parking is set to zero;
 		if (duration < 0.5) {
 			ticket.setPrice(0);
 			logger.info("Parking visit is below 30 minutes, fare to pay set to free");
 			return;
 		}
 
+		// Fare calculation for parking is performed
 		ticket.setPrice(computeFare(duration, selectedFare, isRecurrent));
 	}
 
@@ -81,26 +83,6 @@ public class FareCalculatorService {
 		return selectedFare;
 	}
 
-	// *******************TASK COMPLETED - 30 Minutes free**********************
-	// Fare for the parking is set to be free
-	// when the user parking time is less than 30 minutes
-	// *******************TASK COMPLETED - 30 Minutes free**********************
-
-//	/**
-//	 * {@link #fareSetZeroValueForLessThanThirtyMinutesParking(Ticket ticket, double duration)}
-//	 * This method checks the parking duration and sets the value for far price zero
-//	 * if less than 30 minutes
-//	 * 
-//	 * @param ticket   Instance of Ticket class
-//	 * @param duration
-//	 */
-//	private void fareSetZeroValueForLessThanThirtyMinutesParking(Ticket ticket, double duration) {
-//		if (duration < 0.5) {
-//			ticket.setPrice(0);
-//			logger.info("Parking visit is below 30 minutes, fare to pay set to free");
-//			return ;
-//		}
-//	}
 
 	/**
 	 * {@link #checkPertinanceOfGetOutTime(Ticket ticket)} This method checks if
@@ -118,7 +100,7 @@ public class FareCalculatorService {
 	/**
 	 * {@link #computeFare(double duration, double selectedFareType, boolean isRecurrent)}
 	 * This method called in the calculateFare() method to recalculates fare for
-	 * recurrent customer
+	 * recurrent customer.
 	 * 
 	 * @param duration
 	 * @param selectedFareType Return value of
@@ -128,7 +110,7 @@ public class FareCalculatorService {
 	double computeFare(double duration, double selectedFareType, boolean isRecurrent) {
 		double fare = duration * selectedFareType;
 
-		// discounted fare value for the recurrent users
+		// discount for the fare value for the recurrent users.
 		if (isRecurrent)
 			fare -= (fare / 100 * 5);
 

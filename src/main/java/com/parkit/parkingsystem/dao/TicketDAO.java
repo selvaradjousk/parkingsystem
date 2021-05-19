@@ -17,7 +17,7 @@ import com.parkit.parkingsystem.model.Ticket;
 
 /**
  * Class: {@link TicketDAO} - Ticket Data Access Objects.<br>
- * <b>Project: <b> P3 - parking system - ParkIt<br>
+ * <b>Project: </b> P3 - parking system - ParkIt<br>
  * 
  * @see Methods: {@link #getTicket(String)}, {@link #saveTicket(Ticket)},
  *      {@link #getVehicleOccurence(String)}, {@link #updateTicket(Ticket)}
@@ -25,12 +25,20 @@ import com.parkit.parkingsystem.model.Ticket;
  * @author Senthil
  */
 public class TicketDAO {
+
+	/**
+	 * Logger for TicketDao.
+	 */
 	private static final Logger logger = LogManager.getLogger("TicketDAO");
+
+	/**
+	 * dataBaseConfig instance of DataBaseConfig to connect with DataBase.
+	 */
 	public DataBaseConfig dataBaseConfig = new DataBaseConfig();
 
 	/**
 	 * {@link #saveTicket()} This method helps to save the parking spot made
-	 * available for parking of vehicle by customer
+	 * available for parking of vehicle by customer.
 	 * 
 	 * @return boolean - returns boolean value to confirm saving process implemented
 	 *         successfully or not.
@@ -50,7 +58,9 @@ public class TicketDAO {
 			ps.setDouble(3, ticket.getPrice());
 			ps.setTimestamp(4, new Timestamp(ticket.getInTime().getTime()));
 			ps.setTimestamp(5, (ticket.getOutTime() == null) ? null : (new Timestamp(ticket.getOutTime().getTime())));
-			return ps.execute();
+			if (ps.execute()) {
+				return true;
+			}
 		} catch (SQLException ex) {
 			logger.error("Error fetching next available slot", ex);
 		} finally {
@@ -62,7 +72,7 @@ public class TicketDAO {
 
 	/**
 	 * {@link #getTicket()} This method helps to assign ticket for the parking spot
-	 * made available for parking of vehicle by customer
+	 * made available for parking of vehicle by customer.
 	 * 
 	 * @return ticket - returns object value basically instantiated from the class
 	 *         Ticket.
@@ -74,12 +84,14 @@ public class TicketDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 		Ticket ticket = null;
+		ResultSet rs = null;
 		try {
 			con = dataBaseConfig.getConnection();
 			ps = con.prepareStatement(DBConstants.GET_TICKET);
 			// ID, PARKING_NUMBER, VEHICLE_REG_NUMBER, PRICE, IN_TIME, OUT_TIME)
 			ps.setString(1, vehicleRegNumber);
-			ResultSet rs = ps.executeQuery();
+
+			rs = ps.executeQuery();
 			if (rs.next()) {
 				ticket = new Ticket();
 				ParkingSpot parkingSpot = new ParkingSpot(rs.getInt(1), ParkingType.valueOf(rs.getString(6)), false);
@@ -101,8 +113,7 @@ public class TicketDAO {
 	}
 
 	/**
-	 * getVehicleOccurence() This method helps to calculate the number of parking
-	 * visits of the vehicle by customer
+	 * getVehicleOccurence() gets the recurrence visit of customer
 	 * 
 	 * @return occurrences - returns value on the number of recurrent visits made by
 	 *         customer.
@@ -122,7 +133,7 @@ public class TicketDAO {
 			ps.setString(1, vehicleRegNumber);
 			rs = ps.executeQuery();
 
-			if (rs.next())
+			if (rs.next() && rs.getInt(1) > 1)
 				occurences = rs.getInt(1);
 		} catch (SQLException ex) {
 			logger.error("Error fetching vehicle occurence", ex);
@@ -135,11 +146,9 @@ public class TicketDAO {
 	}
 
 	/**
-	 * updateTicket() This method helps to update the ticket information for the
-	 * parking spot made available for parking of vehicle by customer
+	 * updateTicket() Update the ticket information for the customer
 	 * 
-	 * @return boolean - returns object value basically instantiated from the class
-	 *         Ticket.
+	 * @return boolean - true if updated successful else false
 	 * @param ticket - instance variable of {@link #Ticket}
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
@@ -154,8 +163,9 @@ public class TicketDAO {
 			ps.setDouble(1, ticket.getPrice());
 			ps.setTimestamp(2, new Timestamp(ticket.getOutTime().getTime()));
 			ps.setInt(3, ticket.getId());
-			ps.execute();
-			return true;
+			if (ps.executeUpdate() == 1) {
+				return true;
+			}
 		} catch (SQLException ex) {
 			logger.error("Error saving ticket info", ex);
 		} finally {
