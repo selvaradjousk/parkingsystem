@@ -3,6 +3,8 @@ package com.parkit.parkingsystem.service;
 import com.parkit.parkingsystem.dao.ParkingSpotDAO;
 import com.parkit.parkingsystem.dao.TicketDAO;
 import com.parkit.parkingsystem.util.InputReaderUtil;
+import com.parkit.parkingsystem.util.ScannerWrapper;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,7 +34,9 @@ public class InteractiveShell {
 		System.out.println("Welcome to Parking System!");
 
 		boolean continueApp = true;
-		InputReaderUtil inputReaderUtil = new InputReaderUtil();
+		
+		 ScannerWrapper scannerWrapper = new ScannerWrapper();
+		InputReaderUtil inputReaderUtil = new InputReaderUtil(scannerWrapper);
 		ParkingSpotDAO parkingSpotDAO = new ParkingSpotDAO();
 		TicketDAO ticketDAO = new TicketDAO();
 		ParkingService parkingService = new ParkingService(inputReaderUtil,

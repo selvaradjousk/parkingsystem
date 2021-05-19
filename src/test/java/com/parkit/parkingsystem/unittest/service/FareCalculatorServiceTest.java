@@ -159,7 +159,7 @@ public class FareCalculatorServiceTest {
 	 */
 	@DisplayName("Parking Fare: CAR recurrent user ")
 	@ParameterizedTest(name = "Duration of Parking: {0} minutes")
-	@CsvSource({ "60, 1", "120, 2", "180, 3", "240, 4", "300, 5" })
+	@CsvSource({ "60, 1", "120, 2", "180, 3", "240, 4"})
 	public void calculateFareRecurentUserCar(long minutesParked, double priceFactor) {
 
 		// GIVEN
