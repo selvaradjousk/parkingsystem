@@ -21,7 +21,7 @@ import java.util.Date;
  * 
  * @see Methods: {@link #processIncomingVehicle()},
  *      {@link #processExitingVehicle()}, {@link #getVehicleRegNumber()}, 
- *      {@link #getVehichleType()}, {@link #getNextParkingNumberIfAvailable()}
+ *      {@link #getVehicleType()}, {@link #getNextParkingNumberIfAvailable()}
  * 
  * @author Senthil
  */
@@ -131,7 +131,7 @@ public class ParkingService {
 	 * @return readVehicleRegistrationNumber() to the method inputReaderUtil in
 	 *         InputReaderUtil Class
 	 */
-	private String getVehicleRegNumber() throws Exception {
+	public String getVehicleRegNumber() throws Exception {
 		System.out.println("Please type the vehicle registration number and "
 				+ "press enter key");
 		return inputReaderUtil.readVehicleRegistrationNumber();
@@ -152,7 +152,7 @@ public class ParkingService {
 		try {
 			
 			// Fetching information on vehicle type.
-			ParkingType parkingType = getVehichleType();
+			ParkingType parkingType = getVehicleType();
 			
 			// Checking for availability of parking spot not taken.
 			parkingNumber = parkingSpotDAO.getNextAvailableSpot(parkingType);
@@ -171,13 +171,13 @@ public class ParkingService {
 	}
 
 	/**
-	 * {@link #getVehichleType()} The method execute the process of getting
+	 * {@link #getVehicleType()} The method execute the process of getting
 	 * gathering the information on the Vehicle Type that needs to be using the
 	 * Parking
 	 * 
 	 * @throws IllegalArgumentException when entered input is invalid
 	 */
-	private ParkingType getVehichleType() {
+	public ParkingType getVehicleType() {
 		System.out.println("Please select vehicle type from menu");
 		System.out.println("1 CAR");
 		System.out.println("2 BIKE");
@@ -217,7 +217,7 @@ public class ParkingService {
 			ticket.setOutTime(outTime);
 
 			// Eligibility for 5% discount is checked. 
-			int vehicleOccurence = checkForDiscountEligibility(vehicleRegNumber, ticket);
+			boolean vehicleOccurence = checkForDiscountEligibility(vehicleRegNumber, ticket);
 			
 			// Ticket updated with fare and exit time in database.
 			if (ticketDAO.updateTicket(ticket)) {
@@ -252,9 +252,9 @@ public class ParkingService {
 	 * @param ticket
 	 * @return
 	 */
-	private int checkForDiscountEligibility(String vehicleRegNumber, Ticket ticket) {
-		int vehicleOccurence = ticketDAO.getVehicleOccurence(vehicleRegNumber);
-		fareCalculatorService.calculateFare(ticket, vehicleOccurence >= recurentUserOccurencesThreshold);
+	private boolean checkForDiscountEligibility(String vehicleRegNumber, Ticket ticket) {
+		boolean vehicleOccurence = ticketDAO.getVehicleOccurence(vehicleRegNumber);
+		fareCalculatorService.calculateFare(ticket, vehicleOccurence = true);
 		return vehicleOccurence;
 	}
 	
@@ -263,8 +263,8 @@ public class ParkingService {
 	 * 
 	 * @param vehicleOccurence
 	 */
-	private void confirmOfferForDiscount(int vehicleOccurence) {
-		if (vehicleOccurence >= recurentUserOccurencesThreshold)
+	public void confirmOfferForDiscount(boolean vehicleOccurence) {
+		if (vehicleOccurence = true)
 			System.out.println("Applied 5% discount for recurent user");
 	}
 	
@@ -285,7 +285,7 @@ public class ParkingService {
 	/**
 	 * Displays error in case not able to update ticket information.
 	 */
-	private void displayErrorUpdateTicketInformation() {
+	public void displayErrorUpdateTicketInformation() {
 		System.out.println("Unable to update ticket information.");
 	}
 }

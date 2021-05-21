@@ -205,7 +205,7 @@ public class TicketDAOIT {
 		}
 
 		// WHEN
-		int occurences = testTicketDAO.getVehicleOccurence(vehicleRegNumber);
+		boolean occurences = testTicketDAO.getVehicleOccurence(vehicleRegNumber);
 
 		// THEN
 		assertEquals(targetCount, occurences, "Result: Both client reccurence status matches");

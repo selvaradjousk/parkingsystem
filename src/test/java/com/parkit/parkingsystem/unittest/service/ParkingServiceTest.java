@@ -1,8 +1,11 @@
 package com.parkit.parkingsystem.unittest.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
@@ -10,6 +13,9 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Date;
@@ -64,6 +70,7 @@ public class ParkingServiceTest {
 	private static ParkingSpotDAO parkingSpotDAO;
 	@Mock
 	private static TicketDAO ticketDAO;
+	ByteArrayOutputStream byteArrayOutputStream;
 
 	@BeforeEach
 	private void setUpPerTest() {
@@ -114,6 +121,118 @@ public class ParkingServiceTest {
 	}
 
 	/**
+	 * {@link #testForMessageTextDisplayIncomingVehicle()} <br>
+	 * GIVEN: incoming process<br>
+	 * WHEN: executing parking service for incoming vehicle<br>
+	 * THEN: finalizes the <b>match entry ticket</b><br>
+	 * <b>Test Condition <i>PASSED</i>: </b> display message match
+	 * <code><b>TRUE</b></code> <br>
+	 * <b>Test Condition <i>FAILED</i>: </b> display message do not match
+	 * <code><b>FALSE</b></code>
+	 */
+	@Test
+	@DisplayName("Test - Incoming Vehicle Process Does Checks input for Vehicle Type Entry")
+	public void testForMessageTextDisplayIncomingVehicle() throws Exception {
+
+		// GIVEN
+		String outputScreen = null;
+		byteArrayOutputStream = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(byteArrayOutputStream));
+
+		// WHEN
+		parkingService.processIncomingVehicle();
+		outputScreen = byteArrayOutputStream.toString("UTF-8");
+		String out = null;
+
+		// THEN
+		
+		assertTrue(outputScreen.toString().trim().contains("1 CAR"));
+		assertTrue(outputScreen.toString().trim().contains("2 BIKE"));
+		assertFalse(outputScreen.toString().trim().contains("2 CAR"));
+		assertFalse(outputScreen.toString().trim().contains("1 BIKE"));
+//		assertEquals(outputScreen.toString().trim(),"  ");
+		byteArrayOutputStream.close();
+	}
+	
+	@Test
+	@DisplayName("Test - Incoming Vehicle Process Does Check for the Available Parking Spot")
+	public void testIncomingVehicleProcessChecksForAvailableParkingSpot() throws Exception {
+
+		// GIVEN
+		String outputScreen = null;
+		byteArrayOutputStream = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(byteArrayOutputStream));
+
+		// WHEN
+		parkingService.processIncomingVehicle();
+		outputScreen = byteArrayOutputStream.toString("UTF-8");
+		String out = null;
+
+		// THEN
+		assertTrue(outputScreen.toString().trim().contains("Please park your vehicle in spot number:"));
+		assertFalse(outputScreen.toString().trim().contains("PLEASE PARK your VEHICLE in spot number:"));
+		byteArrayOutputStream.close();
+	}
+	
+	@Test
+	@DisplayName("Test - Incoming Vehicle Process Does Generated Ticket and Saved in DB")
+	public void testIncomingVehicleProcessSuccessfullyGenerateTicket() throws Exception {
+
+		// GIVEN
+		String outputScreen = null;
+		byteArrayOutputStream = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(byteArrayOutputStream));
+
+		// WHEN
+		parkingService.processIncomingVehicle();
+		outputScreen = byteArrayOutputStream.toString("UTF-8");
+		String out = null;
+
+		// THEN
+		assertTrue(outputScreen.toString().trim().contains("Generated Ticket and saved in DB"));
+		assertFalse(outputScreen.toString().trim().contains("Generated xxxxx and saved in DB"));
+		byteArrayOutputStream.close();
+	}
+	
+	@Test
+	@DisplayName("Test - Incoming Vehicle Process Does Record the inoming time of Vehicle")
+	public void testIncomingVehicleProcessSuccessfullyREcordInComingTimeOfVehicle() throws Exception {
+
+		// GIVEN
+		String outputScreen = null;
+		byteArrayOutputStream = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(byteArrayOutputStream));
+
+		// WHEN
+		parkingService.processIncomingVehicle();
+		outputScreen = byteArrayOutputStream.toString("UTF-8");
+		String out = null;
+
+		// THEN
+		assertTrue(outputScreen.toString().trim().contains("Recorded in-time for vehicle number:"));
+		byteArrayOutputStream.close();
+	}
+	
+	@Test
+	@DisplayName("Test - Incoming Vehicle Process Does it ask for Vehicle registration number")
+	public void testIncomingVehicleProcessAsksForVehicleREgistrationNumber() throws Exception {
+
+		// GIVEN
+		String outputScreen = null;
+		byteArrayOutputStream = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(byteArrayOutputStream));
+
+		// WHEN
+		parkingService.processIncomingVehicle();
+		outputScreen = byteArrayOutputStream.toString("UTF-8");
+		String out = null;
+
+		// THEN
+		assertTrue(outputScreen.toString().trim().contains("Please type the vehicle registration number and press enter key"));
+		byteArrayOutputStream.close();
+	}
+
+	/**
 	 * {@link #getNextParkingNumberIfAvailableTest()} Integration Test <br>
 	 * GIVEN: <br>
 	 * WHEN: check on the Parking spot availability for Parking<br>
@@ -135,6 +254,389 @@ public class ParkingServiceTest {
 	}
 
 	/**
+	 * {@link #getNextParkingNumberIfAvailableForCarTest()} Integration Test <br>
+	 * GIVEN: <br>
+	 * WHEN: check on the CAR Parking spot availability for Parking<br>
+	 * THEN: <b>verify availability status</b><br>
+	 * <b>Test Condition <i>PASSED</i>: </b> actual expected spots match
+	 * <code><b>TRUE</b></code> <br>
+	 * <b>Test Condition <i>FAILED</i>: </b>actual expected spots not match
+	 * availability <code><b>FALSE</b></code>
+	 */
+	@DisplayName("CAR Parking Availability of Next parking spot ")
+	@Test
+	public void getNextParkingNumberIfAvailableForcarTest() {
+		// GIVEN
+		ParkingSpot expectedParkingSpot = new ParkingSpot(1, ParkingType.CAR, true);
+		when(inputReaderUtil.readSelection()).thenReturn(1);
+		when(parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR)).thenReturn(1);
+
+		// WHEN
+		ParkingSpot parkingSpot = parkingService.getNextParkingNumberIfAvailable();
+
+		// THEN
+		verify(parkingSpotDAO).getNextAvailableSpot(ParkingType.CAR);
+		assertEquals(parkingSpot, expectedParkingSpot);
+	}
+
+	/**
+	 * {@link #getNextParkingNumberIfAvailableForBikeTest()} Integration Test <br>
+	 * GIVEN: <br>
+	 * WHEN: check on the BIKE Parking spot availability for Parking<br>
+	 * THEN: <verify availability status</b><br>
+	 * <b>Test Condition <i>PASSED</i>: </b>actual expected spots match
+	 * <code><b>TRUE</b></code> <br>
+	 * <b>Test Condition <i>FAILED</i>: </b>actual expected spots not match
+	 * <code><b>FALSE</b></code> availability <code><b>FALSE</b></code>
+	 */
+	@DisplayName("BIKE Parking Availability of Next parking spot ")
+	@Test
+	public void getNextParkingNumberIfAvailableForBikeTest() {
+		// GIVEN
+		ParkingSpot expectedParkingSpot = new ParkingSpot(9, ParkingType.BIKE, true);
+		when(inputReaderUtil.readSelection()).thenReturn(2);
+		when(parkingSpotDAO.getNextAvailableSpot(ParkingType.BIKE)).thenReturn(9);
+
+		// WHEN
+		ParkingSpot parkingSpot = parkingService.getNextParkingNumberIfAvailable();
+
+		// THEN
+		verify(parkingSpotDAO).getNextAvailableSpot(ParkingType.BIKE);
+		assertEquals(parkingSpot, expectedParkingSpot);
+	}
+	
+	/**
+	 * {@link #testParkingSpotAvailabuilityFull()} <br>
+	 * GIVEN: <br>
+	 * WHEN: checking for availability of parking is full<br>
+	 * THEN: parking spot <b>processing is Full - complete</b><br>
+	 * <b>Test Condition <i>PASSED</i>: </b>assertThat error message displayed
+	 * <code><b>TRUE</b></code> <br>
+	 * <b>Test Condition <i>FAILED</i>: </b>assertThat error message displayed
+	 * <code><b>FALSE</b></code>
+	 */
+	@DisplayName("Parking Service Testing - Parking Full error messsage ")
+    @Test 
+    public void testParkingSpotAvailabuilityFullThrowErrorMessage(){
+    	// GIVEN
+    	when(inputReaderUtil.readSelection()).thenReturn(1);
+    	parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+    	ParkingType parkingType = ParkingType.CAR;
+    	when(parkingSpotDAO.getNextAvailableSpot(parkingType)).thenReturn(0);
+    	
+    	// WHEN
+    	try {
+    	parkingService.getNextParkingNumberIfAvailable();
+    	
+    	} catch (Exception e) {
+    		String ex = e.getMessage();
+    		// THEN
+    		assertTrue(ex.contains("Error fetching next available parking slot"));
+    	}
+    }
+
+	/**
+	 * {@link #testErrorMessageInvalidVehicleTypeOnThrowIllegalException()} <br>
+	 * GIVEN: input vehicle type value<br>
+	 * WHEN: executing parking verification<br>
+	 * THEN: parking service <b>Throws Exception</b><br>
+	 * <b>Test Condition <i>PASSED</i>: </b> displays error message
+	 * <code><b>TRUE</b></code> <br>
+	 * <b>Test Condition <i>FAILED</i>: </b> do not display error message
+	 * <code><b>FALSE</b></code>
+	 */
+    @DisplayName("Error parsing user input - availability Parking Spot")
+    @Test 
+    public void testErrorMessageInvalidVehicleTypeOnThrowIllegalException(){
+    	// GIVEN
+    	when(inputReaderUtil.readSelection()).thenReturn(1);
+    	parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+    	ParkingType parkingType = ParkingType.CAR;
+    	when(parkingSpotDAO.getNextAvailableSpot(parkingType)).thenReturn(0);
+    	
+    	// WHEN
+    	try {
+    	parkingService.getNextParkingNumberIfAvailable();
+    	
+    	} catch (IllegalArgumentException e) {
+    		String ex = e.getMessage();
+    		// THEN
+    		assertTrue(ex.contains("Error parsing user input for type of vehicle"));
+    	}
+    }
+	
+	/**
+	 * {@link #testErrorMessageInvalidVehicleTypeOnThrowIllegalException()} <br>
+	 * GIVEN: input vehicle type value<br>
+	 * WHEN: executing parking verification<br>
+	 * THEN: parking service <b>Throws Exception</b><br>
+	 * <b>Test Condition <i>PASSED</i>: </b> displays error message
+	 * <code><b>TRUE</b></code> <br>
+	 * <b>Test Condition <i>FAILED</i>: </b> do not display error message
+	 * <code><b>FALSE</b></code>
+	 */
+    @DisplayName("IllegalArgumentException: display message Vehicle type - Invalid Input")
+    @Test 
+    public void testErrorMessageInputVechileTypeOnThrowIllegalException(){
+    	// GIVEN
+    	when(inputReaderUtil.readSelection()).thenReturn(4);
+    	parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+    	ParkingType parkingType = ParkingType.CAR;
+    	when(parkingSpotDAO.getNextAvailableSpot(parkingType)).thenReturn(0);
+    	
+    	// WHEN
+    	try {
+    	parkingService.getVehicleType();
+    	
+    	} catch (IllegalArgumentException e) {
+    		String ex = e.getMessage();
+    		// THEN
+    		assertTrue(ex.contains("Entered input is invalid"));
+    	}
+    }
+    
+	/**
+	 * {@link #testErrorOnWrongVehicleType()} <br>
+	 * GIVEN: input non reliant value<br>
+	 * WHEN: executing parking verification<br>
+	 * THEN: parking service <b>processing fails with error</b><br>
+	 * <b>Test Condition <i>PASSED</i>: </b> assertThrows error
+	 * <code><b>TRUE</b></code> <br>
+	 * <b>Test Condition <i>FAILED</i>: </b> assertThrows no error
+	 * <code><b>FALSE</b></code>
+	 */
+    @DisplayName("IllegalArgumentException thrown for invalid input")
+    @Test 
+    public void testErrorOnWrongVehicleType(){
+    	
+    	// GIVEN
+    	when(inputReaderUtil.readSelection()).thenReturn(4);
+    	
+    	// WHEN
+    	parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+    	
+    	// THEN
+    	assertThrows(IllegalArgumentException.class, () -> parkingService.getVehicleType());
+    }
+	
+	/**
+	 * {@link #testForVehicleTypeIsBike()} <br>
+	 * GIVEN: input vehicle type for Bike<br>
+	 * WHEN: executing parking service<br>
+	 * THEN: identifies <b>match for entry value vehicle type</b><br>
+	 * <b>Test Condition <i>PASSED</i>: </b> assertEquals = type Bike
+	 * <code><b>TRUE</b></code> <br>
+	 * <b>Test Condition <i>FAILED</i>: </b> assertEquals != type Bike
+	 * <code><b>FALSE</b></code>
+	 */
+    @Test
+    @DisplayName("Verify and confirm vehicle type bike")
+    public void testForVehicleTypeIsBike(){
+    	// 
+    	// GIVEN
+    	when(inputReaderUtil.readSelection()).thenReturn(2);
+    	
+    	// WHEN
+    	parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+    	
+    	// THEN
+        assertEquals(parkingService.getVehicleType(), ParkingType.BIKE);
+    }
+	
+	/**
+	 * {@link #testForVehicleTypeIsCar()} <br>
+	 * GIVEN: input vehicle type fore Car<br>
+	 * WHEN: executing parking service<br>
+	 * THEN: identifies <b>match for entry value vehicle type</b><br>
+	 * <b>Test Condition <i>PASSED</i>: </b> assertEquals = type Car
+	 * <code><b>TRUE</b></code> <br>
+	 * <b>Test Condition <i>FAILED</i>: </b> assertEquals != type Car
+	 * <code><b>FALSE</b></code>
+	 */
+    @Test
+    @DisplayName("Verify and confirm vehicle type bike")
+    public void testForVehicleTypeIsCar(){
+    	// 
+    	// GIVEN
+    	when(inputReaderUtil.readSelection()).thenReturn(1);
+    	
+    	// WHEN
+    	parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+    	
+    	// THEN
+        assertEquals(parkingService.getVehicleType(), ParkingType.CAR);
+    }
+	
+    /**
+	 * {@link #testForMessageTextDisplayForPaymentAmount()} <br>
+	 * GIVEN: exiting process<br>
+	 * WHEN: executing parking service for fare calculation<br>
+	 * THEN: finalizes the <b>match  fare amount</b><br>
+	 * <b>Test Condition <i>PASSED</i>: </b> display message match
+	 * <code><b>TRUE</b></code> <br>
+	 * <b>Test Condition <i>FAILED</i>: </b> display message do not match
+	 * <code><b>FALSE</b></code>
+	 */
+    @Test
+    @DisplayName("Test on Screen display message request to pay fare amount")
+    public void testForMessageTextDisplayForPaymentAmount() throws Exception{
+    	
+    	// GIVEN
+        ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        
+        // WHEN
+        parkingService.processIncomingVehicle();
+        parkingService.processExitingVehicle();
+        
+        String out = null;
+		try {
+			out = outContent.toString("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+        // THEN
+		assertTrue(out.contains("Please pay the parking fare:"));
+		assertTrue(out.contains("Recorded out-time for vehicle number:"));
+    }
+        
+    /**
+	 * {@link #testForMessageTextDisplayForTicketUpdateError()} <br>
+	 * GIVEN: exiting process<br>
+	 * WHEN: executing parking service for fare calculation<br>
+	 * THEN: identifies <b>ticket update error</b><br>
+	 * <b>Test Condition <i>PASSED</i>: </b> do not display the error message
+	 * <code><b>TRUE</b></code> <br>
+	 * <b>Test Condition <i>FAILED</i>: </b> do not display the error message
+	 * <code><b>FALSE</b></code>
+	 */
+    @Test
+    @DisplayName("Test on Screen display error message on Ticket update")
+    public void testForMessageTextDisplayForTicketUpdateError() throws Exception{
+    	
+    	// GIVEN
+        ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        
+        // WHEN
+        parkingService.processIncomingVehicle();
+        parkingService.processExitingVehicle();
+        parkingService.displayErrorUpdateTicketInformation();
+        String out = null;
+		try {
+			out = outContent.toString("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+        // THEN
+		assertTrue(out.contains("Unable to update ticket information."));
+    }
+
+    /**
+	 * {@link #testForMessageTextDisplayOnDiscountConfirmation()} <br>
+	 * GIVEN: exiting process<br>
+	 * WHEN: executing parking service for fare calculation<br>
+	 * THEN: confirms <b>discount eligibility</b><br>
+	 * <b>Test Condition <i>PASSED</i>: </b> display discount confirmation message 
+	 * <code><b>TRUE</b></code> <br>
+	 * <b>Test Condition <i>FAILED</i>: </b> display discount confirmation message
+	 * <code><b>FALSE</b></code>
+	 */
+    @Test
+    @DisplayName("Test for display message confirm 5% discount")
+    public void testForMessageTextDisplayOnDiscountConfirmation() throws Exception{
+    	
+    	// GIVEN
+        ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        
+        // WHEN
+        parkingService.processIncomingVehicle();
+        parkingService.processExitingVehicle();
+        parkingService.confirmOfferForDiscount(true);
+        String out = null;
+		try {
+			out = outContent.toString("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+        // THEN
+		assertTrue(out.contains("Applied 5% discount for recurent user"));
+    }
+    
+    /**
+	 * {@link #testForMessageTextDisplayWrongInputVehcileType()} <br>
+	 * GIVEN: exiting process<br>
+	 * WHEN: retrieving input vehicle type<br>
+	 * THEN: identifies <b>error input</b><br>
+	 * <b>Test Condition <i>PASSED</i>: </b> display invalid input error
+	 * <code><b>TRUE</b></code> <br>
+	 * <b>Test Condition <i>FAILED</i>: </b>no display invalid input error
+	 * <code><b>FALSE</b></code>
+	 */
+    @Test
+    @DisplayName("Test for display message invalid Vehcile type input")
+    public void testForMessageTextDisplayWrongInputVehcileType() throws Exception{
+    	
+    	
+    	// GIVEN
+    	when(inputReaderUtil.readSelection()).thenReturn(4);
+    	
+    	// WHEN
+    	parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+    	// THEN
+    	assertThrows(IllegalArgumentException.class, () -> parkingService.getVehicleType());
+    	
+        String out = null;
+		try {
+			out = outContent.toString("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+        // THEN
+		assertTrue(out.contains("Incorrect input provided"));
+    }  
+   
+	/**
+	 * {@link #testErrorMessageInvalidVehicleTypeOnThrowException()} <br>
+	 * GIVEN: input vehicle type value<br>
+	 * WHEN: executing parking verification<br>
+	 * THEN: parking service <b>Throws Exception</b><br>
+	 * <b>Test Condition <i>PASSED</i>: </b> displays error message
+	 * <code><b>TRUE</b></code> <br>
+	 * <b>Test Condition <i>FAILED</i>: </b> do not display error message
+	 * <code><b>FALSE</b></code>
+	 */
+    @DisplayName("IllegalArgumentException thrown display error message")
+    @Test 
+    public void testErrorMessageInvalidVehicleTypeOnThrowException(){
+    	// GIVEN
+    	when(inputReaderUtil.readSelection()).thenReturn(4);
+    	parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+    	ParkingType parkingType = ParkingType.CAR;
+    	when(parkingSpotDAO.getNextAvailableSpot(parkingType)).thenReturn(0);
+    	
+    	// WHEN
+    	try {
+    	parkingService.getVehicleType();
+    	
+    	} catch (IllegalArgumentException e) {
+    		String ex = e.getMessage();
+    		// THEN
+    		assertTrue(ex.contains("Entered input is invalid"));
+    	}
+    }
+    
+	/**
 	 * {@link #processExitingVehicleTest()} Integration Test <br>
 	 * GIVEN: <br>
 	 * WHEN: processing of Vehicle Exit Process<br>
@@ -155,6 +657,7 @@ public class ParkingServiceTest {
 		// THEN
 		verify(parkingSpotDAO, Mockito.times(1)).updateParking(any(ParkingSpot.class));
 	}
+	
 
 	/**
 	 * {@link #testParkingLotExit()} Integration Test <br>
@@ -179,7 +682,34 @@ public class ParkingServiceTest {
 		Date insertedInTime = new Date();
 		insertedInTime.setTime(System.currentTimeMillis() - (1000 * 60 * 60));
 		testTicket.setInTime(insertedInTime);
+		Ticket ticket = getVehicileRegistrationNumber();
+		ticketDAO.saveTicket(testTicket);
 
+		// WHEN
+		parkingService.processExitingVehicle();
+
+		// THEN
+		ParkingSpot parkingSpot = ticket.getParkingSpot();
+		int availableParkingSpotNumber = parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR);
+		assertNotNull(parkingSpot, "Confirms parkingSpot for Ticket is not null, So isAvailable");
+		assertTrue(parkingSpot.isAvailable(), "Return: availability-YES updated");
+		assertEquals(parkingSpot.getId(), availableParkingSpotNumber, "Leaving Vehicle ParkingSpot matches with isAvailable ParkingSpot");
+
+	}	
+	
+	@DisplayName("Test - Parking Service - Parking Exit Time is not Null")
+	@Test
+	public void testParkingExitProcessTicketOutTimeNotNull() throws Exception {
+		// GIVEN
+		ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+
+		// inserts test ticket in database
+		Ticket testTicket = new Ticket();
+		testTicket.setParkingSpot(parkingService.getNextParkingNumberIfAvailable());
+		testTicket.setVehicleRegNumber(inputReaderUtil.readVehicleRegistrationNumber());
+		Date insertedInTime = new Date();
+		insertedInTime.setTime(System.currentTimeMillis() - (1000 * 60 * 60));
+		testTicket.setInTime(insertedInTime);
 		ticketDAO.saveTicket(testTicket);
 
 		// WHEN
@@ -188,31 +718,57 @@ public class ParkingServiceTest {
 		// THEN
 
 		Ticket ticket = getVehicileRegistrationNumber();
-		BigDecimal bd = new BigDecimal(ticket.getPrice()).setScale(3, RoundingMode.HALF_UP);
-		double ticketGetPrice = bd.doubleValue();
-		assertNotNull(ticket.getOutTime(), "Return: null");
-		assertNotNull(ticket, "Return null: No Ticket");
-		assertNotEquals(ticket.getPrice(), null);
-		assertNotEquals(ticket.getPrice(), 0);
-		assertNotNull(ticket.getPrice());
-		assertEquals(Fare.CAR_RATE_PER_HOUR, ticketGetPrice, "Return: defaule per hour price");
-		assertTrue(ticket instanceof Ticket, "Return: No Ticket");
-		assertTrue(ticketDAO.updateTicket(ticket), "Return: not updated");
-//		System.out.println("*******************");
-//		System.out.println("Vehichle " + ticket.getVehicleRegNumber() + " Entry-time:" + ticket.getInTime());
-//		System.out.println("*******************");		
-		ParkingSpot parkingSpot = ticket.getParkingSpot();
-		int availableParkingSpotNumber = parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR);
-		assertNotNull(parkingSpot, "Return: parking spot null value");
-		assertTrue(parkingSpot instanceof ParkingSpot, "Return: !=parking Spot");
-		assertEquals(parkingSpot.getId(), availableParkingSpotNumber, "Return: availability-YES updated");
-		assertTrue(parkingSpot.isAvailable(), "Return: availability-YES updated");
+		assertNotNull(ticket.getOutTime(), "Return: not null, exit time is recorded");
+	}		
+	
+	
+	@DisplayName("Test - Parking Service - Parking Exit Ticket Is Issued Properly")
+	@Test
+	public void testParkingExitProcessTicketIsIssuedProperly() throws Exception {
+		// GIVEN
+		ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
 
+		// inserts test ticket in database
+		Ticket testTicket = new Ticket();
+		testTicket.setParkingSpot(parkingService.getNextParkingNumberIfAvailable());
+		testTicket.setVehicleRegNumber(inputReaderUtil.readVehicleRegistrationNumber());
+		Date insertedInTime = new Date();
+		insertedInTime.setTime(System.currentTimeMillis() - (1000 * 60 * 60));
+		testTicket.setInTime(insertedInTime);
+		ticketDAO.saveTicket(testTicket);
+
+		// WHEN
+		parkingService.processExitingVehicle();
+
+		// THEN
+		Ticket ticket = getVehicileRegistrationNumber();
+		BigDecimal FareCAR_RATE_PER_HOUR = new BigDecimal(Fare.CAR_RATE_PER_HOUR*0.950000000000001).setScale(2, RoundingMode.HALF_UP);
+		BigDecimal ticketGetPrice = new BigDecimal(ticket.getPrice()).setScale(2, RoundingMode.HALF_UP);
+		assertNotEquals(ticket.getPrice(), null, "Fare price of the Ticket is not a null value");
+		assertNotEquals(ticket.getPrice(), 0);
+		assertEquals(FareCAR_RATE_PER_HOUR, ticketGetPrice, "Return: defaule per hour price");
 	}
 	
-	
-	
+	@Test
+	@DisplayName("Test - Display Error Update Ticket Information")
+	public void testDisplayErrorUpdateTicketInformation() throws Exception {
 
+		// GIVEN
+		String outputScreen = null;
+		byteArrayOutputStream = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(byteArrayOutputStream));
+
+		// WHEN
+		parkingService.displayErrorUpdateTicketInformation();
+		outputScreen = byteArrayOutputStream.toString("UTF-8");
+		String out = null;
+
+		// THEN
+		assertTrue(outputScreen.toString().trim().contains("Unable to update ticket information."));
+		assertFalse(outputScreen.toString().trim().contains("Unable to UPDATe ticket information"));
+		byteArrayOutputStream.close();
+	}
+		
 	static Ticket getVehicileRegistrationNumber() throws Exception {
 		Ticket ticket = null;
 		String registrationNumber = new String();

@@ -121,11 +121,11 @@ public class TicketDAO {
 	 *                         the vehicles registration number
 	 * @exception SQLException
 	 */
-	public int getVehicleOccurence(String vehicleRegNumber) {
+	public boolean getVehicleOccurence(String vehicleRegNumber) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		int occurences = 0;
+		boolean occurences = false;
 
 		try {
 			con = dataBaseConfig.getConnection();
@@ -133,14 +133,16 @@ public class TicketDAO {
 			ps.setString(1, vehicleRegNumber);
 			rs = ps.executeQuery();
 
-			if (rs.next() && rs.getInt(1) > 1)
-				occurences = rs.getInt(1);
+			if (rs.next() && rs.getInt(1) > 1) {
+				occurences = true;
+			} else
+			{
+				logger.debug("No ticket found with this registration number");	
+			}
+				
 		} catch (SQLException ex) {
 			logger.error("Error fetching vehicle occurence", ex);
 		} finally {
-			dataBaseConfig.closeConnection(con);
-			dataBaseConfig.closePreparedStatement(ps);
-			dataBaseConfig.closeResultSet(rs);
 			return occurences;
 		}
 	}
