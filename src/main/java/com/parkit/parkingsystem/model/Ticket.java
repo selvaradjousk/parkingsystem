@@ -42,6 +42,10 @@ public class Ticket {
 	 * Exit Time.
 	 */
 	private Date outTime;
+	
+	private boolean occurences;
+	
+	
 
 	/**
 	 * getID() getter for attribute - id getter.
@@ -156,4 +160,13 @@ public class Ticket {
 		this.outTime = Optional.ofNullable(outTime).map(Date::getTime).map(Date::new).orElse(null);// new
 																									// Date(outTime.getTime());
 	}
+	
+	public boolean occurences() {
+		return occurences;
+	}
+
+	public void setOccurences(boolean occurences) {
+		this.occurences = occurences;
+	}
+	
 }
