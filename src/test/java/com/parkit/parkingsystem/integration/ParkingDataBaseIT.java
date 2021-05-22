@@ -57,7 +57,11 @@ public class ParkingDataBaseIT {
 	@Spy
 	private static TicketDAO ticketDAO;
 	private static DataBasePrepareService dataBasePrepareService;
+    private ParkingService parkingService;
 
+    @Mock
+    private ParkingSpot parkingSpot;
+	
 	@Mock
 	private static InputReaderUtil inputReaderUtil;
 
@@ -161,6 +165,27 @@ public class ParkingDataBaseIT {
 		assertNotNull(ticket, "Return: Ticket issued");
 
 	}
+	
+    @DisplayName("Test DB save Ticket and update availability of parkingSpot")
+    @Test
+    public void testDbAvailabilityUpdatedAndTicketSave() throws Exception {
+
+    	// GIVEN
+    	when(inputReaderUtil.readSelection()).thenReturn(1);
+        when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
+        dataBasePrepareService.clearDBEntries();
+        parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+        
+        // WHEN
+    	parkingService.processIncomingVehicle();
+
+    	// THEN
+        assertNotNull(ticketDAO.getTicket("ABCDEF"));
+        assertTrue(parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR) > 1);
+        assertFalse(parkingSpot.isAvailable());
+    }
+    
+    
 	
 
 

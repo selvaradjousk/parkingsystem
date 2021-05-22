@@ -170,6 +170,10 @@ class InputReaderUtilTest {
 		// THEN
 		assertThrows(IllegalArgumentException.class, () -> inputReaderUtil.readVehicleRegistrationNumber()); // WHEN
 	}
+	
+	
+	
+	
 
 //	@Test
 //	@Tag("DisplayMessageTest")
