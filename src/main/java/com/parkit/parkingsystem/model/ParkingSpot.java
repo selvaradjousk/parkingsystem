@@ -36,11 +36,9 @@ public class ParkingSpot {
 	 * ParkingSpot() Parameterized Constructor with three parameters number,
 	 * ParkingType and IsAvailable
 	 * 
-	 * @return boolean - returns object value basically instantiated from the class
-	 *         Ticket.
-	 * @param num          Parking spot number
-	 * @param the          vehicle parking type
-	 * @param availability of a parking spot
+	 * @param number
+	 * @param parkingType
+	 * @param isAvailable
 	 */
 	public ParkingSpot(int number, ParkingType parkingType, boolean isAvailable) {
 		this.number = number;
@@ -49,8 +47,7 @@ public class ParkingSpot {
 	}
 
 	/**
-	 * getID() getter for ParkingSpot() parameter - number. getter is used to
-	 * protect the data during class instance creation.
+	 * getID() getter number
 	 * 
 	 * @return number - returns the instance parameter attribute value.
 	 */
@@ -59,38 +56,34 @@ public class ParkingSpot {
 	}
 
 	/**
-	 * setID() setter for ParkingSpot() parameter - number. setter is used to
-	 * protect the data during class instance creation.
+	 * setID() setter for ParkingSpot() parameter - number.
 	 * 
-	 * @return number - returns value assigned to its attribute.
+	 * @return number Returns value assigned to its attribute.
 	 */
 	public void setId(int number) {
 		this.number = number;
 	}
 
 	/**
-	 * getParkingType() getter for ParkingSpot() Constructor parameter - parkingType
-	 * - getter is used to protect the data during class instance creation.
+	 * getParkingType() getter for ParkingSpot() Constructor parameter.
 	 * 
-	 * @return parkingType - returns the instance parameter attribute values.
+	 * @return parkingType Returns the instance parameter attribute values.
 	 */
 	public ParkingType getParkingType() {
 		return parkingType;
 	}
 
 	/**
-	 * setParkingType() setter for ParkingSpot() Constructor parameter -
-	 * parkingType. setter is used to protect the data during class instance
-	 * creation.
+	 * setParkingType() setter for ParkingSpot() Constructor parameter
 	 * 
-	 * @return parkingType - returns value assigned to its parameter attributes.
+	 * @return parkingType - returns value of its parameter attributes.
 	 */
 	public void setParkingType(ParkingType parkingType) {
 		this.parkingType = parkingType;
 	}
 
 	/**
-	 * isAvailable() method for ParkingSpot() parameter - isAvailable. protect the
+	 * isAvailable() method for ParkingSpot() parameter isAvailable. protect the
 	 * data during class instance creation.
 	 * 
 	 * @return isAvailable - returns the instance parameter attribute value.
@@ -100,18 +93,17 @@ public class ParkingSpot {
 	}
 
 	/**
-	 * setAvailable() setter for ParkingSpot() Constructor parameter - setAvailable.
-	 * setter is used to protect the data during class instance creation.
+	 * setAvailable() setter for ParkingSpot() Constructor parameter.
 	 * 
-	 * @return setAvailable - returns value assigned to its attribute.
+	 * @param available
+	 * @return setAvailable Returns value assigned to its attribute.
 	 */
 	public void setAvailable(boolean available) {
 		isAvailable = available;
 	}
 
 	/**
-	 * equals() equals boolean method with object parameter as input value. Checks
-	 * for null value and duplicity.
+	 * equals() equals boolean method with object parameter as input value.
 	 * 
 	 * @return boolean - returns boolean result for the ParkingSpot check.
 	 */
@@ -119,14 +111,14 @@ public class ParkingSpot {
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
-		if (o == null || getClass() != o.getClass())
+		if (o == null || getClass() != o.getClass()) 
 			return false;
 		ParkingSpot that = (ParkingSpot) o;
 		return number == that.number;
 	}
 
 	/**
-	 * hashcode() method
+	 * hashcode() method.
 	 * 
 	 * @return number - returns the instance parameter attribute value.
 	 */

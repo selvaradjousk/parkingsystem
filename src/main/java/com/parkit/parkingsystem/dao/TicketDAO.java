@@ -34,7 +34,16 @@ public class TicketDAO {
 	/**
 	 * dataBaseConfig instance of DataBaseConfig to connect with DataBase.
 	 */
-	public DataBaseConfig dataBaseConfig = new DataBaseConfig();
+	private DataBaseConfig dataBaseConfig = new DataBaseConfig();
+
+	/**
+	 * DataBaseConfig setter.
+	 *
+	 * @param dataBaseConfig set instance
+	 */
+	public void setDataBaseConfig(final DataBaseConfig dataBaseConfig) {
+		this.dataBaseConfig = dataBaseConfig;
+	}
 
 	/**
 	 * {@link #saveTicket()} This method helps to save the parking spot made
@@ -135,11 +144,10 @@ public class TicketDAO {
 
 			if (rs.next() && rs.getInt(1) > 1) {
 				occurences = true;
-			} else
-			{
-				logger.debug("No ticket found with this registration number");	
+			} else {
+				logger.debug("No ticket found with this registration number");
 			}
-				
+
 		} catch (SQLException ex) {
 			logger.error("Error fetching vehicle occurence", ex);
 		} finally {

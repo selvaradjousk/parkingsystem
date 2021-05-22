@@ -10,7 +10,13 @@ package com.parkit.parkingsystem.constants;
  * 
  * @author Senthil
  */
-public class DBConstants {
+public final class DBConstants {
+	
+	/**
+	 * Private Constructor of DBConstants.
+	 */
+	private DBConstants() {
+	}
 
 	/**
 	 * SQL query to get available parking spot.

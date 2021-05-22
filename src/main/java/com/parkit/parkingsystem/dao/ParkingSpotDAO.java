@@ -30,8 +30,17 @@ public class ParkingSpotDAO {
 	/**
 	 * Instance dataBaseConfig of DataBaseConfig to connect to DataBase.
 	 */
-	public DataBaseConfig dataBaseConfig = new DataBaseConfig();
+	 private DataBaseConfig dataBaseConfig = new DataBaseConfig();
 
+	  /**
+	   * Setter of a DataBaseConfig.
+	   *
+	   * @param dataBaseConfig set instance
+	   */
+	  public void setDataBaseConfig(final DataBaseConfig dataBaseConfig) {
+	    this.dataBaseConfig = dataBaseConfig;
+	  }
+	 
 	/**
 	 * getNextAvailableSlot() This method helps to identify the next parking spot
 	 * available for parking of vehicle

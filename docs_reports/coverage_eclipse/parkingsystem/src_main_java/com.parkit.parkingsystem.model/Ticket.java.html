@@ -1,105 +1,105 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Ticket.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (17 mai 2021 20:51:59)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.model</a> &gt; <span class="el_source">Ticket.java</span></div><h1>Ticket.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.model;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Ticket.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (22 mai 2021 09:43:40)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.model</a> &gt; <span class="el_source">Ticket.java</span></div><h1>Ticket.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.model;
 
 import java.util.Date;
+import java.util.Optional;
 
 /**
- * Class: {@link Ticket} - Ticket Data Objects.&lt;br&gt; 
- * &lt;b&gt;Project: &lt;b&gt; P3 - parking system - ParkIt&lt;br&gt; 
+ * Class: {@link Ticket} - Ticket Data Objects.&lt;br&gt;
+ * &lt;b&gt;Project: &lt;b&gt; P3 - parking system - ParkIt&lt;br&gt;
+ * 
  * @package - com.parkit.parkingsystem.model
  * 
  * @author Senthil
  */
-<span class="fc" id="L12">public class Ticket {</span>
-	private int id;
-	private ParkingSpot parkingSpot;
-	private String vehicleRegNumber;
-	private double price;
-	private Date inTime;
-	private Date outTime;
+<span class="fc" id="L14">public class Ticket {</span>
 
 	/**
-	 * getID() getter for attribute - id getter is used to protect the data during
-	 * class instance creation.
+	 * Ticket Identifier.
+	 */
+	private int id;
+
+	/**
+	 * Parking Spot for the vehicle.
+	 */
+	private ParkingSpot parkingSpot;
+	
+	/**
+	 * Vehicle registration number.
+	 */
+	private String vehicleRegNumber;
+	
+	/**
+	 * Fare price of parking.
+	 */
+	private double price;
+	
+	/**
+	 * Entry Time.
+	 */
+	private Date inTime;
+	
+	/**
+	 * Exit Time.
+	 */
+	private Date outTime;
+	
+	private boolean occurences;
+	
+	
+
+	/**
+	 * getID() getter for attribute - id getter.
 	 * 
 	 * @return id - returns the instance parameter attribute value.
 	 */
 	public int getId() {
-<span class="fc" id="L27">		return id;</span>
+<span class="fc" id="L56">		return id;</span>
 	}
 
 	/**
-	 * setId() setter id attribute - setID with parameter id type integer. setter is
-	 * used to protect the data during class instance creation.
+	 * setId() setter id attribute.
 	 * 
 	 * @return id - returns value assigned to its attribute.
 	 */
 	public void setId(int id) {
-<span class="fc" id="L37">		this.id = id;</span>
-<span class="fc" id="L38">	}</span>
+<span class="fc" id="L65">		this.id = id;</span>
+<span class="fc" id="L66">	}</span>
 
 	/**
-	 * getID() getter for attribute method- getParkingSpot() with parameter type
-	 * ParkingSpot. getter is used to protect the data during class instance
-	 * creation.
+	 * getID() getter for attribute method.
 	 * 
-	 * @return parkingSpot - returns the instance parameter attributes and values of
-	 *         class ParkingSpot instantiated.
+	 * @param spot parking spot.
+	 * @return parkingSpot - returns the instance parameter attributes.
 	 */
 	public ParkingSpot getParkingSpot() {
-<span class="fc" id="L49">		return parkingSpot;</span>
+<span class="fc" id="L75">		return parkingSpot;</span>
 	}
 
 	/**
-	 * setParkingSpot() setter for ParkingSpot() Constructor parameter instance of -
-	 * ParkingSpot. setter is used to protect the data during class instance
-	 * creation.
+	 * setParkingSpot() setter for ParkingSpot() Constructor.
 	 * 
-	 * @return parkingSpot - returns value assigned to the attributes of ParkingSpot
-	 *         instance.
+	 * @return parkingSpot - returns value assigned instance.
 	 */
 	public void setParkingSpot(ParkingSpot parkingSpot) {
-<span class="fc" id="L61">		this.parkingSpot = parkingSpot;</span>
-<span class="fc" id="L62">	}</span>
+<span class="fc" id="L84">		this.parkingSpot = parkingSpot;</span>
+<span class="fc" id="L85">	}</span>
 
 	/**
-	 * getVehicleRegNumber() getter for attribute - vehicleRegNumber getter is used
-	 * to protect the data during class instance creation.
+	 * getVehicleRegNumber() getter for attribute - vehicleRegNumber.
 	 * 
-	 * @return vehicleRegNumber - returns the instance parameter attribute value.
+	 * @return vehicleRegNumber - returns the attribute value.
 	 */
 	public String getVehicleRegNumber() {
-<span class="fc" id="L71">		return vehicleRegNumber;</span>
+<span class="fc" id="L93">		return vehicleRegNumber;</span>
 	}
 
 	/**
-	 * setVehicleRegNumber() setter vehicleRegNumber attribute - with parameter
-	 * vehicleRegNumber type string. setter is used to protect the data during class
-	 * instance creation.
+	 * setVehicleRegNumber() setter vehicle Reg Number attribute.
 	 * 
 	 * @return vehicleRegNumber - returns value assigned to its attribute.
 	 */
 	public void setVehicleRegNumber(String vehicleRegNumber) {
-<span class="fc" id="L82">		this.vehicleRegNumber = vehicleRegNumber;</span>
-<span class="fc" id="L83">	}</span>
-
-	/**
-	 * getPrice() getter for attribute - price getter is used to protect the data
-	 * during class instance creation.
-	 * 
-	 * @return price - returns the instance parameter attribute value.
-	 */
-	public double getPrice() {
-<span class="fc" id="L92">		return price;</span>
-	}
-
-	/**
-	 * setPrice() setter price attribute - with parameter price type double. setter
-	 * is used to protect the data during class instance creation.
-	 * 
-	 * @return price - returns value assigned to its attribute.
-	 */
-	public void setPrice(double price) {
-<span class="fc" id="L102">		this.price = price;</span>
+<span class="fc" id="L102">		this.vehicleRegNumber = vehicleRegNumber;</span>
 <span class="fc" id="L103">	}</span>
 
 	/**
@@ -108,19 +108,37 @@ import java.util.Date;
 	 * 
 	 * @return price - returns the instance parameter attribute value.
 	 */
-	public Date getInTime() {
-<span class="fc" id="L112">		return inTime;</span>
+	public double getPrice() {
+<span class="fc" id="L112">		return price;</span>
 	}
 
 	/**
-	 * setInTime() setter inTime attribute - with parameter inTime type Date. setter
-	 * is used to protect the data during class instance creation.
+	 * setPrice() setter price attribute - with parameter price type double.
+	 * 
+	 * @return price - returns value assigned to its attribute.
+	 */
+	public void setPrice(double price) {
+<span class="fc" id="L121">		this.price = price;</span>
+<span class="fc" id="L122">	}</span>
+
+	/**
+	 * getPrice() getter for attribute - price value getter.
+	 * 
+	 * @return price - returns the instance parameter attribute value.
+	 */
+	public Date getInTime() {
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		return this.inTime == null ? null : new Date(this.inTime.getTime());</span>
+	}
+
+	/**
+	 * setInTime() setter inTime attribute - with parameter inTime type Date.
 	 * 
 	 * @return inTime - returns value assigned to its attribute.
 	 */
 	public void setInTime(Date inTime) {
-<span class="fc" id="L122">		this.inTime = inTime;</span>
-<span class="fc" id="L123">	}</span>
+<span class="fc" id="L139">		this.inTime = Optional.ofNullable(inTime).map(Date::getTime).map(Date::new).orElse(null); // new</span>
+																									// Date(inTime.getTime());
+<span class="fc" id="L141">	}</span>
 
 	/**
 	 * getOutTime() setter outTime attribute - with parameter outTime type Date.
@@ -129,7 +147,7 @@ import java.util.Date;
 	 * @return outTime - returns the instance parameter attribute value.
 	 */
 	public Date getOutTime() {
-<span class="fc" id="L132">		return outTime;</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">		return this.outTime == null ? null : new Date(this.outTime.getTime());</span>
 	}
 
 	/**
@@ -139,7 +157,17 @@ import java.util.Date;
 	 * @return outTime - returns value assigned to its attribute.
 	 */
 	public void setOutTime(Date outTime) {
-<span class="fc" id="L142">		this.outTime = outTime;</span>
-<span class="fc" id="L143">	}</span>
+<span class="fc" id="L160">		this.outTime = Optional.ofNullable(outTime).map(Date::getTime).map(Date::new).orElse(null);// new</span>
+																									// Date(outTime.getTime());
+<span class="fc" id="L162">	}</span>
+	
+	public boolean occurences() {
+<span class="nc" id="L165">		return occurences;</span>
+	}
+
+	public void setOccurences(boolean occurences) {
+<span class="nc" id="L169">		this.occurences = occurences;</span>
+<span class="nc" id="L170">	}</span>
+	
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (17 mai 2021 20:51:59)</div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (22 mai 2021 09:43:40)</div></body></html>
