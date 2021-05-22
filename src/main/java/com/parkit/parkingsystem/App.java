@@ -63,7 +63,14 @@ public class App {
 	   */
 	private static final Logger logger = LogManager.getLogger("App");
 
+	  /**
+	   * Constructor of App class.
+	   */
+	  App() {
+	  }
+	
 	/**
+	 * Parkit application
 	 * @param args no arguments defined.
 	 */
 	public static void main(String[] args) {

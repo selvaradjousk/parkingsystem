@@ -77,10 +77,10 @@ public class ParkingSpotDAOIT {
 
 	@BeforeAll
 	public static void setupTests() {
-		parkingSpotDAO.dataBaseConfig = dataBaseTestConfig;
+		parkingSpotDAO.setDataBaseConfig(dataBaseTestConfig);
 		parkingSpotDAO = new ParkingSpotDAO();
 		ticketDAO = new TicketDAO();
-		ticketDAO.dataBaseConfig = dataBaseTestConfig;
+		ticketDAO.setDataBaseConfig(dataBaseTestConfig);
 		dataBasePrepareService = new DataBasePrepareService();
 	}
 

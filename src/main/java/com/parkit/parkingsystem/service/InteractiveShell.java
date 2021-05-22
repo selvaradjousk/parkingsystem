@@ -19,11 +19,17 @@ import org.apache.logging.log4j.Logger;
 public class InteractiveShell {
 	
 	/**
-	 * Logger InteractiveShell
+	 * Logger InteractiveShell.
 	 * 
 	 */
 	private static final Logger logger = LogManager.getLogger("InteractiveShell");
 
+	 /**
+	   * InteractiveShell constructor.
+	   */
+	  public InteractiveShell() {
+	  }
+	
 	/**
 	 * {@link #loadInterface()} This method loads the subsequent interface 
 	 * for the menu choice done using Application Menu {@link #loadMenu()}.

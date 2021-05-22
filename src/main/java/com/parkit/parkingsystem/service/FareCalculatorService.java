@@ -1,9 +1,9 @@
 package com.parkit.parkingsystem.service;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import com.parkit.parkingsystem.constants.Fare;
 import com.parkit.parkingsystem.model.Ticket;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Class: {@link FareCalculatorService} - Fare Computation Service.<br>
@@ -13,12 +13,12 @@ import com.parkit.parkingsystem.model.Ticket;
  *      {@link #calculateFare()},
  *      {@link #identifyVehicleTypeForComputeFare(Ticket ticket)},
  *      {@link #fareSetZeroValueForLessThanThirtyMinutesParking(Ticket ticket, double duration)},
- *      {@link #computeFare(double duration, double selectedFareType, boolean isRecurrent)}
+ *      {@link #computeFare(double duration, double selectedFareType, boolean isRecurrent)}.
  * 
  * @author Senthil
  */
 public class FareCalculatorService {
-	
+
 	/**
 	 * Logger for FareClaculator Service class.
 	 * 
@@ -33,7 +33,7 @@ public class FareCalculatorService {
 	 * @throws IllegalArgumentException when vehicle exit time is incorrect.
 	 */
 	public void calculateFare(Ticket ticket, boolean isRecurrent) {
-		
+
 		// This method checks if Exit time provided is correct.
 		checkPertinanceOfGetOutTime(ticket);
 
@@ -43,10 +43,10 @@ public class FareCalculatorService {
 
 		// Duration values are computed into hours from milliseconds.
 		double duration = (exitTime - entryTime) / (60.0 * 60.0 * 1000);
-		
+
 		// identifyVehicleTypeForComputeFare(ticket) stored in selectedFare.
 		double selectedFare = identifyVehicleTypeForComputeFare(ticket);
-		
+
 		// 30 minutes parking is set to zero;
 		if (duration < 0.5) {
 			ticket.setPrice(0);
@@ -83,7 +83,6 @@ public class FareCalculatorService {
 		return selectedFare;
 	}
 
-
 	/**
 	 * {@link #checkPertinanceOfGetOutTime(Ticket ticket)} This method checks if
 	 * Exit time provided is correct
@@ -117,8 +116,10 @@ public class FareCalculatorService {
 		double computedFare = fare;
 
 		System.out.println(
-				"We welcome you on behalf of ParkIt and pleased to inform that you have a 5% discount for your regular visit");
-		logger.info("Parking visit is below is reccurent, welcome note and 5 % discount displayed ");
+				"We welcome you on behalf of ParkIt and pleased to inform that you "
+		+"have a 5% discount for your regular visit");
+		logger.info("Parking visit is below is reccurent, welcome note and 5 % "
+		+"discount displayed ");
 		return computedFare;
 	}
 }

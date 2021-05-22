@@ -9,20 +9,21 @@ import org.junit.jupiter.api.Test;
  *
  */
 class AppTest {
-	private static App app;
 
+	/**
+	 * Test appLoads.
+	 */
 	@Test
 	public void appLoads() {
 	}
 
-//	@Test
-//	public void main() {
-//		App.main(new String[] {});
-//	}
-
+	/**
+	 * Test appLoading.
+	 */
 	@Test
 	public void appLoading() {
 		App app = new App();
 		assertTrue(app.equals(app));
 	}
+
 }

@@ -52,7 +52,7 @@ public class TicketDAOIT {
 
 	@BeforeAll
 	public static void setupTests() {
-		testTicketDAO.dataBaseConfig = testDB;
+		testTicketDAO.setDataBaseConfig(testDB);
 	}
 
 	@BeforeEach
