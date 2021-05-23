@@ -13,7 +13,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.parkit.parkingsystem.App;
 import com.parkit.parkingsystem.service.InteractiveShell;
+
+import nl.altindag.log.LogCaptor;
 
 class InteractiveShellTest {
 	private InteractiveShell interactiveShell;
@@ -29,6 +32,8 @@ class InteractiveShellTest {
 		@Test
 		public void testLoadInterfaceWelcomeMessage() throws IOException {
 			// GIVEN
+			String expectedInfoMessage = "App initialized!!!";
+			LogCaptor logCaptor = LogCaptor.forClass(App.class);
 			byteArrayOutputStream = new ByteArrayOutputStream();
 			System.setOut(new PrintStream(byteArrayOutputStream));
 			String input = "3\n";
@@ -41,7 +46,7 @@ class InteractiveShellTest {
 			outputScreen = byteArrayOutputStream.toString("UTF-8");
 
 			// THEN
-
+			assertFalse(logCaptor.getInfoLogs().contains(expectedInfoMessage));
 			// Testing the Welcome Message display
 			assertTrue(outputScreen.contains("Welcome to Parking System!"));
 			assertFalse(outputScreen.contains("Welcome to Parzzz System!"));

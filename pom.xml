@@ -106,17 +106,23 @@
 		</dependency>
 		<!-- https://stackoverflow.com/questions/46290916/missing-org-junit-jupiter-params-from-junit5 -->
 
+		<!-- ======================================================= -->
+		<!-- For LogCaptor Testing Use -->
+		<dependency>
+			<groupId>io.github.hakky54</groupId>
+			<artifactId>logcaptor</artifactId>
+			<version>2.3.1</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 	<!-- ======================================================= -->
 	<!-- Reporting -->
 	<!-- ======================================================= -->
 	<reporting>
 		<plugins>
-			<!--<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-report-plugin</artifactId>
-				<version>3.0.0-M5</version>
-			</plugin>-->
+			<!--<plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-surefire-report-plugin</artifactId> 
+				<version>3.0.0-M5</version> </plugin> -->
 
 			<!-- ======================================================= -->
 			<!-- Added below from La source -->

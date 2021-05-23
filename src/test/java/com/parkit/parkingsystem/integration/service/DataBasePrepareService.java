@@ -51,30 +51,30 @@ public class DataBasePrepareService {
 		}
 	}
 
-	/**
-	 * {@link #insertTestTicket(Ticket testData)} This method does the insert
-	 * function in the DB for test ticket values
-	 *
-	 * @exception Exception
-	 */
-	public void insertTestTicket(Ticket testData) {
-		Connection connection = null;
-
-		try {
-			connection = dataBaseTestConfig.getConnection();
-
-			PreparedStatement ps = connection.prepareStatement(DBConstants.SAVE_TICKET);
-			ps.setInt(1, testData.getParkingSpot().getId());
-			ps.setString(2, testData.getVehicleRegNumber());
-			ps.setDouble(3, testData.getPrice());
-			ps.setTimestamp(4, new Timestamp(testData.getInTime().getTime()));
-			ps.setTimestamp(5,
-					(testData.getOutTime() == null) ? null : (new Timestamp(testData.getOutTime().getTime())));
-
-			ps.execute();
-		} catch (Exception exception) {
-			exception.printStackTrace();
-		}
-	}
+//	/**
+//	 * {@link #insertTestTicket(Ticket testData)} This method does the insert
+//	 * function in the DB for test ticket values
+//	 *
+//	 * @exception Exception
+//	 */
+//	public void insertTestTicket(Ticket testData) {
+//		Connection connection = null;
+//
+//		try {
+//			connection = dataBaseTestConfig.getConnection();
+//
+//			PreparedStatement ps = connection.prepareStatement(DBConstants.SAVE_TICKET);
+//			ps.setInt(1, testData.getParkingSpot().getId());
+//			ps.setString(2, testData.getVehicleRegNumber());
+//			ps.setDouble(3, testData.getPrice());
+//			ps.setTimestamp(4, new Timestamp(testData.getInTime().getTime()));
+//			ps.setTimestamp(5,
+//					(testData.getOutTime() == null) ? null : (new Timestamp(testData.getOutTime().getTime())));
+//
+//			ps.execute();
+//		} catch (Exception exception) {
+//			exception.printStackTrace();
+//		}
+//	}
 
 }

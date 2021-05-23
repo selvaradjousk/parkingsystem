@@ -79,7 +79,7 @@ public class InputReaderUtil {
 	 *  registration number.
 	 * @throws IllegalArgumentException When invalid input provided.
 	 */
-	public String readVehicleRegistrationNumber() throws Exception {
+	public String readVehicleRegistrationNumber() throws NullPointerException {
 		try {
 			String vehicleRegNumber = scannerWrapper.nextLine();
 			if (vehicleRegNumber == null || vehicleRegNumber.trim().length() == 0

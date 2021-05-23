@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import org.junit.jupiter.api.AfterAll;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.parkit.parkingsystem.constants.DBConstants;
 import com.parkit.parkingsystem.constants.ParkingType;
 import com.parkit.parkingsystem.dao.TicketDAO;
 import com.parkit.parkingsystem.integration.config.DataBaseTestConfig;
@@ -201,7 +203,29 @@ public class TicketDAOIT {
 			testDataSet.setOutTime(new Date());
 			testDataSet.setParkingSpot(new ParkingSpot(ticketCount + 1, ParkingType.CAR, false));
 
-			prepareDBService.insertTestTicket(testDataSet);
+			
+			Connection connection = null;
+			
+			DataBaseTestConfig dataBaseTestConfig = new DataBaseTestConfig();
+			Ticket ticket = testDataSet;
+					try {
+						connection = dataBaseTestConfig.getConnection();
+			
+						PreparedStatement ps = connection.prepareStatement(DBConstants.SAVE_TICKET);
+						ps.setInt(1, ticket.getParkingSpot().getId());
+						ps.setString(2, ticket.getVehicleRegNumber());
+						ps.setDouble(3, ticket.getPrice());
+						ps.setTimestamp(4, new Timestamp(ticket.getInTime().getTime()));
+						ps.setTimestamp(5,
+								(ticket.getOutTime() == null) ? null : (new Timestamp(ticket.getOutTime().getTime())));
+			
+						ps.execute();
+					} catch (Exception exception) {
+						exception.printStackTrace();
+					}
+				
+
+//			prepareDBService.insertTestTicket(testDataSet);
 		}
 
 		// WHEN
