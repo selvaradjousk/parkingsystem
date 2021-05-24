@@ -14,8 +14,8 @@ import org.apache.logging.log4j.Logger;
  * settings..<br>
  * <b>Project: </b> P3 - parking system - ParkIt<br>
  * 
- * @see Methods: {@link #getConnection()},
- *      {@link #closeConnection(Connection)},{@link #closePreparedStatement(PreparedStatement)},
+ * @see Methods: {@link #getConnection()}, {@link #closeConnection(Connection)}
+ *      {@link #closePreparedStatement(PreparedStatement)},
  *      {@link #closeResultSet(ResultSet)}
  * 
  * @author Senthil
@@ -35,7 +35,7 @@ public class DataBaseConfig {
 	 * @exception SQLException
 	 * @exception ClassNotFoundException
 	 */
-	public Connection getConnection() throws SQLException, ClassNotFoundException{
+	public Connection getConnection() throws SQLException, ClassNotFoundException {
 		Connection con = null;
 		logger.info("Create DB connection");
 		try {
