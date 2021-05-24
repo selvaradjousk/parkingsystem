@@ -35,7 +35,7 @@ public class DataBaseConfig {
 	 * @exception SQLException
 	 * @exception ClassNotFoundException
 	 */
-	public Connection getConnection() throws IllegalAccessException, InstantiationException {
+	public Connection getConnection() throws SQLException, ClassNotFoundException{
 		Connection con = null;
 		logger.info("Create DB connection");
 		try {
@@ -61,7 +61,6 @@ public class DataBaseConfig {
 		if (con != null) {
 			try {
 				con.close();
-				con = null;
 				logger.info("Closing DB connection");
 			} catch (SQLException e) {
 				logger.error("Error while closing connection", e);
@@ -82,7 +81,6 @@ public class DataBaseConfig {
 		if (ps != null) {
 			try {
 				ps.close();
-				ps = null;
 				logger.info("Closing Prepared Statement");
 			} catch (SQLException e) {
 				logger.error("Error while closing prepared statement", e);
@@ -103,7 +101,6 @@ public class DataBaseConfig {
 		if (rs != null) {
 			try {
 				rs.close();
-				rs = null;
 				logger.info("Closing Result Set");
 			} catch (SQLException e) {
 				logger.error("Error while closing result set", e);

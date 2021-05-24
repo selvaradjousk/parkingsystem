@@ -3,10 +3,6 @@ package com.parkit.parkingsystem.util;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import java.util.Scanner;
-
 /**
  * Class: {@link InputReaderUtil} - Customer input data management service.<br>
  * <b>Project: </b> P3 - parking system - ParkIt<br>

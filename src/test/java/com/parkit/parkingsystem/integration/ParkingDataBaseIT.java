@@ -153,7 +153,7 @@ public class ParkingDataBaseIT {
 
 		// THEN
 		assertNull(ticket.getOutTime());
-		assertEquals(ticket.getPrice(), 0.0);
+		assertEquals(0.0, ticket.getPrice());
 
 		// GIVEN
 		TimeUnit.SECONDS.sleep(1);

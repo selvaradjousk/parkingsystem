@@ -2,6 +2,7 @@ package com.parkit.parkingsystem.integration.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -375,7 +376,7 @@ public class ParkingSpotDAOIT {
 		parkingService.processExitingVehicle();
 
 		Ticket ticket = ticketDAO.getTicket("ABCDEF");
-		assertTrue(ticket.getOutTime() != null);
+		assertNotNull(ticket.getOutTime());
 	}
 
 	@Test

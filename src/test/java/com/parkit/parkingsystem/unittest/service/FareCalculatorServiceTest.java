@@ -68,7 +68,7 @@ import com.parkit.parkingsystem.service.FareCalculatorService;
 @ExtendWith(MockitoExtension.class)
 @TestMethodOrder(OrderAnnotation.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
-public class FareCalculatorServiceTest {
+class FareCalculatorServiceTest {
 
 	private static FareCalculatorService fareCalculatorService;
 	private Ticket ticket;
@@ -97,7 +97,7 @@ public class FareCalculatorServiceTest {
 	@ParameterizedTest(name = "Duration of Parking: {0} minutes")
 	@Order(1)
 	@CsvSource({ "60, 1", "90, 1.5", "120, 2", "180, 3", "240, 4", "300, 5" })
-	public void calculateFareCar(long minutesParked, double priceFactor) {
+	void calculateFareCar(long minutesParked, double priceFactor) {
 
 		// GIVEN
 		Date inTime = new Date();
@@ -133,7 +133,7 @@ public class FareCalculatorServiceTest {
 	@ParameterizedTest(name = "Duration of Parking: {0} minutes")
 	@Order(2)
 	@CsvSource({ "60, 1", "90, 1.5", "120, 2", "180, 3", "240, 4", "300, 5" })
-	public void calculateFareBike(long minutesParked, double priceFactor) {
+	void calculateFareBike(long minutesParked, double priceFactor) {
 
 		// GIVEN
 		Date inTime = new Date();
@@ -172,7 +172,7 @@ public class FareCalculatorServiceTest {
 	@ParameterizedTest(name = "Duration of car parking: {0} Minute(s) i.e less than one hour")
 	@Order(3)
 	@CsvSource({ "30, 0.5", "45, 0.75", "54, 0.9" })
-	public void calculateFareCarWithLessThanOneHourParkingTime(int minutes, double priceConversionFactor) {
+	void calculateFareCarWithLessThanOneHourParkingTime(int minutes, double priceConversionFactor) {
 
 		// GIVEN
 		Date inTime = new Date();
@@ -209,7 +209,7 @@ public class FareCalculatorServiceTest {
 	@ParameterizedTest(name = "Duration of Bike parking: {0} Minute(s) i.e less than one hour")
 	@Order(4)
 	@CsvSource({ "30, 0.5", "45, 0.75", "54, 0.9" })
-	public void calculateFareBikeWithLessThanOneHourParkingTime(int minutes, double priceConversionFactor) {
+	void calculateFareBikeWithLessThanOneHourParkingTime(int minutes, double priceConversionFactor) {
 
 		// GIVEN
 		Date inTime = new Date();
@@ -247,7 +247,7 @@ public class FareCalculatorServiceTest {
 	@Order(5)
 	@ParameterizedTest(name = "Duration of Car parking: {0} Minute(s) - Free parking less than 30 minutes")
 	@ValueSource(ints = { 1, 15, 29 })
-	public void calculateFareCarWithLessThanThirtyMinutesParkingTime(int arg) {
+	void calculateFareCarWithLessThanThirtyMinutesParkingTime(int arg) {
 
 		// GIVEN
 		Date inTime = new Date();
@@ -284,7 +284,7 @@ public class FareCalculatorServiceTest {
 	@ParameterizedTest(name = "Duration of bike parking: {0} Minute(s) - Free parking less than 30 minutes")
 	@Order(6)
 	@ValueSource(ints = { 1, 15, 29 })
-	public void calculateFareBikeWithLessThanThirtyMinutesParkingTime(int arg) {
+	void calculateFareBikeWithLessThanThirtyMinutesParkingTime(int arg) {
 
 		// GIVEN
 		Date inTime = new Date();
@@ -321,7 +321,7 @@ public class FareCalculatorServiceTest {
 	@ParameterizedTest(name = "Duration of Parking: {0} Day(s)")
 	@Order(7)
 	@CsvSource({ "1, 24", "2, 48", "3, 72", "5, 120", "10, 240", "15, 360" })
-	public void calculateFareCarWithMoreThanADayParkingTime(long daysParked, double estimatedPrice) {
+	void calculateFareCarWithMoreThanADayParkingTime(long daysParked, double estimatedPrice) {
 
 		// GIVEN
 		Date inTime = new Date();
@@ -360,7 +360,7 @@ public class FareCalculatorServiceTest {
 	@ParameterizedTest(name = "Duration of Parking: {0} Day(s)")
 	@Order(8)
 	@CsvSource({ "1, 24", "2, 48", "3, 72", "5, 120", "10, 240", "15, 360" })
-	public void calculateFareBikeWithMoreThanADayParkingTime(long daysParked, double estimatedPrice) {
+	void calculateFareBikeWithMoreThanADayParkingTime(long daysParked, double estimatedPrice) {
 
 		// GIVEN
 		Date inTime = new Date();
@@ -397,7 +397,7 @@ public class FareCalculatorServiceTest {
 	@ParameterizedTest(name = "Duration of Parking: {0} minutes")
 	@Order(9)
 	@CsvSource({ "60, 1", "120, 2", "180, 3", "240, 4" })
-	public void calculateFareRecurentUserCar(long minutesParked, double priceFactor) {
+	void calculateFareRecurentUserCar(long minutesParked, double priceFactor) {
 
 		// GIVEN
 		Date inTime = new Date();
@@ -434,7 +434,7 @@ public class FareCalculatorServiceTest {
 	@ParameterizedTest(name = "Duration of Parking: {0} minutes")
 	@Order(10)
 	@CsvSource({ "60, 1", "120, 2", "180, 3", "240, 4" })
-	public void calculateFareRecurentUserBuke(long minutesParked, double priceFactor) {
+	void calculateFareRecurentUserBuke(long minutesParked, double priceFactor) {
 
 		// GIVEN
 		Date inTime = new Date();
@@ -469,7 +469,7 @@ public class FareCalculatorServiceTest {
 	@DisplayName("Parking Fare: ERROR-CHECK Unknown Type of Vehicle ")
 	@Order(11)
 	@Test
-	public void calculateFareUnkownType() {
+	void calculateFareUnkownType() {
 
 		// GIVEN
 		Date inTime = new Date();
@@ -501,7 +501,7 @@ public class FareCalculatorServiceTest {
 	@DisplayName("Parking Fare: ERROR-CHECK Car With Future In Time ")
 	@Test
 	@Order(12)
-	public void calculateFareCarWithFutureInTime() {
+	void calculateFareCarWithFutureInTime() {
 
 		// GIVEN
 		Date inTime = new Date();
@@ -531,7 +531,7 @@ public class FareCalculatorServiceTest {
 	@DisplayName("Parking Fare: ERROR-CHECK Bike With Future In Time ")
 	@Test
 	@Order(13)
-	public void calculateFareBikeWithFutureInTime() {
+	void calculateFareBikeWithFutureInTime() {
 
 		// GIVEN
 		Date inTime = new Date();
@@ -561,7 +561,7 @@ public class FareCalculatorServiceTest {
 	@DisplayName("Parking Fare: ERROR-CHECK Bike Negative Duration Park Time ")
 	@Test
 	@Order(14)
-	public void calculateFareBikeWithNegativeDurationTime() {
+	void calculateFareBikeWithNegativeDurationTime() {
 
 		// GIVEN
 		Date inTime = new Date();
@@ -586,7 +586,7 @@ public class FareCalculatorServiceTest {
 	@Tag("Exceptions")
 	@DisplayName("For a ticket with null out time, calculatorFare should raise an IllegalArgumentException")
 	@EnumSource(value = ParkingType.class, names = { "CAR", "BIKE" })
-	public void givenATicketWithNoOutTime_whenGetCalculatedFare_thenIllegalArgumentExceptionThrown(
+	void givenATicketWithNoOutTime_whenGetCalculatedFare_thenIllegalArgumentExceptionThrown(
 			ParkingType parkingType) {
 
 		// GIVEN

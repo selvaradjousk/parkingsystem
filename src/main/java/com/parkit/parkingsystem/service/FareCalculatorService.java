@@ -47,7 +47,7 @@ public class FareCalculatorService {
 		// identifyVehicleTypeForComputeFare(ticket) stored in selectedFare.
 		double selectedFare = identifyVehicleTypeForComputeFare(ticket);
 
-		// 30 minutes parking is set to zero;
+		// 30 minutes parking is set to zero
 		if (duration < 0.5) {
 			ticket.setPrice(0);
 			logger.info("Parking visit is below 30 minutes, fare to pay set to free");

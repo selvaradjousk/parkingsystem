@@ -77,10 +77,11 @@ public class TicketDAOIT {
 	 * found<code><b>TRUE</b></code> <br>
 	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected != result in DB
 	 * found<code><b>FALSE</b></code>
+	 * @throws SQLException 
 	 */
 	@Test
 	@DisplayName("Ticket DAO - Integration Testing - Save Ticket function")
-	public void testSaveTicket() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+	public void testSaveTicket() throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
 		// GIVEN
 		String testVehicleRegNumber = "ABCEDFGH";
 
@@ -121,10 +122,14 @@ public class TicketDAOIT {
 	 * getVehicleRegNumber() <code><b>TRUE</b></code> <br>
 	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected !=
 	 * getVehicleRegNumber() <code><b>FALSE</b></code>
+	 * @throws InstantiationException 
+	 * @throws IllegalAccessException 
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
 	@DisplayName("Ticket DAO - Integration Testing - getting Ticket function")
 	@Test
-	public void testGetTicket() {
+	public void testGetTicket() throws ClassNotFoundException, SQLException {
 		// GIVEN
 		String testVehicleRegNumber = "MLKJHG";
 		Ticket testTicket = createTestingTicket(testVehicleRegNumber);
@@ -152,10 +157,12 @@ public class TicketDAOIT {
 	 * 
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
 	@DisplayName("Ticket DAO - Integration Testing - Ticket update function")
 	@Test
-	public void testUpdateTicket() throws IllegalAccessException, InstantiationException {
+	public void testUpdateTicket() throws ClassNotFoundException, SQLException {
 		// GIVEN
 		String testVehicleRegNumber = "SDFGHJK";
 		Ticket testTicket = createTestingTicket(testVehicleRegNumber);
@@ -186,10 +193,14 @@ public class TicketDAOIT {
 	 * frequency <code><b>TRUE</b></code> <br>
 	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected != occurrences
 	 * frequency <code><b>FALSE</b></code>
+	 * @throws InstantiationException 
+	 * @throws IllegalAccessException 
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
 	@DisplayName("Ticket DAO - Integration Testing - Client reccurence check function")
 	@Test
-	public void testGetVehicleOccurence() {
+	public void testGetVehicleOccurence() throws ClassNotFoundException, SQLException {
 		// GIVEN
 		final String vehicleRegNumber = "ZYXWVU";
 		int ticketCount = 0, targetCount = 3;

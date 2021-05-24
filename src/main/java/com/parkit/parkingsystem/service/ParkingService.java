@@ -9,6 +9,7 @@ import com.parkit.parkingsystem.util.InputReaderUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.SQLException;
 import java.util.Date;
 
 /**
@@ -62,7 +63,7 @@ public class ParkingService {
 	 * setting recurrent user occurrences threshold value.
 	 *
 	 */
-	final static int recurentUserOccurencesThreshold = 2;
+//	final static int recurentUserOccurencesThreshold = 2;
 
 	/**
 	 * {@link #ParkingService(InputReaderUtil, ParkingSpotDAO, TicketDAO)} The
@@ -107,7 +108,7 @@ public class ParkingService {
 				// Incoming ticket values set.
 				Ticket ticket = new Ticket();
 				// ID, PARKING_NUMBER, VEHICLE_REG_NUMBER, PRICE, IN_TIME, OUT_TIME)
-				// ticket.setId(ticketID);
+				// ticket.setId(ticketID)
 				ticket.setParkingSpot(parkingSpot);
 				ticket.setVehicleRegNumber(vehicleRegNumber);
 				ticket.setPrice(0);
@@ -251,10 +252,16 @@ public class ParkingService {
 	 * @param vehicleRegNumber
 	 * @param ticket
 	 * @return
+	 * @throws InstantiationException 
+	 * @throws IllegalAccessException 
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	private boolean checkForDiscountEligibility(String vehicleRegNumber, Ticket ticket) {
+	private boolean checkForDiscountEligibility(String vehicleRegNumber, Ticket ticket) throws ClassNotFoundException, SQLException {
 		boolean vehicleOccurence = ticketDAO.getVehicleOccurence(vehicleRegNumber);
-		fareCalculatorService.calculateFare(ticket, vehicleOccurence = true);
+		fareCalculatorService.calculateFare(ticket, vehicleOccurence);
+		
+		
 		return vehicleOccurence;
 	}
 	
@@ -264,8 +271,8 @@ public class ParkingService {
 	 * @param vehicleOccurence
 	 */
 	public void confirmOfferForDiscount(boolean vehicleOccurence) {
-		if (vehicleOccurence = true)
-			System.out.println("Applied 5% discount for recurent user");
+		if (vehicleOccurence == true)
+			System.out.println("As a recurrent user your have 5% discount!");
 	}
 	
 	/**

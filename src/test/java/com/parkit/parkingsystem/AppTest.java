@@ -1,6 +1,7 @@
 package com.parkit.parkingsystem;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ class AppTest {
 	public void appLoading() {
 		LogCaptor logCaptor = LogCaptor.forClass(App.class);
 		App app = new App();
-		assertTrue(app.equals(app));
+//		assertTrue(app.equals(app));
 		String expectedInfoMessage = "Initializing Parking System";
 		assertFalse(logCaptor.getInfoLogs().contains(expectedInfoMessage));
 	}

@@ -9,14 +9,12 @@ import java.util.Date;
 
 import org.junit.jupiter.api.Test;
 
-import com.parkit.parkingsystem.model.Ticket;
-
 class TicketTest {
 
 	public static final Ticket ticket = new Ticket();
 
 	@Test
-	public void testTicketCarGetId() {
+	void testTicketCarGetId() {
 		int expected = (int) Math.random();
 		ticket.setId(expected);
 		int actual = ticket.getId();
@@ -24,7 +22,7 @@ class TicketTest {
 	}
 
 	@Test
-	public void testTicketBikeGetId() {
+	void testTicketBikeGetId() {
 		int expected = (int) Math.random();
 		ticket.setId(expected);
 		int actual = ticket.getId();
@@ -32,7 +30,7 @@ class TicketTest {
 	}
 
 	@Test
-	public void testTicketBikeGetVehicleRegNumber() {
+	void testTicketBikeGetVehicleRegNumber() {
 		String expected = "AB1243GH";
 		ticket.setVehicleRegNumber(expected);
 		String actual = ticket.getVehicleRegNumber();
@@ -40,7 +38,7 @@ class TicketTest {
 	}
 
 	@Test
-	public void testTicketCarGetVehicleRegNumber() {
+	void testTicketCarGetVehicleRegNumber() {
 		String expected = "ABCDEFGH";
 		ticket.setVehicleRegNumber(expected);
 		String actual = ticket.getVehicleRegNumber();
@@ -48,7 +46,7 @@ class TicketTest {
 	}
 
 	@Test
-	public void testTicketPrice() {
+	void testTicketPrice() {
 		double expected = (double) Math.random();
 		ticket.setPrice(expected);
 		double actual = ticket.getPrice();
@@ -56,7 +54,7 @@ class TicketTest {
 	}
 
 	@Test
-	public void testTicketInTime() {
+	void testTicketInTime() {
 		Date expected = new Date();
 		ticket.setInTime(expected);
 		Date actual = ticket.getInTime();
@@ -64,7 +62,7 @@ class TicketTest {
 	}
 
 	@Test
-	public void testTicketOutTime() {
+	void testTicketOutTime() {
 		Date expected = new Date();
 		ticket.setOutTime(expected);
 		Date actual = ticket.getOutTime();

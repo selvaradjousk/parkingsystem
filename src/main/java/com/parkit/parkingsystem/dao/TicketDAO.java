@@ -52,22 +52,26 @@ public class TicketDAO {
 	 * @return boolean - returns boolean value to confirm saving process implemented
 	 *         successfully or not.
 	 * @param ticket - instance variable of {@link #Ticket}
+	 * @throws InstantiationException 
+	 * @throws IllegalAccessException 
 	 * @exception SQLException
+	 * @throws ClassNotFoundException 
 	 */
-	public boolean saveTicket(Ticket ticket) {
+	public boolean saveTicket(Ticket ticket) throws SQLException, ClassNotFoundException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
 			con = dataBaseConfig.getConnection();
 			ps = con.prepareStatement(DBConstants.SAVE_TICKET);
 			// ID, PARKING_NUMBER, VEHICLE_REG_NUMBER, PRICE, IN_TIME, OUT_TIME)
-			// ps.setInt(1,ticket.getId());
+			// ps.setInt(1,ticket.getId())
 			ps.setInt(1, ticket.getParkingSpot().getId());
 			ps.setString(2, ticket.getVehicleRegNumber());
 			ps.setDouble(3, ticket.getPrice());
 			ps.setTimestamp(4, new Timestamp(ticket.getInTime().getTime()));
 			ps.setTimestamp(5, (ticket.getOutTime() == null) ? null : (new Timestamp(ticket.getOutTime().getTime())));
 			if (ps.execute()) {
+				logger.info("Ticket Saved");
 				return true;
 			}
 		} catch (SQLException ex) {
@@ -75,8 +79,8 @@ public class TicketDAO {
 		} finally {
 			dataBaseConfig.closeConnection(con);
 			dataBaseConfig.closePreparedStatement(ps);
-			return false;
 		}
+		return false;
 	}
 
 	/**
@@ -128,9 +132,12 @@ public class TicketDAO {
 	 *         customer.
 	 * @param vehicleRegNumber - This the input information provided by client on
 	 *                         the vehicles registration number
+	 * @throws InstantiationException 
+	 * @throws IllegalAccessException 
 	 * @exception SQLException
+	 * @throws ClassNotFoundException 
 	 */
-	public boolean getVehicleOccurence(String vehicleRegNumber) {
+	public boolean getVehicleOccurence(String vehicleRegNumber) throws SQLException, ClassNotFoundException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -151,8 +158,9 @@ public class TicketDAO {
 		} catch (SQLException ex) {
 			logger.error("Error fetching vehicle occurence", ex);
 		} finally {
-			return occurences;
+			dataBaseConfig.closePreparedStatement(ps);
 		}
+		return occurences;
 	}
 
 	/**
@@ -163,8 +171,9 @@ public class TicketDAO {
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
 	 * @exception SQLException
+	 * @throws ClassNotFoundException 
 	 */
-	public boolean updateTicket(Ticket ticket) throws IllegalAccessException, InstantiationException {
+	public boolean updateTicket(Ticket ticket) throws SQLException, ClassNotFoundException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -180,6 +189,7 @@ public class TicketDAO {
 			logger.error("Error saving ticket info", ex);
 		} finally {
 			dataBaseConfig.closeConnection(con);
+			dataBaseConfig.closePreparedStatement(ps);
 		}
 		return false;
 	}
