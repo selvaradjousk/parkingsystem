@@ -112,11 +112,11 @@ class FareCalculatorServiceTest {
 		// WHEN
 		fareCalculatorService.calculateFare(ticket, false);
 
-		BigDecimal bd = new BigDecimal(ticket.getPrice()).setScale(3, RoundingMode.HALF_UP);
-		double estimate = bd.doubleValue();
+//		BigDecimal bd = new BigDecimal(ticket.getPrice()).setScale(3, RoundingMode.HALF_UP);
+//		double estimate = bd.doubleValue();
 
 		// THEN
-		assertEquals(priceFactor * Fare.CAR_RATE_PER_HOUR, estimate, "Result: estimated and actual price match");
+		assertEquals(priceFactor * Fare.CAR_RATE_PER_HOUR, ticket.getPrice(), "Result: estimated and actual price match");
 	}
 
 	/**

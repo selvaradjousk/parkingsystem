@@ -121,13 +121,13 @@ class ParkingSpotTest {
 //			Object obj = new Object();
 //			assertTrue((parkingSpot1).equals(parkingSpot2));
 //	}
-//		@Test
-//		public void testEqualsNull() {
-//			ParkingSpot parkingSpot = null;
-//			Object obj = new Object();
-//
-//			assertFalse(obj == parkingSpot);
-//	}
+		@Test
+		public void testEqualsNull() {
+			ParkingSpot parkingSpot = null;
+			Object obj = new Object();
+
+			assertFalse(obj == parkingSpot);
+	}
 
 	/**
 	 * instance of test for Equals Equals true.

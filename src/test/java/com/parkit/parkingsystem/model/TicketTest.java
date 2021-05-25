@@ -15,7 +15,7 @@ class TicketTest {
 
 	@Test
 	void testTicketCarGetId() {
-		int expected = (int) Math.random();
+		int expected = 5;
 		ticket.setId(expected);
 		int actual = ticket.getId();
 		assertEquals(expected, actual);
@@ -23,7 +23,7 @@ class TicketTest {
 
 	@Test
 	void testTicketBikeGetId() {
-		int expected = (int) Math.random();
+		int expected = 6;
 		ticket.setId(expected);
 		int actual = ticket.getId();
 		assertEquals(expected, actual);
@@ -60,6 +60,14 @@ class TicketTest {
 		Date actual = ticket.getInTime();
 		assertEquals(expected, actual);
 	}
+	
+	@Test
+	void testgetTicketInTimeNull() {
+		Date expected = null;
+		ticket.setInTime(expected);
+		Date actual = ticket.getInTime();
+		assertEquals(expected, actual);
+	}
 
 	@Test
 	void testTicketOutTime() {
@@ -67,6 +75,21 @@ class TicketTest {
 		ticket.setOutTime(expected);
 		Date actual = ticket.getOutTime();
 		assertEquals(expected, actual);
+	}
+	@Test
+	void testTicketOutTimeNull() {
+		Date expected = null;
+		ticket.setOutTime(expected);
+		Date actual = ticket.getOutTime();
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	void testOccurences() {
+		boolean occurencesExpected = true;
+		ticket.setOccurences(occurencesExpected);
+		boolean actual = ticket.occurences();
+		assertEquals(occurencesExpected, actual);
 	}
 
 }

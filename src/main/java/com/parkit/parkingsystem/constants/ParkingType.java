@@ -9,14 +9,14 @@ package com.parkit.parkingsystem.constants;
  * @author Senthil
  */
 public enum ParkingType {
-	  
+
 	/**
 	 * Parking spot for the car.
 	 */
 	CAR, 
-		  
+
 	/**
-	 * Parking spot for the cbike.
+	 * Parking spot for the bike.
 	 */
 	BIKE
 }

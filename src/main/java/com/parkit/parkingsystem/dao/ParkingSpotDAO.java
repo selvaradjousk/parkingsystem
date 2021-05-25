@@ -16,19 +16,37 @@ import com.parkit.parkingsystem.model.ParkingSpot;
  * Class: {@link ParkingSpotDAO} - Parking spot Data Access Objects.<br>
  * <b>Project: </b> P3 - parking system - ParkIt<br>
  * 
- * @see Methods: {@link #ParkingSpotDAO()}, {@link #updateParking(ParkingSpot)}
+ * @see Methods: {@link #ParkingSpotDAO()}, 
+ * {@link #updateParking(ParkingSpot)}
  * 
  * @author Senthil
  */
 public class ParkingSpotDAO {
 
+	 /**
+	 * Constant value for one
+	 */
+	public static final int NO_MAGIC_PARAMETER_VALUE_ONE = 1;
+
+	 /**
+	 * Constant value for Two
+	 */
+	 public static final int NO_MAGIC_PARAMETER_VALUE_TWO = 2;
+
+	 /**
+	 * Constant value for one
+	 */
+	public static final int NO_MAGIC_PARAMETER_VALUE_MINUS_ONE = -1;
+
 	/**
 	 * Logger for ParkingSpotDao.
 	 */
-	private static final Logger logger = LogManager.getLogger("ParkingSpotDAO");
+	private static final Logger LOGGER 
+	= LogManager.getLogger("ParkingSpotDAO");
 
 	/**
-	 * Instance dataBaseConfig of DataBaseConfig to connect to DataBase.
+	 * Instance dataBaseConfig of DataBaseConfig 
+	 * to connect to DataBase.
 	 */
 	 private DataBaseConfig dataBaseConfig = new DataBaseConfig();
 
@@ -37,33 +55,33 @@ public class ParkingSpotDAO {
 	   *
 	   * @param dataBaseConfig set instance
 	   */
-	  public void setDataBaseConfig(final DataBaseConfig dataBaseConfig) {
+	public void setDataBaseConfig(final DataBaseConfig dataBaseConfig) {
 	    this.dataBaseConfig = dataBaseConfig;
 	  }
-	 
+
 	/**
-	 * getNextAvailableSlot() This method helps to identify the next parking spot
-	 * available for parking of vehicle
+	 * getNextAvailableSlot() Identify next parking spot available.
 	 * 
 	 * @return result - returns parking spot identification number
 	 * @param parkingType - instance variable of {@link #ParkingType}
 	 * @exception Exception - java.lang.Exception
 	 */
-	public int getNextAvailableSpot(ParkingType parkingType) {
+	public int getNextAvailableSpot(final ParkingType parkingType) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		int result = -1;
+		int result = NO_MAGIC_PARAMETER_VALUE_MINUS_ONE;
 		try {
 			con = dataBaseConfig.getConnection();
 			ps = con.prepareStatement(DBConstants.GET_NEXT_PARKING_SPOT);
-			ps.setString(1, parkingType.toString());
+			ps.setString(NO_MAGIC_PARAMETER_VALUE_ONE, 
+					parkingType.toString());
 			rs = ps.executeQuery();
 			if (rs.next()) {
-				result = rs.getInt(1);
+				result = rs.getInt(NO_MAGIC_PARAMETER_VALUE_ONE);
 			}
 		} catch (Exception ex) {
-			logger.error("Error fetching next available slot", ex);
+			LOGGER.error("Error fetching next available slot", ex);
 		} finally {
 			dataBaseConfig.closeConnection(con);
 			dataBaseConfig.closeResultSet(rs);
@@ -73,30 +91,30 @@ public class ParkingSpotDAO {
 	}
 
 	/**
-	 * updateParking() This method helps to update the parking spot provided to the
-	 * customer for parking of vehicle
+	 * updateParking() Update the parking spot provided.
 	 * 
 	 * @param parkingSpot - instance variable of {@link #ParkingSpot}
+	 * @return boolean update parking status
 	 * @exception Exception - java.lang.Exception
 	 */
-	public boolean updateParking(ParkingSpot parkingSpot) {
+	public boolean updateParking(final ParkingSpot parkingSpot) {
 		// update the availability of that parking slot
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
 			con = dataBaseConfig.getConnection();
 			ps = con.prepareStatement(DBConstants.UPDATE_PARKING_SPOT);
-			ps.setBoolean(1, parkingSpot.isAvailable());
-			ps.setInt(2, parkingSpot.getId());
+			ps.setBoolean(NO_MAGIC_PARAMETER_VALUE_ONE, 
+					parkingSpot.isAvailable());
+			ps.setInt(NO_MAGIC_PARAMETER_VALUE_TWO, parkingSpot.getId());
 			int updateRowCount = ps.executeUpdate();
-			return (updateRowCount == 1);
+			return (updateRowCount == NO_MAGIC_PARAMETER_VALUE_ONE);
 		} catch (Exception ex) {
-			logger.error("Error updating parking info", ex);
+			LOGGER.error("Error updating parking info", ex);
 			return false;
 		} finally {
 			dataBaseConfig.closeConnection(con);
 			dataBaseConfig.closePreparedStatement(ps);
 		}
 	}
-
 }

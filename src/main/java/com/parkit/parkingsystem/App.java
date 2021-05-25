@@ -69,23 +69,25 @@ import com.parkit.parkingsystem.util.InputReaderUtil;
  *
  */
 public class App {
-	  /**
-	   * Logger for the application.
-	   */
-	private static final Logger logger = LogManager.getLogger("App");
 
-	  /**
-	   * Constructor of App class.
-	   */
-	  App() {
-	  }
-	
 	/**
-	 * Parkit application
-	 * @param args no arguments defined.
+	 * Logger for the application.
 	 */
-	public static void main(String[] args) {
-		logger.info("Initializing Parking System");
+	private static final Logger LOGGER = LogManager.getLogger("App");
+
+	/**
+	 * Constructor of App class.
+	 */
+	App() {
+	}
+
+	/**
+	 * Parkit application.
+	 * 
+	 * @param args no arguments defined
+	 */
+	public static void main(final String[] args) {
+		LOGGER.info("Initializing Parking System");
 		InteractiveShell.loadInterface();
 	}
 }
