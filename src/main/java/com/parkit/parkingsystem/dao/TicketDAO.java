@@ -159,6 +159,7 @@ public class TicketDAO {
 			logger.error("Error fetching vehicle occurence", ex);
 		} finally {
 			dataBaseConfig.closePreparedStatement(ps);
+			dataBaseConfig.closeResultSet(rs);
 		}
 		return occurences;
 	}
