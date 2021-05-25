@@ -98,7 +98,7 @@ public class TicketDAO {
 	 * @param vehicleRegNumber - input vehicles registration number
 	 * @exception SQLException
 	 */
-	public Ticket getTicket(final String vehicleRegNumber) {
+	public Ticket getTicket(final String vehicleRegNumber) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		Ticket ticket = null;

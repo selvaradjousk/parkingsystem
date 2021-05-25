@@ -58,12 +58,12 @@ public class TicketDAOIT {
 	}
 
 	@BeforeEach
-	public void setupPerTest() {
+	public void setupPerTest() throws SQLException {
 		prepareDBService.clearDBEntries();
 	}
 
 	@AfterAll
-	public static void cleanTests() {
+	public static void cleanTests() throws SQLException {
 		prepareDBService.clearDBEntries();
 	}
 

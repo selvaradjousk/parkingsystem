@@ -63,7 +63,7 @@ public class DataBaseConfig {
 	 * @param con - Connection instance value
 	 * @exception SQLException
 	 */
-	public void closeConnection(Connection con) {
+	public void closeConnection(Connection con) throws SQLException{
 		if (con != null) {
 			try {
 				con.close();

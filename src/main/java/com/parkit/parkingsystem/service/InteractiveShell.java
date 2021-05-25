@@ -29,7 +29,7 @@ public final class InteractiveShell {
 	 /**
 	   * InteractiveShell constructor.
 	   */
-	  public InteractiveShell() {
+	  private InteractiveShell() {
 	  }
 
 	/**

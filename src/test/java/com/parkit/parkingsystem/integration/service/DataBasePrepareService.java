@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import org.junit.jupiter.api.Test;
@@ -34,10 +35,11 @@ public class DataBasePrepareService {
 	/**
 	 * {@link #clearDBEntries()} This method set parking entries to available &
 	 * clear ticket entries
+	 * @throws SQLException 
 	 *
 	 * @exception Exception
 	 */
-	public void clearDBEntries() {
+	public void clearDBEntries() throws SQLException {
 		Connection connection = null;
 		 PreparedStatement preparedStatement = null;
 		try {

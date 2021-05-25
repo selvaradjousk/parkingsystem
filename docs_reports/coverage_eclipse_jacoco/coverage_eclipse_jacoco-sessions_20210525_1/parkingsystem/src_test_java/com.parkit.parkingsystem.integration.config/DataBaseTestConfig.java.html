@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>DataBaseTestConfig.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (26 mai 2021 00:56:22)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.integration.config</a> &gt; <span class="el_source">DataBaseTestConfig.java</span></div><h1>DataBaseTestConfig.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.integration.config;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Properties;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.parkit.parkingsystem.config.DataBaseConfig;
+
+/**
+ * &lt;b&gt;Test Class: &lt;/b&gt; {@link DataBaseTestConfig} - Integration Tests for
+ * database connection configuration setting &lt;br&gt;
+ * &lt;b&gt;Class Tested:&lt;/b&gt;{@link DataBaseConfig}.&lt;br&gt;
+ * &lt;b&gt;Project: &lt;b&gt; P3 - parking system - ParkIt&lt;br&gt;
+ * 
+ * @see Tests: {@link #getConnection()},
+ *      {@link #closeConnection(Connection con)},
+ *      {@link #closePreparedStatement(PreparedStatement ps)},
+ *      {@link #closeResultSet(ResultSet rs)},
+ * 
+ * @author Senthil
+ */
+<span class="fc" id="L28">public class DataBaseTestConfig extends DataBaseConfig {</span>
+
+//	private static final Logger logger = LogManager.getLogger(&quot;DataBaseConfig&quot;);
+//
+//	public Connection getConnection() throws IllegalAccessException, InstantiationException {
+//		Connection con = null;
+//		logger.info(&quot;Create DB connection&quot;);
+//		try {
+//			Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);
+//						
+//	Properties info = new Properties();
+//    info.put(&quot;user&quot;, &quot;root&quot;);
+//    info.put(&quot;password&quot;, &quot;rootroot&quot;);
+//    
+//	con = DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/prod&quot;, info);
+//		} catch (SQLException e) {
+//			System.err.println(&quot;Exception occured : SQLException : &quot; + e.getMessage());
+//			e.printStackTrace();
+//		} catch (ClassNotFoundException e) {
+//			System.err.println(&quot;Exception occured : ClassNotFoundException : &quot; + e.getMessage());
+//			e.printStackTrace();
+//		}
+//
+//		return con;
+//	}
+//
+//	public void closeConnection(Connection con) {
+//		if (con != null) {
+//			try {
+//				con.close();
+//				logger.info(&quot;Closing DB connection&quot;);
+//			} catch (SQLException e) {
+//				logger.error(&quot;Error while closing connection&quot;, e);
+//			}
+//		}
+//	}
+//
+//	public void closePreparedStatement(PreparedStatement ps) {
+//		if (ps != null) {
+//			try {
+//				ps.close();
+//				logger.info(&quot;Closing Prepared Statement&quot;);
+//			} catch (SQLException e) {
+//				logger.error(&quot;Error while closing prepared statement&quot;, e);
+//			}
+//		}
+//	}
+//
+//	public void closeResultSet(ResultSet rs) {
+//		if (rs != null) {
+//			try {
+//				rs.close();
+//				logger.info(&quot;Closing Result Set&quot;);
+//			} catch (SQLException e) {
+//				logger.error(&quot;Error while closing result set&quot;, e);
+//			}
+//		}
+//	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (26 mai 2021 00:56:22)</div></body></html>

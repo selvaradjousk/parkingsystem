@@ -112,9 +112,6 @@ class FareCalculatorServiceTest {
 		// WHEN
 		fareCalculatorService.calculateFare(ticket, false);
 
-//		BigDecimal bd = new BigDecimal(ticket.getPrice()).setScale(3, RoundingMode.HALF_UP);
-//		double estimate = bd.doubleValue();
-
 		// THEN
 		assertEquals(priceFactor * Fare.CAR_RATE_PER_HOUR, ticket.getPrice(), "Result: estimated and actual price match");
 	}
@@ -565,8 +562,6 @@ class FareCalculatorServiceTest {
 
 		// GIVEN
 		Date inTime = new Date();
-//		inTime.setTime(System.currentTimeMillis() + (60 * 60 * 1000));
-//		Date outTime = new Date();
 		inTime.setTime(System.currentTimeMillis());
 		Date outTime = new Date();
 		outTime.setTime(System.currentTimeMillis() - (60 * 60 * 1000));
@@ -592,16 +587,37 @@ class FareCalculatorServiceTest {
 		// GIVEN
 		Date inTime = new Date();
 		inTime.setTime(System.currentTimeMillis());
-//		Date outTime = new Date();
-//		outTime.setTime(System.currentTimeMillis() - (60 * 60 * 1000));
 		ParkingSpot parkingSpot = new ParkingSpot(1, parkingType, false);
 
 		ticket.setInTime(inTime);
 		ticket.setOutTime(null);
-//		ticket.setParkingSpot(parkingSpot);
+		ticket.setParkingSpot(parkingSpot);
 
 		// THEN
 		assertThrows(NullPointerException.class, () -> fareCalculatorService.calculateFare(ticket, false),
+				"Result: Exception thrown"); // WHEN
+
+	}
+	
+	@ParameterizedTest
+	@Order(15)
+	@Tag("Exceptions")
+	@DisplayName("For a ticket with null out time, calculatorFare should raise an IllegalArgumentException")
+	@EnumSource(value = ParkingType.class, names = { "CAR", "BIKE" })
+	void givenAVehicleTypeNull_whenGetCalculatedFare_thenNullPointerExceptionThrown(
+			ParkingType parkingType) {
+
+		// GIVEN
+		Date inTime = new Date();
+		inTime.setTime(System.currentTimeMillis());
+		ParkingSpot parkingSpot = new ParkingSpot(1, null, false);
+
+		ticket.setInTime(inTime);
+		ticket.setOutTime(null);
+		ticket.setParkingSpot(null);
+
+		// THEN
+		assertThrows(NullPointerException.class, () -> fareCalculatorService.identifyVehicleTypeForComputeFare(ticket),
 				"Result: Exception thrown"); // WHEN
 
 	}

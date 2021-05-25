@@ -175,50 +175,51 @@ class InputReaderUtilTest {
 	
 	
 
-//	@Test
-//	@Tag("DisplayMessageTest")
-//	@DisplayName("Tested Vehicle Registration Number Illegal Argument Exception Message")
-//	void testReadVehicleRegistrationNumberIllegalArgumentExceptionMessageTest() {
-//		// GIVEN
-//		when(scanner.nextLine()).thenReturn(null);
-//
-//		// WHEN
-//		try {
-//			inputReaderUtil.readVehicleRegistrationNumber();
-//		} catch (Exception e) {
-//			String ex = e.getMessage();
-//			// THEN
-//			assertTrue(ex.contains("Invalid input provided"));
-//			assertFalse(
-//					ex.contains("Error reading input. Please enter a valid string for vehicle registration number"));
-//		}
-//	}
-//
-//	@Test
-//	@Tag("DisplayMessageTest")
-//	@DisplayName("Tested Vehicle Registration Number Illegal Argument Exception Message")
-//	void testReadVehicleRegistrationNumberIExceptionMessageTest() throws Exception {
-//		// GIVEN
-//				String outputScreen = null;
-//		byteArrayOutputStream = new ByteArrayOutputStream();
-//		System.setOut(new PrintStream(byteArrayOutputStream));
-//		when(scanner.nextLine()).thenReturn(null);
-//		// WHEN
-//		try {
-//			inputReaderUtil.readVehicleRegistrationNumber();
-//			outputScreen = byteArrayOutputStream.toString("UTF-8");
-//
-//		} catch (IllegalArgumentException e) {
-//			String expected = e.getMessage();
-//			assertFalse(expected.contains("Error reading input"));
-//			outputScreen = byteArrayOutputStream.toString("UTF-8");
-//			assertEquals("Error reading input. Please enter a valid string for vehicle registration number",
-//					outputScreen.toString().trim());
-//			assertNotEquals("Invalid input provided",outputScreen.toString().trim() );
-//			assertNotEquals("Error reading input. Please enter a valid string for vehicle registration number", expected);
-//			// THEN
-//			byteArrayOutputStream.close();
-//		}
-//		byteArrayOutputStream.close();
-//	}
+	@Test
+	@Tag("DisplayMessageTest")
+	@DisplayName("Tested Vehicle Registration Number Illegal Argument Exception Message")
+	void testReadVehicleRegistrationNumberIllegalArgumentExceptionMessageTest() {
+		// GIVEN
+		when(scanner.nextLine()).thenReturn(null);
+
+		// WHEN
+		try {
+			inputReaderUtil.readVehicleRegistrationNumber();
+		} catch (Exception e) {
+			String ex = e.getMessage();
+			// THEN
+			assertTrue(ex.contains("Invalid input provided"));
+			assertFalse(
+					ex.contains("Error reading input. Please enter a valid string for vehicle registration number"));
+		}
+	}
+
+	@Test
+	@Tag("DisplayMessageTest")
+	@DisplayName("Tested Vehicle Registration Number Illegal Argument Exception Message")
+	void testReadVehicleRegistrationNumberIExceptionMessageTest() throws Exception {
+		// GIVEN
+				String outputScreen = null;
+		byteArrayOutputStream = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(byteArrayOutputStream));
+		when(scanner.nextLine()).thenReturn(null);
+		// WHEN
+		try {
+			inputReaderUtil.readVehicleRegistrationNumber();
+			outputScreen = byteArrayOutputStream.toString("UTF-8");
+
+		} catch (IllegalArgumentException e) {
+			String expected = e.getMessage();
+			// THEN
+			assertFalse(expected.contains("Error reading input"));
+			outputScreen = byteArrayOutputStream.toString("UTF-8");
+			assertFalse(expected.contains("Error while reading user input from Shell"));
+			assertNotEquals("Error reading input. Please enter a valid string for vehicle registration number",
+					outputScreen.toString().trim());
+			assertNotEquals("Invalid input provided",outputScreen.toString().trim() );
+			assertNotEquals("Error reading input. Please enter a valid string for vehicle registration number", expected);
+			byteArrayOutputStream.close();
+		}
+		byteArrayOutputStream.close();
+	}
 }

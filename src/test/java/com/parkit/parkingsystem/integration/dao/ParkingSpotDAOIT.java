@@ -86,7 +86,7 @@ public class ParkingSpotDAOIT {
 	}
 
 	@BeforeEach
-	public void setupPerTest() {
+	public void setupPerTest() throws SQLException {
 
 		dataBasePrepareService.clearDBEntries();
 	}
@@ -102,10 +102,11 @@ public class ParkingSpotDAOIT {
 	 * <code><b>TRUE</b></code> <br>
 	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected != 1
 	 * <code><b>FALSE</b></code>
+	 * @throws SQLException 
 	 */
 	@DisplayName("Parking Spot - CAR Spot availability ")
 	@Test
-	public void testGetNextAvailableSpotForCar() {
+	public void testGetNextAvailableSpotForCar() throws SQLException {
 		// GIVEN
 		final int expectedSpot = 1;
 
@@ -139,10 +140,11 @@ public class ParkingSpotDAOIT {
 	 * <code><b>TRUE</b></code> <br>
 	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected != 4
 	 * <code><b>FALSE</b></code>
+	 * @throws SQLException 
 	 */
 	@DisplayName("Parking Spot - BIKE Spot availability ")
 	@Test
-	public void testNextAvailableSpotForBike() {
+	public void testNextAvailableSpotForBike() throws SQLException {
 		// GIVEN
 		final int expectedSpot = 4;
 
@@ -164,10 +166,11 @@ public class ParkingSpotDAOIT {
 	 * getNextAvailableSpot(ParkingType.CAR) <code><b>TRUE</b></code> <br>
 	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected !=
 	 * getNextAvailableSpot(ParkingType.CAR) <code><b>FALSE</b></code>
+	 * @throws SQLException 
 	 */
 	@DisplayName("Parking Spot - CAR Update Spot status")
 	@Test
-	public void testUpdateParkingForCar() {
+	public void testUpdateParkingForCar() throws SQLException {
 		// GIVEN
 		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
 
@@ -193,10 +196,11 @@ public class ParkingSpotDAOIT {
 	 * getNextAvailableSpot(ParkingType.BIKE) <code><b>TRUE</b></code> <br>
 	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected !=
 	 * getNextAvailableSpot(ParkingType.BIKE) <code><b>FALSE</b></code>
+	 * @throws SQLException 
 	 */
 	@DisplayName("Parking Spot - BIKE Update Spot status ")
 	@Test
-	public void testUpdateParkingForBike() {
+	public void testUpdateParkingForBike() throws SQLException {
 		// GIVEN
 		ParkingSpot parkingSpot = new ParkingSpot(4, ParkingType.BIKE, false);
 
@@ -221,10 +225,11 @@ public class ParkingSpotDAOIT {
 	 * <code><b>TRUE</b></code> <br>
 	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected != actual
 	 * <code><b>FALSE</b></code>
+	 * @throws SQLException 
 	 */
 	@DisplayName("Parking Spot with Invalid ParkingSpot values ")
 	@Test
-	public void testUpdateParkingInvalidParkingSpot() {
+	public void testUpdateParkingInvalidParkingSpot() throws SQLException {
 		// GIVEN
 		ParkingSpot parkingSpot = new ParkingSpot(7, ParkingType.BIKE, false);
 
@@ -246,10 +251,11 @@ public class ParkingSpotDAOIT {
 	 * <code><b>TRUE</b></code> <br>
 	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected != actual
 	 * <code><b>FALSE</b></code>
+	 * @throws SQLException 
 	 */
 	@DisplayName("Parking Spot with Valid ParkingSpot values ")
 	@Test
-	public void testUpdateParkingValidParkingSpot() {
+	public void testUpdateParkingValidParkingSpot() throws SQLException {
 		// GIVEN
 		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.BIKE, false);
 
@@ -271,10 +277,11 @@ public class ParkingSpotDAOIT {
 	 * <code><b>TRUE</b></code> <br>
 	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected != actual
 	 * <code><b>FALSE</b></code>
+	 * @throws SQLException 
 	 */
 	@Test
 	@DisplayName("Tests of if all parking spots are occupied")
-	public void testsNextAvailableSpotStatustWhenAllOccupied() {
+	public void testsNextAvailableSpotStatustWhenAllOccupied() throws SQLException {
 		// GIVEN
 		ParkingSpot parkingSpot1 = new ParkingSpot(1, ParkingType.CAR, false);
 		ParkingSpot parkingSpot2 = new ParkingSpot(2, ParkingType.CAR, false);
@@ -312,10 +319,11 @@ public class ParkingSpotDAOIT {
 	 * <code><b>TRUE</b></code> <br>
 	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected != actual
 	 * <code><b>FALSE</b></code>
+	 * @throws SQLException 
 	 */
 	@Test
 	@DisplayName("Tests CAR for penultimate parking spot available to be alloted")
-	public void testNextAvailableSlotWhenPenutimateIsLeftFree() {
+	public void testNextAvailableSlotWhenPenutimateIsLeftFree() throws SQLException {
 		// GIVEN
 		ParkingSpot parkingSpot1 = new ParkingSpot(1, ParkingType.CAR, false);
 		ParkingSpot parkingSpot2 = new ParkingSpot(2, ParkingType.CAR, false);
@@ -341,10 +349,11 @@ public class ParkingSpotDAOIT {
 	 * <code><b>TRUE</b></code> <br>
 	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected != actual
 	 * <code><b>FALSE</b></code>
+	 * @throws SQLException 
 	 */
 	@Test
 	@DisplayName("Tests BIKE for penultimate parking spot available to be alloted")
-	public void testBikeNextAvailableSlotWhenPenutimateIsLeftFree() {
+	public void testBikeNextAvailableSlotWhenPenutimateIsLeftFree() throws SQLException {
 		// GIVEN
 		ParkingSpot parkingSpot1 = new ParkingSpot(1, ParkingType.BIKE, false);
 		ParkingSpot parkingSpot2 = new ParkingSpot(2, ParkingType.BIKE, false);
@@ -380,7 +389,7 @@ public class ParkingSpotDAOIT {
 	}
 
 	@Test
-	public void testCarParkingSpotGetAllotedTwoWhenTwoIncomingVehiculesButOneOfThemExiting() {
+	public void testCarParkingSpotGetAllotedTwoWhenTwoIncomingVehiculesButOneOfThemExiting() throws SQLException {
 		parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
 		ParkingSpot parkingSpot2 = new ParkingSpot(2, ParkingType.CAR, false);
 
@@ -395,7 +404,7 @@ public class ParkingSpotDAOIT {
 	}
 
 	@Test
-	public void testBikeParkingSpotGetAllotedTwoWhenTwoIncomingVehiculesButOneOfThemExiting() {
+	public void testBikeParkingSpotGetAllotedTwoWhenTwoIncomingVehiculesButOneOfThemExiting() throws SQLException {
 		parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
 		ParkingSpot parkingSpot2 = new ParkingSpot(2, ParkingType.BIKE, false);
 

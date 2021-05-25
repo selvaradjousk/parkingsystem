@@ -3,6 +3,7 @@ package com.parkit.parkingsystem.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -64,9 +65,10 @@ public class ParkingSpotDAO {
 	 * 
 	 * @return result - returns parking spot identification number
 	 * @param parkingType - instance variable of {@link #ParkingType}
+	 * @throws SQLException 
 	 * @exception Exception - java.lang.Exception
 	 */
-	public int getNextAvailableSpot(final ParkingType parkingType) {
+	public int getNextAvailableSpot(final ParkingType parkingType) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -95,9 +97,10 @@ public class ParkingSpotDAO {
 	 * 
 	 * @param parkingSpot - instance variable of {@link #ParkingSpot}
 	 * @return boolean update parking status
+	 * @throws SQLException 
 	 * @exception Exception - java.lang.Exception
 	 */
-	public boolean updateParking(final ParkingSpot parkingSpot) {
+	public boolean updateParking(final ParkingSpot parkingSpot) throws SQLException {
 		// update the availability of that parking slot
 		Connection con = null;
 		PreparedStatement ps = null;

@@ -10,6 +10,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.AfterAll;
@@ -95,10 +96,11 @@ public class ParkingDataBaseIT {
 	 * are not same <code><b>TRUE</b></code> <br>
 	 * <b>Test Condition <i>FAILED</i>: </b>verify alternate available parking spot
 	 * are not same <code><b>FALSE</b></code>
+	 * @throws SQLException 
 	 */
 	@DisplayName("Parking Database Testing - Availability of alternate parking spot ")
 	@Test
-	public void testParkingACar() {
+	public void testParkingACar() throws SQLException {
 
 		// GIVEN
 		int firstAlternateParkingSlot = parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR);
@@ -135,10 +137,11 @@ public class ParkingDataBaseIT {
 	 * <code><b>TRUE</b></code> <br>
 	 * <b>Test Condition <i>FAILED</i>: </b>assertNull with getOutime
 	 * <code><b>FALSE</b></code>
+	 * @throws SQLException 
 	 */
 	@DisplayName("Parking Service Testing - Parking Lot Status on Exit ")
 	@Test
-	public void testParkingLotExitIT() throws InterruptedException {
+	public void testParkingLotExitIT() throws InterruptedException, SQLException {
 
 		// GIVEN
 		testParkingACar();

@@ -71,7 +71,7 @@ public class FareCalculatorService {
 	 * @return selected fare value base don vehicle type
 	 * @throws IllegalArgumentException for Unknown Parking Type
 	 */
-	private double identifyVehicleTypeForComputeFare(final Ticket ticket) {
+	public double identifyVehicleTypeForComputeFare(final Ticket ticket){
 		double selectedFare = 0;
 
 		switch (ticket.getParkingSpot().getParkingType()) {
