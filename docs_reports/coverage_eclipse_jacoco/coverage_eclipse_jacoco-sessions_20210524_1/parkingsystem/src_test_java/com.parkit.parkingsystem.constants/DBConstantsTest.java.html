@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>DBConstantsTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (24 mai 2021 16:38:44)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.constants</a> &gt; <span class="el_source">DBConstantsTest.java</span></div><h1>DBConstantsTest.java</h1><pre class="source lang-java linenums">/**
+ * 
+ */
+package com.parkit.parkingsystem.constants;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+/**
+ * Test on DBConstants.
+ * 
+ * @author Senthil
+ *
+ */
+<span class="fc" id="L17">class DBConstantsTest {</span>
+	/**
+	 * Instance of DBConstants class
+	 */
+	DBConstants dbConstants;
+
+	/**
+	 * Test SQL query to get available parking spot.
+	 */
+<span class="fc" id="L26">	final String GET_NEXT_PARKING_SPOT_expected = &quot;select &quot;</span>
+			+ &quot;min(PARKING_NUMBER) from parking where AVAILABLE = true and TYPE = ?&quot;;
+
+	/**
+	 * Test SQL query to update available parking spot.
+	 */
+<span class="fc" id="L32">	final String UPDATE_PARKING_SPOT_expected = &quot;update &quot; + &quot;parking set available = ? where PARKING_NUMBER = ?&quot;;</span>
+
+	/**
+	 * Test SQL query to save ticket.
+	 */
+<span class="fc" id="L37">	final String SAVE_TICKET_expected = &quot;insert into &quot; + &quot;ticket(PARKING_NUMBER, VEHICLE_REG_NUMBER, PRICE, &quot;</span>
+			+ &quot;IN_TIME, OUT_TIME) values(?,?,?,?,?)&quot;;
+
+	/**
+	 * Test SQL query to update ticket.
+	 */
+<span class="fc" id="L43">	final String UPDATE_TICKET_expected = &quot;update ticket &quot; + &quot;set PRICE=?, OUT_TIME=? where ID=?&quot;;</span>
+
+	/**
+	 * Test SQL query to get ticket.
+	 */
+<span class="fc" id="L48">	final String GET_TICKET_expected = &quot;select t.PARKING_NUMBER, &quot;</span>
+			+ &quot; t.ID, t.PRICE, t.IN_TIME, t.OUT_TIME, p.TYPE from &quot;
+			+ &quot;ticket t,parking p where p.parking_number = t.parking_number &quot;
+			+ &quot; and t.VEHICLE_REG_NUMBER=? order by t.IN_TIME  limit 1&quot;;
+
+	/**
+	 * Test SQL query to get vehicle recurrence frequency.
+	 */
+<span class="fc" id="L56">	final String GET_VEHICLE_OCCURENCES_expected = &quot;select &quot;</span>
+			+ &quot;count(VEHICLE_REG_NUMBER) from ticket where VEHICLE_REG_NUMBER = ?&quot;;
+
+	/**
+	 * test SQL query to get available parking spot.
+	 */
+	@DisplayName(&quot;Test GET_NEXT_PARKING_SPOT&quot;)
+	@Test
+	void testGetNextParkingSpotDbConstanst() {
+<span class="fc" id="L65">		assertEquals(dbConstants.GET_NEXT_PARKING_SPOT, GET_NEXT_PARKING_SPOT_expected);</span>
+<span class="fc" id="L66">	}</span>
+
+	/**
+	 * Test SQL query to update available parking spot.
+	 */
+	@DisplayName(&quot;Test UPDATE_PARKING_SPOT&quot;)
+	@Test
+	void testUpdateParkingSpotDbConstanst() {
+<span class="fc" id="L74">		assertEquals(dbConstants.UPDATE_PARKING_SPOT, UPDATE_PARKING_SPOT_expected);</span>
+<span class="fc" id="L75">	}</span>
+
+	/**
+	 * Test SQL query to save ticket.
+	 */
+	@DisplayName(&quot;Test SAVE_TICKET&quot;)
+	@Test
+	void testSaveTickettDbConstanst() {
+<span class="fc" id="L83">		assertEquals(dbConstants.SAVE_TICKET, SAVE_TICKET_expected);</span>
+<span class="fc" id="L84">	}</span>
+
+	/**
+	 * Test SQL query to update ticket.
+	 */
+	@DisplayName(&quot;Test UPDATE_TICKET&quot;)
+	@Test
+	void testUpdateTicketbConstanst() {
+<span class="fc" id="L92">		assertEquals(dbConstants.UPDATE_TICKET, UPDATE_TICKET_expected);</span>
+<span class="fc" id="L93">	}</span>
+
+	/**
+	 * Test SQL query to get ticket.
+	 */
+	@DisplayName(&quot;Test GET_TICKET&quot;)
+	@Test
+	void testGetTickettDbConstanst() {
+<span class="fc" id="L101">		assertEquals(dbConstants.GET_TICKET, GET_TICKET_expected);</span>
+<span class="fc" id="L102">	}</span>
+
+	/**
+	 * Test SQL query to get vehicle recurrence frequency.
+	 */
+	@DisplayName(&quot;Test GET_VEHICLE_OCCURENCES&quot;)
+	@Test
+	void testGetVehicleOccurencesDbConstanst() {
+<span class="fc" id="L110">		assertEquals(dbConstants.GET_VEHICLE_OCCURENCES, GET_VEHICLE_OCCURENCES_expected);</span>
+<span class="fc" id="L111">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (24 mai 2021 16:38:44)</div></body></html>

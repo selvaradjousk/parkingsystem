@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Properties;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -33,7 +34,12 @@ public class DataBaseTestConfig extends DataBaseConfig {
 //		logger.info("Create DB connection");
 //		try {
 //			Class.forName("com.mysql.cj.jdbc.Driver");
-//			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/prod", "root", "rootroot");
+//						
+//	Properties info = new Properties();
+//    info.put("user", "root");
+//    info.put("password", "rootroot");
+//    
+//	con = DriverManager.getConnection("jdbc:mysql://localhost:3306/prod", info);
 //		} catch (SQLException e) {
 //			System.err.println("Exception occured : SQLException : " + e.getMessage());
 //			e.printStackTrace();

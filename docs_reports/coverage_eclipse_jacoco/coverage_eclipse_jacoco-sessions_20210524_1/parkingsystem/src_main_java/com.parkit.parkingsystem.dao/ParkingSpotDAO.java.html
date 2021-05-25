@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ParkingSpotDAO.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (24 mai 2021 16:38:44)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.dao</a> &gt; <span class="el_source">ParkingSpotDAO.java</span></div><h1>ParkingSpotDAO.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.parkit.parkingsystem.config.DataBaseConfig;
+import com.parkit.parkingsystem.constants.DBConstants;
+import com.parkit.parkingsystem.constants.ParkingType;
+import com.parkit.parkingsystem.model.ParkingSpot;
+
+/**
+ * Class: {@link ParkingSpotDAO} - Parking spot Data Access Objects.&lt;br&gt;
+ * &lt;b&gt;Project: &lt;/b&gt; P3 - parking system - ParkIt&lt;br&gt;
+ * 
+ * @see Methods: {@link #ParkingSpotDAO()}, {@link #updateParking(ParkingSpot)}
+ * 
+ * @author Senthil
+ */
+<span class="fc" id="L23">public class ParkingSpotDAO {</span>
+
+	/**
+	 * Logger for ParkingSpotDao.
+	 */
+<span class="fc" id="L28">	private static final Logger logger = LogManager.getLogger(&quot;ParkingSpotDAO&quot;);</span>
+
+	/**
+	 * Instance dataBaseConfig of DataBaseConfig to connect to DataBase.
+	 */
+<span class="fc" id="L33">	 private DataBaseConfig dataBaseConfig = new DataBaseConfig();</span>
+
+	  /**
+	   * Setter of a DataBaseConfig.
+	   *
+	   * @param dataBaseConfig set instance
+	   */
+	  public void setDataBaseConfig(final DataBaseConfig dataBaseConfig) {
+<span class="fc" id="L41">	    this.dataBaseConfig = dataBaseConfig;</span>
+<span class="fc" id="L42">	  }</span>
+	 
+	/**
+	 * getNextAvailableSlot() This method helps to identify the next parking spot
+	 * available for parking of vehicle
+	 * 
+	 * @return result - returns parking spot identification number
+	 * @param parkingType - instance variable of {@link #ParkingType}
+	 * @exception Exception - java.lang.Exception
+	 */
+	public int getNextAvailableSpot(ParkingType parkingType) {
+<span class="fc" id="L53">		Connection con = null;</span>
+<span class="fc" id="L54">		PreparedStatement ps = null;</span>
+<span class="fc" id="L55">		ResultSet rs = null;</span>
+<span class="fc" id="L56">		int result = -1;</span>
+		try {
+<span class="fc" id="L58">			con = dataBaseConfig.getConnection();</span>
+<span class="fc" id="L59">			ps = con.prepareStatement(DBConstants.GET_NEXT_PARKING_SPOT);</span>
+<span class="fc" id="L60">			ps.setString(1, parkingType.toString());</span>
+<span class="fc" id="L61">			rs = ps.executeQuery();</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">			if (rs.next()) {</span>
+<span class="fc" id="L63">				result = rs.getInt(1);</span>
+			}
+<span class="pc" id="L65">		} catch (Exception ex) {</span>
+<span class="nc" id="L66">			logger.error(&quot;Error fetching next available slot&quot;, ex);</span>
+		} finally {
+<span class="fc" id="L68">			dataBaseConfig.closeConnection(con);</span>
+<span class="fc" id="L69">			dataBaseConfig.closeResultSet(rs);</span>
+<span class="fc" id="L70">			dataBaseConfig.closePreparedStatement(ps);</span>
+		}
+<span class="fc" id="L72">		return result;</span>
+	}
+
+	/**
+	 * updateParking() This method helps to update the parking spot provided to the
+	 * customer for parking of vehicle
+	 * 
+	 * @param parkingSpot - instance variable of {@link #ParkingSpot}
+	 * @exception Exception - java.lang.Exception
+	 */
+	public boolean updateParking(ParkingSpot parkingSpot) {
+		// update the availability of that parking slot
+<span class="fc" id="L84">		Connection con = null;</span>
+<span class="fc" id="L85">		PreparedStatement ps = null;</span>
+		try {
+<span class="fc" id="L87">			con = dataBaseConfig.getConnection();</span>
+<span class="fc" id="L88">			ps = con.prepareStatement(DBConstants.UPDATE_PARKING_SPOT);</span>
+<span class="fc" id="L89">			ps.setBoolean(1, parkingSpot.isAvailable());</span>
+<span class="fc" id="L90">			ps.setInt(2, parkingSpot.getId());</span>
+<span class="fc" id="L91">			int updateRowCount = ps.executeUpdate();</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">			return (updateRowCount == 1);</span>
+<span class="nc" id="L93">		} catch (Exception ex) {</span>
+<span class="nc" id="L94">			logger.error(&quot;Error updating parking info&quot;, ex);</span>
+<span class="nc" id="L95">			return false;</span>
+		} finally {
+<span class="fc" id="L97">			dataBaseConfig.closeConnection(con);</span>
+<span class="fc" id="L98">			dataBaseConfig.closePreparedStatement(ps);</span>
+		}
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (24 mai 2021 16:38:44)</div></body></html>

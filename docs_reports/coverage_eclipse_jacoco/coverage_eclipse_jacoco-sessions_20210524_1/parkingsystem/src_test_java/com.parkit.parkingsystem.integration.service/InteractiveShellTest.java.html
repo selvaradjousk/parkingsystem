@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>InteractiveShellTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (24 mai 2021 16:38:44)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.integration.service</a> &gt; <span class="el_source">InteractiveShellTest.java</span></div><h1>InteractiveShellTest.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.integration.service;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintStream;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import com.parkit.parkingsystem.App;
+import com.parkit.parkingsystem.service.InteractiveShell;
+
+import nl.altindag.log.LogCaptor;
+
+<span class="fc" id="L21">class InteractiveShellTest {</span>
+	private InteractiveShell interactiveShell;
+
+		ByteArrayOutputStream byteArrayOutputStream;
+
+		@BeforeEach
+		public void setUp() {
+<span class="fc" id="L28">			interactiveShell = new InteractiveShell();</span>
+<span class="fc" id="L29">		}</span>
+
+		@DisplayName(&quot;Testing the Message Dispays in InteractiveShell&quot;)
+		@Test
+		public void testLoadInterfaceWelcomeMessage() throws IOException {
+			// GIVEN
+<span class="fc" id="L35">			String expectedInfoMessage = &quot;App initialized!!!&quot;;</span>
+<span class="fc" id="L36">			LogCaptor logCaptor = LogCaptor.forClass(App.class);</span>
+<span class="fc" id="L37">			byteArrayOutputStream = new ByteArrayOutputStream();</span>
+<span class="fc" id="L38">			System.setOut(new PrintStream(byteArrayOutputStream));</span>
+<span class="fc" id="L39">			String input = &quot;3\n&quot;;</span>
+<span class="fc" id="L40">			InputStream inputStream = new ByteArrayInputStream(input.getBytes());</span>
+<span class="fc" id="L41">			System.setIn(inputStream);</span>
+
+			// WHEN
+<span class="fc" id="L44">			InteractiveShell.loadInterface();</span>
+<span class="fc" id="L45">			String outputScreen = null;</span>
+<span class="fc" id="L46">			outputScreen = byteArrayOutputStream.toString(&quot;UTF-8&quot;);</span>
+
+			// THEN
+<span class="fc" id="L49">			assertFalse(logCaptor.getInfoLogs().contains(expectedInfoMessage));</span>
+			// Testing the Welcome Message display
+<span class="fc" id="L51">			assertTrue(outputScreen.contains(&quot;Welcome to Parking System!&quot;));</span>
+<span class="fc" id="L52">			assertFalse(outputScreen.contains(&quot;Welcome to Parzzz System!&quot;));</span>
+			// Testing the Message - Please select an option display
+<span class="fc" id="L54">			assertTrue(outputScreen.contains(&quot;Please select an option. Simply enter the number to choose an action&quot;));</span>
+<span class="fc" id="L55">			assertFalse(outputScreen.contains(&quot; Esaelp select an noitpo. Simply enter the number to choose an action&quot;));</span>
+			// Testing the Message and Menu displayed
+<span class="fc" id="L57">			assertTrue(outputScreen.contains(&quot;1 New Vehicle Entering - Allocate Parking Space&quot;));</span>
+<span class="fc" id="L58">			assertFalse(outputScreen.contains(&quot;2 New Vehicle Entering - Allocate Parking Space&quot;));</span>
+			// Testing the Message and Menu displayed
+<span class="fc" id="L60">			assertTrue(outputScreen.contains(&quot;2 Vehicle Exiting - Generate Ticket Price&quot;));</span>
+<span class="fc" id="L61">			assertFalse(outputScreen.contains(&quot;1 Vehicle Exiting - Generate Ticket Price&quot;));</span>
+			// Testing the Message and Menu displayed&quot;
+<span class="fc" id="L63">			assertTrue(outputScreen.contains(&quot;3 Shutdown System&quot;));</span>
+<span class="fc" id="L64">			assertFalse(outputScreen.contains(&quot;1 Shutdown System&quot;));</span>
+<span class="fc" id="L65">			assertFalse(outputScreen.contains(&quot;2 Shutdown System&quot;));</span>
+			
+<span class="fc" id="L67">			byteArrayOutputStream.close();</span>
+<span class="fc" id="L68">			inputStream.close();</span>
+			
+<span class="fc" id="L70">		}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (24 mai 2021 16:38:44)</div></body></html>

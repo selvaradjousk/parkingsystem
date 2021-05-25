@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>InputReaderUtilTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (24 mai 2021 16:38:44)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.unittest.util</a> &gt; <span class="el_source">InputReaderUtilTest.java</span></div><h1>InputReaderUtilTest.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.unittest.util;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import com.parkit.parkingsystem.util.InputReaderUtil;
+import com.parkit.parkingsystem.util.ScannerWrapper;
+
+@ExtendWith(MockitoExtension.class)
+<span class="fc" id="L27">class InputReaderUtilTest {</span>
+
+	private InputReaderUtil inputReaderUtil;
+	ByteArrayOutputStream byteArrayOutputStream;
+
+	@Mock
+	ScannerWrapper scanner;
+
+	@BeforeEach
+	public void setUp() {
+<span class="fc" id="L37">		inputReaderUtil = new InputReaderUtil(scanner);</span>
+<span class="fc" id="L38">	}</span>
+
+	@Tag(&quot;ReadSelection&quot;)
+	@DisplayName(&quot;Testing read REGULAR selection&quot;)
+	@ParameterizedTest(name = &quot;Tested Value: {0} on read return {0}&quot;)
+	@ValueSource(strings = { &quot;1&quot;, &quot;2&quot;, &quot;3&quot; })
+	void readSelectionTest(String arg) {
+
+		// GIVEN - NumericalInput
+<span class="fc" id="L47">		when(scanner.nextLine()).thenReturn(arg);</span>
+
+		// WHEN
+<span class="fc" id="L50">		int selection = inputReaderUtil.readSelection();</span>
+
+		// THEN
+<span class="fc" id="L53">		assertEquals(selection, Integer.parseInt(arg));</span>
+<span class="fc" id="L54">	}</span>
+
+	@Tag(&quot;ReadSelection&quot;)
+	@DisplayName(&quot;Testing read NEGATIVE values selection&quot;)
+	@ParameterizedTest(name = &quot;Tested Value: {0} on read return -1&quot;)
+	@ValueSource(strings = { &quot;-1&quot;, &quot;-2&quot;, &quot;-3&quot;, &quot;-4&quot;, &quot;-9&quot; })
+	void readSelectionNegativeValues(String arg) {
+
+		// GIVEN
+<span class="fc" id="L63">		when(scanner.nextLine()).thenReturn(arg);</span>
+
+		// WHEN
+<span class="fc" id="L66">		int selection = inputReaderUtil.readSelection();</span>
+
+		// THEN
+<span class="fc" id="L69">		assertEquals(selection, -1);</span>
+<span class="fc" id="L70">	}</span>
+
+	@Tag(&quot;ReadSelection&quot;)
+	@DisplayName(&quot;Testing read &gt;3 values selection&quot;)
+	@ParameterizedTest(name = &quot;Tested Value: {0} on read return -1&quot;)
+	@ValueSource(strings = { &quot;4&quot;, &quot;5&quot;, &quot;9&quot;, &quot;10&quot;, &quot;100&quot; })
+	void readSelectionAboveValueThree(String arg) {
+
+		// GIVEN
+<span class="fc" id="L79">		when(scanner.nextLine()).thenReturn(arg);</span>
+
+		// WHEN
+<span class="fc" id="L82">		int selection = inputReaderUtil.readSelection();</span>
+
+		// THEN
+<span class="fc" id="L85">		assertEquals(selection, -1);</span>
+<span class="fc" id="L86">	}</span>
+
+	@Tag(&quot;ReadSelection&quot;)
+	@DisplayName(&quot;Testing read ALPHABET characters selection&quot;)
+	@ParameterizedTest(name = &quot;Tested Value: {0} on read return -1&quot;)
+	@ValueSource(strings = { &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;x&quot;, &quot;z&quot; })
+	void readSelectionAlphabets(String arg) {
+
+		// GIVEN
+<span class="fc" id="L95">		when(scanner.nextLine()).thenReturn(arg);</span>
+
+		// WHEN
+<span class="fc" id="L98">		int selection = inputReaderUtil.readSelection();</span>
+
+		// THEN
+<span class="fc" id="L101">		assertEquals(selection, -1);</span>
+<span class="fc" id="L102">	}</span>
+
+	@Tag(&quot;ReadSelection&quot;)
+	@DisplayName(&quot;Testing read SPECIAL characters selection&quot;)
+	@ParameterizedTest(name = &quot;Tested Value: {0} on read return -1&quot;)
+	@ValueSource(strings = { &quot;&amp;&quot;, &quot;#&quot;, &quot;!&quot;, &quot;=&quot;, &quot;~&quot; })
+	void readSelectionSpecialCharacters(String arg) {
+
+		// GIVEN
+<span class="fc" id="L111">		when(scanner.nextLine()).thenReturn(arg);</span>
+
+		// WHEN
+<span class="fc" id="L114">		int selection = inputReaderUtil.readSelection();</span>
+
+		// THEN
+<span class="fc" id="L117">		assertEquals(selection, -1);</span>
+<span class="fc" id="L118">	}</span>
+
+	@Tag(&quot;ReadVehicleRegistrationNumber&quot;)
+	@DisplayName(&quot;Testing VALID registration number inputs&quot;)
+	@ParameterizedTest(name = &quot;Tested Value: {0} on read return {0}&quot;)
+	@ValueSource(strings = { &quot;AB123CD&quot;, &quot;BC456DE&quot;, &quot;123456&quot;, &quot;AB1234YZ&quot;, &quot;XY9874OP&quot; })
+	void readVehicleRegistrationNumberValidType(String arg) throws Exception {
+
+		// GIVEN
+<span class="fc" id="L127">		when(scanner.nextLine()).thenReturn(arg);</span>
+
+		// WHEN
+<span class="fc" id="L130">		String regNumber = inputReaderUtil.readVehicleRegistrationNumber();</span>
+
+		// THEN
+<span class="fc" id="L133">		assertEquals(regNumber, arg);</span>
+<span class="fc" id="L134">	}</span>
+
+	@Tag(&quot;ReadVehicleRegistrationNumber&quot;)
+	@DisplayName(&quot;Testing read INVALID registration number input throws exception&quot;)
+	@ParameterizedTest(name = &quot;Tested Value: {0} on read throws exception&quot;)
+	@ValueSource(strings = { &quot;WOOOO WOOOO&quot;, &quot;BC4sdfs56DE&quot;, &quot;123sdfq456&quot;, &quot;HAAAAHHAAAAA&quot;, &quot;XY9IUYT&amp;874OP&quot; })
+	void readVehicleRegistrationNumberInvalid(String arg) {
+
+		// GIVEN
+<span class="fc" id="L143">		when(scanner.nextLine()).thenReturn(arg);</span>
+
+		// THEN
+<span class="pc" id="L146">		assertThrows(IllegalArgumentException.class, () -&gt; inputReaderUtil.readVehicleRegistrationNumber()); // WHEN</span>
+<span class="fc" id="L147">	}</span>
+
+	@Tag(&quot;ReadVehicleRegistrationNumber&quot;)
+	@DisplayName(&quot;Tested read EMPTY input value throws exception&quot;)
+	@ParameterizedTest(name = &quot;Tested Value: {0} on read throws exception&quot;)
+	@ValueSource(strings = { &quot;&quot;, &quot; &quot;, &quot;   &quot;, &quot;     &quot;, &quot;     &quot;, &quot;             &quot; })
+	void readVehicleRegistrationNumberEmpty(String arg) {
+
+		// GIVEN
+<span class="fc" id="L156">		when(scanner.nextLine()).thenReturn(arg);</span>
+
+		// THEN
+<span class="pc" id="L159">		assertThrows(IllegalArgumentException.class, () -&gt; inputReaderUtil.readVehicleRegistrationNumber()); // WHEN</span>
+<span class="fc" id="L160">	}</span>
+
+	@Test
+	@Tag(&quot;ReadVehicleRegistrationNumber&quot;)
+	@DisplayName(&quot;Tested read null input value: {0} throws exception&quot;)
+	void readVehicleRegistrationNumberNull() {
+
+		// GIVEN
+<span class="fc" id="L168">		when(scanner.nextLine()).thenReturn(null);</span>
+
+		// THEN
+<span class="pc" id="L171">		assertThrows(IllegalArgumentException.class, () -&gt; inputReaderUtil.readVehicleRegistrationNumber()); // WHEN</span>
+<span class="fc" id="L172">	}</span>
+	
+	
+	
+	
+
+//	@Test
+//	@Tag(&quot;DisplayMessageTest&quot;)
+//	@DisplayName(&quot;Tested Vehicle Registration Number Illegal Argument Exception Message&quot;)
+//	void testReadVehicleRegistrationNumberIllegalArgumentExceptionMessageTest() {
+//		// GIVEN
+//		when(scanner.nextLine()).thenReturn(null);
+//
+//		// WHEN
+//		try {
+//			inputReaderUtil.readVehicleRegistrationNumber();
+//		} catch (Exception e) {
+//			String ex = e.getMessage();
+//			// THEN
+//			assertTrue(ex.contains(&quot;Invalid input provided&quot;));
+//			assertFalse(
+//					ex.contains(&quot;Error reading input. Please enter a valid string for vehicle registration number&quot;));
+//		}
+//	}
+//
+//	@Test
+//	@Tag(&quot;DisplayMessageTest&quot;)
+//	@DisplayName(&quot;Tested Vehicle Registration Number Illegal Argument Exception Message&quot;)
+//	void testReadVehicleRegistrationNumberIExceptionMessageTest() throws Exception {
+//		// GIVEN
+//				String outputScreen = null;
+//		byteArrayOutputStream = new ByteArrayOutputStream();
+//		System.setOut(new PrintStream(byteArrayOutputStream));
+//		when(scanner.nextLine()).thenReturn(null);
+//		// WHEN
+//		try {
+//			inputReaderUtil.readVehicleRegistrationNumber();
+//			outputScreen = byteArrayOutputStream.toString(&quot;UTF-8&quot;);
+//
+//		} catch (IllegalArgumentException e) {
+//			String expected = e.getMessage();
+//			assertFalse(expected.contains(&quot;Error reading input&quot;));
+//			outputScreen = byteArrayOutputStream.toString(&quot;UTF-8&quot;);
+//			assertEquals(&quot;Error reading input. Please enter a valid string for vehicle registration number&quot;,
+//					outputScreen.toString().trim());
+//			assertNotEquals(&quot;Invalid input provided&quot;,outputScreen.toString().trim() );
+//			assertNotEquals(&quot;Error reading input. Please enter a valid string for vehicle registration number&quot;, expected);
+//			// THEN
+//			byteArrayOutputStream.close();
+//		}
+//		byteArrayOutputStream.close();
+//	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (24 mai 2021 16:38:44)</div></body></html>
