@@ -17,7 +17,7 @@ public class ScannerWrapper {
 	  /**
 	   * Initialize scanner to read keyboard input.
 	   */
-	  private static final Scanner SCANNER = new Scanner(System.in);
+	  private static final Scanner SCANNER = new Scanner(System.in, "UTF-8");
 
 	  /**
 	   * Reads keyboard input.
