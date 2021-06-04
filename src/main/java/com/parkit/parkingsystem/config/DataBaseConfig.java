@@ -31,17 +31,14 @@ public class DataBaseConfig {
 	 * getConnection() This method establishes DB connection.
 	 * 
 	 * @return Instance variable - returns connection values
-	 * @throws IllegalAccessException
-	 * @throws InstantiationException
-	 * @exception SQLException
-	 * @exception ClassNotFoundException
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
 	 * 
 	 * @return con a connection instance
 	 */
 	public Connection getConnection() throws SQLException, ClassNotFoundException {
 		Connection con = null;
 		LOGGER.info("Create DB connection");
-		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			Properties info = new Properties();
@@ -49,11 +46,7 @@ public class DataBaseConfig {
 			info.put("password", "rootroot");
 
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/prod", info);
-		} catch (SQLException e) {
-			LOGGER.error("Exception occured : SQLException : ", e);
-		} catch (ClassNotFoundException e) {
-			LOGGER.error("Exception occured : ClassNotFoundException : ", e);
-		}
+
 		return con;
 	}
 
@@ -92,7 +85,7 @@ public class DataBaseConfig {
 	}
 
 	/**
-	 * closePreparedStatement() This method closes the DB ResultSet object.
+	 * closeResultSet() This method closes the DB ResultSet object.
 	 * 
 	 * @param rs - ResultSet instance value is supplied as a input parameter
 	 * @exception SQLException

@@ -69,9 +69,13 @@ public final class InteractiveShell {
 				System.out.println("Exiting from the system!");
 				continueApp = false;
 				break;
-			default:
-				System.out.println("Unsupported option. Please enter"
-					+ " a number corresponding to the provided menu");
+				
+				// default is unreachable and redundant code
+				// because InputReaderUtil readSelection handles exception
+				// for unsupported inputs. these codes can be removed
+//			default:
+//				System.out.println("Unsupported option. Please enter"
+//					+ " a number corresponding to the provided menu");
 			}
 		}
 	}

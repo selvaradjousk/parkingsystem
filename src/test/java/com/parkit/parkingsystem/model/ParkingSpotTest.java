@@ -77,95 +77,51 @@ class ParkingSpotTest {
 		assertEquals(expected, actual);
 	}
 
+	
 	/**
-	 * instance of test Equals() False.
+	 * instance of test for Equals Equals true (this equals object o).
 	 */
 	@Test
-	public void testEqualsFalse() {
-		ParkingSpot parkingSpot1 = new ParkingSpot(1, ParkingType.CAR, false);
-		Object obj = new Object();
-		assertFalse(obj instanceof ParkingSpot);
-	}
-
-	/**
-	 * instance of test Equals()true.
-	 */
-	@Test
-	public void testEqualsTrue() {
-		ParkingSpot parkingSpot1 = new ParkingSpot(1, ParkingType.CAR, false);
-		Object obj = new Object();
-		assertFalse(obj instanceof ParkingSpot);
-	}
-
-	/**
-	 * instance of test Equals Equal for ParkingSpot.
-	 */
-	@Test
-	public void testEqualsEqualReturn() {
-		ParkingSpot parkingSpot1 = new ParkingSpot(1, ParkingType.BIKE, false);
-		ParkingSpot parkingSpot2 = new ParkingSpot(1, ParkingType.BIKE, false);
-
-		assertEquals((parkingSpot1.getId()), (parkingSpot2.getId()));
-		assertEquals((parkingSpot1.getParkingType()), (parkingSpot2.getParkingType()));
-		assertEquals((parkingSpot1.isAvailable()), (parkingSpot2.isAvailable()));
-//			assertTrue((parkingSpot1.isAvailable()) == false);
-	}
-
-//		/** 
-//		 * instance of test true.
-//		 */ 
-//		@Test
-//		public void testEqualsEqualReturn() {
-//			ParkingSpot parkingSpot1 = new ParkingSpot(1, null, false);
-//			ParkingSpot parkingSpot2 = new ParkingSpot(1, ParkingType.CAR, false);
-//			Object obj = new Object();
-//			assertTrue((parkingSpot1).equals(parkingSpot2));
-//	}
-		@Test
-		public void testEqualsNull() {
-			ParkingSpot parkingSpot = null;
-			Object obj = new Object();
-
-			assertFalse(obj == parkingSpot);
-	}
-
-	/**
-	 * instance of test for Equals Equals true.
-	 */
-	@Test
-	public void testEqualsEquals() {
+	public void testEqualsShouldReturnTrueWhenComparingTheSameInstance() {
 		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
 		assertTrue(parkingSpot.equals(parkingSpot));
 	}
-
+	
+	
 	/**
-	 * instance of test Equals Not Equals.
+	 * instance of test for Equals Equals Null ( o equals null).
 	 */
 	@Test
-	public void testEqualsNotEquals() {
-		ParkingSpot parkingSpot = new ParkingSpot(1, null, false);
-		assertEquals(false, parkingSpot.equals(null));
+	public void testEqualsShouldReturnFalseWhenComparingTheNullValue() {
+		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
+		assertFalse(parkingSpot.equals(null));
 	}
-
+	
 	/**
-	 * instance of test Equals Equals True.
+	 * instance of test for Equals Not Equals getcClass.
 	 */
 	@Test
-	public void testEqualsEqualsTrue() {
-		ParkingSpot parkingSpot1 = new ParkingSpot(1, ParkingType.CAR, false);
-//			ParkingSpot parkingSpot2 = new ParkingSpot(1, ParkingType.BIKE, true);
-		Object obj = new Object();
-		assertFalse(parkingSpot1.getClass().equals((obj).getClass()));
+	public void testEqualsShouldReturnFalseWhenComparingTheWrongType() {
+		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
+		assertFalse(parkingSpot.equals(ParkingType.CAR));
 	}
-
+	
+	/**
+	 * instance of test for Equals true Comparing New Instance With Same Values.
+	 */
+	@Test
+	public void testEqualsShouldReturnTrueWhenComparingNewInstanceWithSameValues() {
+		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
+		assertTrue(parkingSpot.equals(new ParkingSpot(1, ParkingType.CAR, false)));
+	}
+	
 	/**
 	 * instance of hashCode.
 	 */
 	@Test
-	public void testHashCode() {
+	public void testHashCodeShouldBeEqualWithTwoInstanceWithSameValues() {
 		ParkingSpot parkingSpot1 = new ParkingSpot(1, ParkingType.CAR, false);
 		ParkingSpot parkingSpot2 = new ParkingSpot(1, ParkingType.CAR, false);
 		assertEquals(parkingSpot1.hashCode(), parkingSpot2.hashCode());
 	}
-
 }

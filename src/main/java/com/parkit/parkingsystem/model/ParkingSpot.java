@@ -119,7 +119,8 @@ public class ParkingSpot {
 			return false;
 		}
 		ParkingSpot that = (ParkingSpot) o;
-		return number == that.number;
+		boolean resultNumber = number == that.number;
+		return resultNumber;
 	}
 
 	/**

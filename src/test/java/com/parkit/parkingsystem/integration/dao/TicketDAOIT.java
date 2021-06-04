@@ -30,19 +30,7 @@ import com.parkit.parkingsystem.model.Ticket;
  * Integration Testing on Functions and Methods for dealing with Ticket
  * management for customers parking <br>
  * <b>Class Tested:</b> {@link TicketDAO}.<br>
- * <b>Project: <b> P3 - parking system - ParkIt<br>
- * 
- * @see <b>Tests:</b><br>
- *      {@link #testSaveTicket()}: Ticket DAO - Integration Testing - Save
- *      Ticket function<br>
- *      {@link #testGetTicket()}: Ticket DAO - Integration Testing - getting
- *      Ticket function<br>
- *      {@link #testUpdateTicket()}: Ticket DAO - Integration Testing - Ticket
- *      update function<br>
- *      {@link #testGetVehicleOccurence()}: Ticket DAO - Integration Testing -
- *      Client recurrence check function<br>
- *      {@link #createTestingTicket(String vehicleRegNumber)}: Support method
- *      for testing methods<br>
+ * <b>Project: </b> P3 - parking system - ParkIt<br>
  * 
  * @author Senthil
  */
@@ -247,8 +235,7 @@ public class TicketDAOIT {
 	}
 
 	/**
-	 * {@link #createTestingTicket(String vehicleRegNumber)} Test ticket is created
-	 * as template to use in test cases
+	 *Test ticket is created as template to use in test cases
 	 */
 	Ticket createTestingTicket(String vehicleRegNumber) {
 		Ticket testingTicket = new Ticket();

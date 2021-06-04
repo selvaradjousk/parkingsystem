@@ -37,11 +37,10 @@ class InputReaderUtilTest {
 		inputReaderUtil = new InputReaderUtil(scanner);
 	}
 
-	@Tag("ReadSelection")
-	@DisplayName("Testing read REGULAR selection")
+	@DisplayName("Test ReadSelection - REGULAR selection")
 	@ParameterizedTest(name = "Tested Value: {0} on read return {0}")
 	@ValueSource(strings = { "1", "2", "3" })
-	void readSelectionTest(String arg) {
+	void testReadSelectionRegularSelection(String arg) {
 
 		// GIVEN - NumericalInput
 		when(scanner.nextLine()).thenReturn(arg);
@@ -53,11 +52,10 @@ class InputReaderUtilTest {
 		assertEquals(selection, Integer.parseInt(arg));
 	}
 
-	@Tag("ReadSelection")
-	@DisplayName("Testing read NEGATIVE values selection")
+	@DisplayName("Test ReadSelection - NEGATIVE values selection")
 	@ParameterizedTest(name = "Tested Value: {0} on read return -1")
 	@ValueSource(strings = { "-1", "-2", "-3", "-4", "-9" })
-	void readSelectionNegativeValues(String arg) {
+	void testReadSelectionNegativeValues(String arg) {
 
 		// GIVEN
 		when(scanner.nextLine()).thenReturn(arg);
@@ -69,11 +67,10 @@ class InputReaderUtilTest {
 		assertEquals(selection, -1);
 	}
 
-	@Tag("ReadSelection")
-	@DisplayName("Testing read >3 values selection")
+	@DisplayName("Test ReadSelection - >3 values selection")
 	@ParameterizedTest(name = "Tested Value: {0} on read return -1")
 	@ValueSource(strings = { "4", "5", "9", "10", "100" })
-	void readSelectionAboveValueThree(String arg) {
+	void testReadSelectionAboveValueThree(String arg) {
 
 		// GIVEN
 		when(scanner.nextLine()).thenReturn(arg);
@@ -85,11 +82,10 @@ class InputReaderUtilTest {
 		assertEquals(selection, -1);
 	}
 
-	@Tag("ReadSelection")
-	@DisplayName("Testing read ALPHABET characters selection")
+	@DisplayName("Test ReadSelection - ALPHABET characters selection")
 	@ParameterizedTest(name = "Tested Value: {0} on read return -1")
 	@ValueSource(strings = { "a", "b", "c", "x", "z" })
-	void readSelectionAlphabets(String arg) {
+	void testReadSelectionAlphabets(String arg) {
 
 		// GIVEN
 		when(scanner.nextLine()).thenReturn(arg);
@@ -101,11 +97,10 @@ class InputReaderUtilTest {
 		assertEquals(selection, -1);
 	}
 
-	@Tag("ReadSelection")
-	@DisplayName("Testing read SPECIAL characters selection")
+	@DisplayName("Test ReadSelection - SPECIAL characters selection")
 	@ParameterizedTest(name = "Tested Value: {0} on read return -1")
 	@ValueSource(strings = { "&", "#", "!", "=", "~" })
-	void readSelectionSpecialCharacters(String arg) {
+	void testReadSelectionSpecialCharacters(String arg) {
 
 		// GIVEN
 		when(scanner.nextLine()).thenReturn(arg);
@@ -117,11 +112,10 @@ class InputReaderUtilTest {
 		assertEquals(selection, -1);
 	}
 
-	@Tag("ReadVehicleRegistrationNumber")
-	@DisplayName("Testing VALID registration number inputs")
+	@DisplayName("Test readVehicleRegistrationNumber - VALID registration number inputs")
 	@ParameterizedTest(name = "Tested Value: {0} on read return {0}")
 	@ValueSource(strings = { "AB123CD", "BC456DE", "123456", "AB1234YZ", "XY9874OP" })
-	void readVehicleRegistrationNumberValidType(String arg) throws Exception {
+	void testReadVehicleRegistrationNumberValidType(String arg) throws Exception {
 
 		// GIVEN
 		when(scanner.nextLine()).thenReturn(arg);
@@ -133,11 +127,10 @@ class InputReaderUtilTest {
 		assertEquals(regNumber, arg);
 	}
 
-	@Tag("ReadVehicleRegistrationNumber")
-	@DisplayName("Testing read INVALID registration number input throws exception")
+	@DisplayName("Test readVehicleRegistrationNumber - INVALID registration number input throws exception")
 	@ParameterizedTest(name = "Tested Value: {0} on read throws exception")
 	@ValueSource(strings = { "WOOOO WOOOO", "BC4sdfs56DE", "123sdfq456", "HAAAAHHAAAAA", "XY9IUYT&874OP" })
-	void readVehicleRegistrationNumberInvalid(String arg) {
+	void testReadVehicleRegistrationNumberInvalid(String arg) {
 
 		// GIVEN
 		when(scanner.nextLine()).thenReturn(arg);
@@ -146,11 +139,10 @@ class InputReaderUtilTest {
 		assertThrows(IllegalArgumentException.class, () -> inputReaderUtil.readVehicleRegistrationNumber()); // WHEN
 	}
 
-	@Tag("ReadVehicleRegistrationNumber")
-	@DisplayName("Tested read EMPTY input value throws exception")
+	@DisplayName("Test readVehicleRegistrationNumber -EMPTY input value throws exception")
 	@ParameterizedTest(name = "Tested Value: {0} on read throws exception")
 	@ValueSource(strings = { "", " ", "   ", "     ", "     ", "             " })
-	void readVehicleRegistrationNumberEmpty(String arg) {
+	void testReadVehicleRegistrationNumberEmpty(String arg) {
 
 		// GIVEN
 		when(scanner.nextLine()).thenReturn(arg);
@@ -160,9 +152,8 @@ class InputReaderUtilTest {
 	}
 
 	@Test
-	@Tag("ReadVehicleRegistrationNumber")
-	@DisplayName("Tested read null input value: {0} throws exception")
-	void readVehicleRegistrationNumberNull() {
+	@DisplayName("Test readVehicleRegistrationNumber - null input value: {0} throws exception")
+	void testReadVehicleRegistrationNumberNull() {
 
 		// GIVEN
 		when(scanner.nextLine()).thenReturn(null);
@@ -171,13 +162,9 @@ class InputReaderUtilTest {
 		assertThrows(IllegalArgumentException.class, () -> inputReaderUtil.readVehicleRegistrationNumber()); // WHEN
 	}
 	
-	
-	
-	
 
 	@Test
-	@Tag("DisplayMessageTest")
-	@DisplayName("Tested Vehicle Registration Number Illegal Argument Exception Message")
+	@DisplayName("Test read Vehicle Registration Number Illegal Argument Exception Message")
 	void testReadVehicleRegistrationNumberIllegalArgumentExceptionMessageTest() {
 		// GIVEN
 		when(scanner.nextLine()).thenReturn(null);
@@ -192,34 +179,5 @@ class InputReaderUtilTest {
 			assertFalse(
 					ex.contains("Error reading input. Please enter a valid string for vehicle registration number"));
 		}
-	}
-
-	@Test
-	@Tag("DisplayMessageTest")
-	@DisplayName("Tested Vehicle Registration Number Illegal Argument Exception Message")
-	void testReadVehicleRegistrationNumberIExceptionMessageTest() throws Exception {
-		// GIVEN
-				String outputScreen = null;
-		byteArrayOutputStream = new ByteArrayOutputStream();
-		System.setOut(new PrintStream(byteArrayOutputStream));
-		when(scanner.nextLine()).thenReturn(null);
-		// WHEN
-		try {
-			inputReaderUtil.readVehicleRegistrationNumber();
-			outputScreen = byteArrayOutputStream.toString("UTF-8");
-
-		} catch (IllegalArgumentException e) {
-			String expected = e.getMessage();
-			// THEN
-			assertFalse(expected.contains("Error reading input"));
-			outputScreen = byteArrayOutputStream.toString("UTF-8");
-			assertFalse(expected.contains("Error while reading user input from Shell"));
-			assertNotEquals("Error reading input. Please enter a valid string for vehicle registration number",
-					outputScreen.toString().trim());
-			assertNotEquals("Invalid input provided",outputScreen.toString().trim() );
-			assertNotEquals("Error reading input. Please enter a valid string for vehicle registration number", expected);
-			byteArrayOutputStream.close();
-		}
-		byteArrayOutputStream.close();
 	}
 }

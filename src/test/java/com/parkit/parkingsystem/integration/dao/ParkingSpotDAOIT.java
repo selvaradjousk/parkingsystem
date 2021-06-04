@@ -22,6 +22,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -46,7 +48,7 @@ import com.parkit.parkingsystem.util.InputReaderUtil;
  * Object - Tests on Functions and Methods for dealing with availability
  * management of parking spots / slots <br>
  * <b>Class Tested:</b>{@link ParkingSpotDAO}.<br>
- * <b>Project: <b> P3 - parking system - ParkIt<br>
+ * <b>Project: </b> P3 - parking system - ParkIt<br>
  * 
  * @see <b>Tests:</b><br>
  *      {@link #testGetNextAvailableSpotForCar()}: Parking Spot - Integration
@@ -76,6 +78,9 @@ public class ParkingSpotDAOIT {
 	@Mock
 	private static InputReaderUtil inputReaderUtil;
 
+	private static final Logger LOGGER 
+	= LogManager.getLogger("ParkingSpotDAOIT");
+	
 	@BeforeAll
 	public static void setupTests() {
 		parkingSpotDAO.setDataBaseConfig(dataBaseTestConfig);
@@ -414,10 +419,8 @@ public class ParkingSpotDAOIT {
 		parkingSpotDAO.updateParking(parkingSpot);
 		int result = parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR);
 
-
 		assertEquals(1, result);
 	}
-
 }
 
 	
