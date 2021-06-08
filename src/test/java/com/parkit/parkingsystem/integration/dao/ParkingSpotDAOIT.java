@@ -62,7 +62,7 @@ import com.parkit.parkingsystem.util.InputReaderUtil;
  * 
  * @author Senthil
  */
-@DisplayName("Vehicle Parking Spot Data Access Object - Integration Testing ")
+@DisplayName("IT - Vehicle Parking Spot Data Access Object")
 @ExtendWith(MockitoExtension.class)
 public class ParkingSpotDAOIT {
 

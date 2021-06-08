@@ -20,6 +20,7 @@ import nl.altindag.log.LogCaptor;
  * @author Senthil
  *
  */
+@DisplayName("Application launch and Interaction")
 class AppTest {
 
 	ByteArrayOutputStream byteArrayOutputStream;

@@ -16,37 +16,36 @@ import com.parkit.parkingsystem.model.ParkingSpot;
 /**
  * Class: {@link ParkingSpotDAO} - Parking spot Data Access Objects.<br>
  * <b>Project: </b> P3 - parking system - ParkIt<br>
- * 
- * @see Methods: {@link #ParkingSpotDAO()}, 
- * {@link #updateParking(ParkingSpot)}
- * 
+ *
+ * @see Methods: {@link #ParkingSpotDAO()},
+ *  {@link #updateParking(ParkingSpot)}
  * @author Senthil
  */
 public class ParkingSpotDAO {
 
-	 /**
-	 * Constant value for one
+	/**
+	 * Constant value for one.
 	 */
 	public static final int NO_MAGIC_PARAMETER_VALUE_ONE = 1;
 
 	 /**
-	 * Constant value for Two
+	 * Constant value for Two.
 	 */
 	 public static final int NO_MAGIC_PARAMETER_VALUE_TWO = 2;
 
 	 /**
-	 * Constant value for one
+	 * Constant value for negative value One.
 	 */
 	public static final int NO_MAGIC_PARAMETER_VALUE_MINUS_ONE = -1;
 
 	/**
 	 * Logger for ParkingSpotDao.
 	 */
-	private static final Logger LOGGER 
+	private static final Logger LOGGER
 	= LogManager.getLogger("ParkingSpotDAO");
 
 	/**
-	 * Instance dataBaseConfig of DataBaseConfig 
+	 * Instance dataBaseConfig of DataBaseConfig
 	 * to connect to DataBase.
 	 */
 	 private DataBaseConfig dataBaseConfig = new DataBaseConfig();
@@ -62,25 +61,28 @@ public class ParkingSpotDAO {
 
 	/**
 	 * getNextAvailableSlot() Identify next parking spot available.
-	 * 
+	 *
 	 * @return result - returns parking spot identification number
 	 * @param parkingType - instance variable of {@link #ParkingType}
-	 * @throws SQLException 
+	 * @throws SQLException
 	 * @exception Exception - java.lang.Exception
 	 */
-	public int getNextAvailableSpot(final ParkingType parkingType) throws SQLException {
+	public int getNextAvailableSpot(final ParkingType parkingType)
+			throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		int result = NO_MAGIC_PARAMETER_VALUE_MINUS_ONE;
 		try {
 			con = dataBaseConfig.getConnection();
-			ps = con.prepareStatement(DBConstants.GET_NEXT_PARKING_SPOT);
-			ps.setString(NO_MAGIC_PARAMETER_VALUE_ONE, 
+			ps = con.prepareStatement(DBConstants
+					.GET_NEXT_PARKING_SPOT);
+			ps.setString(NO_MAGIC_PARAMETER_VALUE_ONE,
 					parkingType.toString());
 			rs = ps.executeQuery();
 			if (rs.next()) {
-				result = rs.getInt(NO_MAGIC_PARAMETER_VALUE_ONE);
+				result = rs
+						.getInt(NO_MAGIC_PARAMETER_VALUE_ONE);
 			}
 		} catch (Exception ex) {
 			LOGGER.error("Error fetching next available slot", ex);
@@ -94,22 +96,26 @@ public class ParkingSpotDAO {
 
 	/**
 	 * updateParking() Update the parking spot provided.
-	 * 
-	 * @param parkingSpot - instance variable of {@link #ParkingSpot}
+	 *
+	 * @param parkingSpot - instance variable
+	 *  of {@link #ParkingSpot}
 	 * @return boolean update parking status
-	 * @throws SQLException 
+	 * @throws SQLException
 	 * @exception Exception - java.lang.Exception
 	 */
-	public boolean updateParking(final ParkingSpot parkingSpot) throws SQLException {
+	public boolean updateParking(final ParkingSpot parkingSpot)
+			throws SQLException {
 		// update the availability of that parking slot
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
 			con = dataBaseConfig.getConnection();
-			ps = con.prepareStatement(DBConstants.UPDATE_PARKING_SPOT);
-			ps.setBoolean(NO_MAGIC_PARAMETER_VALUE_ONE, 
+			ps = con.prepareStatement(DBConstants
+					.UPDATE_PARKING_SPOT);
+			ps.setBoolean(NO_MAGIC_PARAMETER_VALUE_ONE,
 					parkingSpot.isAvailable());
-			ps.setInt(NO_MAGIC_PARAMETER_VALUE_TWO, parkingSpot.getId());
+			ps.setInt(NO_MAGIC_PARAMETER_VALUE_TWO,
+					parkingSpot.getId());
 			int updateRowCount = ps.executeUpdate();
 			return (updateRowCount == NO_MAGIC_PARAMETER_VALUE_ONE);
 		} catch (Exception ex) {

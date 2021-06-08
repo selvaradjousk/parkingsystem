@@ -6,10 +6,8 @@ import java.util.Scanner;
  * Class: {@link ScannerWrapper} - provide support to{@link InputReaderUtil} to
  * read keyboard input and write.<br>
  * <b>Project: </b> P3 - parking system - ParkIt<br>
- * 
- * @see Methods: {@link #readVehicleRegistrationNumber()},
- *      {@link #readSelection()}
- * 
+ *
+ * @see Methods: {@link #nextLine()}
  * @author Senthil
  */
 public class ScannerWrapper {

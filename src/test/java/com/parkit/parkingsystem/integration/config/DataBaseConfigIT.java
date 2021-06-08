@@ -3,12 +3,9 @@ package com.parkit.parkingsystem.integration.config;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -19,25 +16,24 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.parkit.parkingsystem.config.DataBaseConfig;
 import com.parkit.parkingsystem.constants.DBConstants;
 
 import nl.altindag.log.LogCaptor;
 
-@DisplayName("Test Parking DB Configuration - Integration Testing")
-@ExtendWith(MockitoExtension.class)
+
+/**
+ * <b>Test Class: </b> {@link DataBaseConfigIT} - Performs Integration Test on
+ * Database configuration <br>
+ * <b>Class Tested:</b> {@link DataBaseConfig}.<br>
+ * <b>Project: </b> P3 - parking system - ParkIt<br>
+ * 
+ * @author Senthil
+ */
+@DisplayName("IT - Test Parking DB Configuration")
 public class DataBaseConfigIT {
 
 	DataBaseConfig dataBaseTestConfig;

@@ -34,7 +34,7 @@ import com.parkit.parkingsystem.model.Ticket;
  * 
  * @author Senthil
  */
-@DisplayName("Vehicle Ticket Data Access Object - Integration Testing ")
+@DisplayName("IT - Vehicle Ticket Data Access Object")
 public class TicketDAOIT {
 	static TicketDAO testTicketDAO = new TicketDAO();
 	static DataBaseTestConfig testDB = new DataBaseTestConfig();

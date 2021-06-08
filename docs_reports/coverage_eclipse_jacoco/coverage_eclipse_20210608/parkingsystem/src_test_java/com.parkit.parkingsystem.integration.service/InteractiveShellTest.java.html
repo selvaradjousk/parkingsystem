@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>InteractiveShellTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (8 juin 2021 11:18:08)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.integration.service</a> &gt; <span class="el_source">InteractiveShellTest.java</span></div><h1>InteractiveShellTest.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.integration.service;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.io.StringWriter;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import com.parkit.parkingsystem.App;
+import com.parkit.parkingsystem.service.InteractiveShell;
+
+import nl.altindag.log.LogCaptor;
+
+<span class="nc" id="L22">class InteractiveShellTest {</span>
+//	private InteractiveShell interactiveShell;
+//
+//	ByteArrayOutputStream byteArrayOutputStream;
+//
+//	@BeforeEach
+//	public void setUp() {
+//		interactiveShell = new InteractiveShell();
+//	}
+
+//	@DisplayName(&quot;Testing the Message Dispays in InteractiveShell&quot;)
+//	@Test
+//	public void testLoadInterfaceWelcomeMessage() throws IOException {
+//		// GIVEN
+//		String expectedInfoMessage = &quot;App initialized!!!&quot;;
+//		LogCaptor logCaptor = LogCaptor.forClass(App.class);
+//		byteArrayOutputStream = new ByteArrayOutputStream();
+//		System.setOut(new PrintStream(byteArrayOutputStream));
+//		String input = &quot;3\n&quot;;
+//		InputStream inputStream = new ByteArrayInputStream(input.getBytes());
+//		System.setIn(inputStream);
+//
+//		// WHEN
+//		InteractiveShell.loadInterface();
+//		String outputScreen = null;
+//		outputScreen = byteArrayOutputStream.toString(&quot;UTF-8&quot;);
+//
+//		// THEN
+//		assertFalse(logCaptor.getInfoLogs().contains(expectedInfoMessage));
+//		// Testing the Welcome Message display
+//		assertTrue(outputScreen.contains(&quot;Welcome to Parking System!&quot;));
+//		assertFalse(outputScreen.contains(&quot;Welcome to Parzzz System!&quot;));
+//		// Testing the Message - Please select an option display
+//		assertTrue(outputScreen.contains(&quot;Please select an option. Simply enter the number to choose an action&quot;));
+//		assertFalse(outputScreen.contains(&quot; Esaelp select an noitpo. Simply enter the number to choose an action&quot;));
+//		// Testing the Message and Menu displayed
+//		assertTrue(outputScreen.contains(&quot;1 New Vehicle Entering - Allocate Parking Space&quot;));
+//		assertFalse(outputScreen.contains(&quot;2 New Vehicle Entering - Allocate Parking Space&quot;));
+//		// Testing the Message and Menu displayed
+//		assertTrue(outputScreen.contains(&quot;2 Vehicle Exiting - Generate Ticket Price&quot;));
+//		assertFalse(outputScreen.contains(&quot;1 Vehicle Exiting - Generate Ticket Price&quot;));
+//		// Testing the Message and Menu displayed&quot;
+//		assertTrue(outputScreen.contains(&quot;3 Shutdown System&quot;));
+//		assertFalse(outputScreen.contains(&quot;1 Shutdown System&quot;));
+//		assertFalse(outputScreen.contains(&quot;2 Shutdown System&quot;));
+//
+//		byteArrayOutputStream.close();
+//		inputStream.close();
+//
+//	}
+
+//	@DisplayName(&quot;Testing the Message Dispays in InteractiveShell&quot;)
+//	@Test
+//	public void testLoadInterfaceChoiceIncomingVehicle() throws IOException {
+//		final InputStream DEFAULT_STDIN = System.in;
+//		String simulatedUserInput = 
+//				&quot;1&quot; + System.getProperty(&quot;line.separator&quot;) + 
+//				&quot;1&quot; + System.getProperty(&quot;line.separator&quot;) + 
+//				&quot;ABCDEF&quot; + System.getProperty(&quot;line.separator&quot;)+ 
+//				&quot;3&quot; + System.getProperty(&quot;line.separator&quot;);
+//		InputStream savedStandardInputStream = System.in;
+//		System.setIn(new ByteArrayInputStream(simulatedUserInput.getBytes()));
+//		InteractiveShell.loadInterface();
+//		System.setIn(savedStandardInputStream);
+//		savedStandardInputStream.close();
+//		System.setIn(DEFAULT_STDIN);
+////		long minRunningMemory = (1024*1024);
+////		Runtime runtime = Runtime.getRuntime();
+////		if(runtime.freeMemory()&lt;minRunningMemory)
+////		 System.gc();
+//		DEFAULT_STDIN.close();
+//		savedStandardInputStream.close();
+//		
+//		
+//	}
+	
+//	@DisplayName(&quot;Testing the Message Dispays in InteractiveShell&quot;)
+//	@Test
+//	public void testLoadInterfaceChoiceExitingVehicle() throws IOException {
+//		final InputStream DEFAULT_STDIN1 = System.in;
+//		String simulatedUserInput1 = 
+//				&quot;2&quot; + System.getProperty(&quot;line.separator&quot;) + 
+////				&quot;1&quot; + System.getProperty(&quot;line.separator&quot;) + 
+//				&quot;ABCDEF&quot; + System.getProperty(&quot;line.separator&quot;)+ 
+//				&quot;3&quot; + System.getProperty(&quot;line.separator&quot;);
+//		InputStream savedStandardInputStream1 = System.in;
+//		System.setIn(new ByteArrayInputStream(simulatedUserInput1.getBytes()));
+//		InteractiveShell.loadInterface();
+//		System.setIn(savedStandardInputStream1);
+//		savedStandardInputStream1.close();
+//		System.setIn(DEFAULT_STDIN1);
+//		DEFAULT_STDIN1.close();
+//		savedStandardInputStream1.close();
+//	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (8 juin 2021 11:18:08)</div></body></html>

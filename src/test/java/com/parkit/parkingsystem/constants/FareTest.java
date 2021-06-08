@@ -48,7 +48,7 @@ final class FareTest {
 	/**
 	 * Test car fare rate per hour.
 	 */
-	@DisplayName("TestCAR_RATE_PER_HOUR")
+	@DisplayName("testCarRateDbConstanst")
 	@Test
 	void testCarRateDbConstanst() {
 		assertEquals(fare.BIKE_RATE_PER_HOUR, BIKE_RATE_PER_HOUR_expected);

@@ -3,11 +3,11 @@ package com.parkit.parkingsystem.constants;
 /**
  * Class: {@link DBConstants} - store DB constant values.<br>
  * <b>Project: </b> P3 - parking system - ParkIt<br>
- * 
+ *
  * @see variables: {@link #GET_NEXT_PARKING_SPOT}, {@link #GET_TICKET},
  *      {@link #GET_VEHICLE_OCCURENCES}, {@link #SAVE_TICKET},
  *      {@link #UPDATE_PARKING_SPOT}, {@link #UPDATE_TICKET}
- * 
+ *
  * @author Senthil
  */
 public final class DBConstants {

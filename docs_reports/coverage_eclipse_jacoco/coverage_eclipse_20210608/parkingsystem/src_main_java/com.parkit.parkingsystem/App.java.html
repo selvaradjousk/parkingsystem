@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>App.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (8 juin 2021 11:18:08)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem</a> &gt; <span class="el_source">App.java</span></div><h1>App.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.parkit.parkingsystem.config.DataBaseConfig;
+import com.parkit.parkingsystem.constants.DBConstants;
+import com.parkit.parkingsystem.constants.Fare;
+import com.parkit.parkingsystem.constants.ParkingType;
+import com.parkit.parkingsystem.dao.ParkingSpotDAO;
+import com.parkit.parkingsystem.dao.TicketDAO;
+import com.parkit.parkingsystem.model.ParkingSpot;
+import com.parkit.parkingsystem.model.Ticket;
+import com.parkit.parkingsystem.service.FareCalculatorService;
+import com.parkit.parkingsystem.service.InteractiveShell;
+import com.parkit.parkingsystem.service.ParkingService;
+import com.parkit.parkingsystem.util.InputReaderUtil;
+
+/**
+ * Class: {@link App} Main class for application ParkIt.&lt;br&gt;
+ * &lt;b&gt;Project: &lt;/b&gt; P3 - parking system - ParkIt&lt;br&gt;
+ * 
+ * @see &lt;b&gt;Class: &lt;/b&gt; {@link DataBaseConfig} Database connection&lt;br&gt;
+ * @see &lt;b&gt;Class: &lt;/b&gt; {@link DBConstants} - Database constants&lt;br&gt;
+ * @see &lt;b&gt;Class: &lt;/b&gt; {@link Fare} - DB constants on Fare values&lt;br&gt;
+ * @see &lt;b&gt;Class: &lt;/b&gt; {@link ParkingType} - DB constants on Parking Type&lt;br&gt;
+ * @see &lt;b&gt;Class: &lt;/b&gt; {@link ParkingSpotDAO} - Parking spots management&lt;br&gt;
+ * @see &lt;b&gt;Class: &lt;/b&gt; {@link TicketDAO} - Ticket management&lt;br&gt;
+ * @see &lt;b&gt;Class: &lt;/b&gt; {@link ParkingSpot} - Parking spot data structure&lt;br&gt;
+ * @see &lt;b&gt;Class: &lt;/b&gt; {@link Ticket} - Ticket data structure&lt;br&gt;
+ * @see &lt;b&gt;Class: &lt;/b&gt; {@link FareCalculatorService} - Fare Service&lt;br&gt;
+ * @see &lt;b&gt;Class: &lt;/b&gt; {@link InteractiveShell} - Interface interaction&lt;br&gt;
+ * @see &lt;b&gt;Class: &lt;/b&gt; {@link ParkingService} - Parking service management&lt;br&gt;
+ * @see &lt;b&gt;Class: &lt;/b&gt; {@link InputReaderUtil} - I/O management&lt;br&gt;
+ * 
+ * @see &lt;b&gt;Test
+ *      Class:&lt;/b&gt;{@link com.parkit.parkingsystem.integration.service.DataBasePrepareService
+ *      DataBasePrepareService} Parking availability management service Testing
+ *      &lt;br&gt;
+ * @see &lt;b&gt;Test
+ *      Class:&lt;/b&gt;{@link com.parkit.parkingsystem.integration.dao.TicketDAOIT
+ *      TicketDAOIT} - Ticket management Testing management for customers
+ *      parking &lt;br&gt;
+ * @see &lt;b&gt;Test
+ *      Class:&lt;/b&gt;{@link com.parkit.parkingsystem.integration.dao.ParkingSpotDAOIT
+ *      ParkingSpotDAOIT} - Parking Spot availability services testing
+ *      management of parking spots / slots &lt;br&gt;
+ * @see &lt;b&gt;Test
+ *      Class:&lt;/b&gt;{@link com.parkit.parkingsystem.integration.config.DataBaseTestConfig
+ *      DataBaseTestConfig} - Integration Tests for database connection
+ *      configurations &lt;br&gt;
+ * @see &lt;b&gt;Test
+ *      Class:&lt;/b&gt;{@link com.parkit.parkingsystem.integration.config.DataBaseConfigIT
+ *      DataBaseConfigIT} - Integration Testing For database connection
+ *      configuration setting &lt;br&gt;
+ * @see &lt;b&gt;Test
+ *      Class:&lt;/b&gt;{@link com.parkit.parkingsystem.integration.ParkingDataBaseIT
+ *      ParkingDataBaseIT} - Integration Test on Parking Database &lt;br&gt;
+ * @see &lt;b&gt;Test
+ *      Class:&lt;/b&gt;{@link com.parkit.parkingsystem.unittest.service.ParkingServiceTest
+ *      ParkingServiceTest} - Integration Test on Parking Services for customer
+ *      of ParkIt&lt;br&gt;
+ * @see &lt;b&gt;Test
+ *      Class:&lt;/b&gt;{@link com.parkit.parkingsystem.unittest.service.FareCalculatorServiceTest
+ *      FareCalculatorServiceTest} - Unit Testing on Fare calculation process
+ *      for customer of ParkIt &lt;br&gt;
+ * 
+ * @author Senthil
+ *
+ */
+public class App {
+
+	/**
+	 * Logger for the application.
+	 */
+<span class="fc" id="L76">	private static final Logger LOGGER = LogManager.getLogger(&quot;App&quot;);</span>
+
+	/**
+	 * Constructor of App class.
+	 */
+<span class="fc" id="L81">	App() {</span>
+<span class="fc" id="L82">	}</span>
+
+	/**
+	 * Parkit application.
+	 * 
+	 * @param args no arguments defined
+	 */
+	public static void main(final String[] args) {
+<span class="fc" id="L90">		LOGGER.info(&quot;Initializing Parking System&quot;);</span>
+<span class="fc" id="L91">		InteractiveShell.loadInterface();</span>
+<span class="fc" id="L92">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (8 juin 2021 11:18:08)</div></body></html>

@@ -3,9 +3,10 @@ package com.parkit.parkingsystem.constants;
 /**
  * Class: {@link Fare} - DB constants on Fare.<br>
  * <b>Project: </b> P3 - parking system - ParkIt<br>
- * 
- * @see variables: {@link #BIKE_RATE_PER_HOUR}, {@link #CAR_RATE_PER_HOUR}
- * 
+ *
+ * @see variables: {@link #BIKE_RATE_PER_HOUR},
+ *  {@link #CAR_RATE_PER_HOUR}
+ *
  * @author Senthil
  */
 public final class Fare {
@@ -39,5 +40,6 @@ public final class Fare {
 	  /**
 	   * Factor to convert millisecond to hour (60.0 * 60.0 * 1000).
 	   */
-	  public static final double MILLISECONDS_HOURS_CONVERSION_FACTOR = 3600000;
+	  public static final double MILLISECONDS_HOURS_CONVERSION_FACTOR
+	  = 3600000;
 }

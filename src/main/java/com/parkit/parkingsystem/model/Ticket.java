@@ -6,19 +6,16 @@ import java.util.Optional;
 /**
  * Class: {@link Ticket} - Ticket Data Objects.<br>
  * <b>Project: </b> P3 - parking system - ParkIt<br>
- * 
- * @package - com.parkit.parkingsystem.model
- * 
+ *
  * @author Senthil
  */
 public class Ticket {
-	
+
 	  /**
 	   * Ticket class constructor.
 	   */
 	  public Ticket() {
 	  }
-	  
 
 	/**
 	 * Ticket Identifier.
@@ -57,7 +54,7 @@ public class Ticket {
 
 	/**
 	 * getID() getter for attribute - id getter.
-	 * 
+	 *
 	 * @return id - returns id.
 	 */
 	public int getId() {
@@ -66,9 +63,8 @@ public class Ticket {
 
 	/**
 	 * setId() setter id attribute.
-	 * 
+	 *
 	 * @param id
-	 * @return id - returns value assigned to its attribute.
 	 */
 	public void setId(final int id) {
 		this.id = id;
@@ -76,8 +72,8 @@ public class Ticket {
 
 	/**
 	 * getID() getter for attribute method.
-	 * 
-	 * @return parkingSpot - 
+	 *
+	 * @return parkingSpot
 	 */
 	public ParkingSpot getParkingSpot() {
 		return parkingSpot;
@@ -85,9 +81,8 @@ public class Ticket {
 
 	/**
 	 * setParkingSpot() setter for ParkingSpot() Constructor.
-	 * 
+	 *
 	 * @param parkingSpot
-	 * @return parkingSpot - returns value assigned instance.
 	 */
 	public void setParkingSpot(final ParkingSpot parkingSpot) {
 		this.parkingSpot = parkingSpot;
@@ -95,7 +90,7 @@ public class Ticket {
 
 	/**
 	 * getVehicleRegNumber() getter for attribute - vehicleRegNumber.
-	 * 
+	 *
 	 * @return vehicleRegNumber - returns the attribute value.
 	 */
 	public String getVehicleRegNumber() {
@@ -104,20 +99,19 @@ public class Ticket {
 
 	/**
 	 * setVehicleRegNumber() setter vehicle Reg Number attribute.
-	 * 
+	 *
 	 * @param vehicleRegNumber
-	 * @return vehicleRegNumber - returns value assigned 
-	 * to its attribute.
 	 */
 	public void setVehicleRegNumber(final String vehicleRegNumber) {
 		this.vehicleRegNumber = vehicleRegNumber;
 	}
 
 	/**
-	 * getPrice() getter for attribute - price getter 
-	 * is used to protect the data during class instance creation.
-	 * 
-	 * @return price - returns the instance parameter 
+	 * getPrice() getter for attribute - price getter
+	 *  is used to protect the data during class
+	 *  instance creation.
+	 *
+	 * @return price - returns the instance parameter
 	 * attribute value.
 	 */
 	public double getPrice() {
@@ -125,11 +119,10 @@ public class Ticket {
 	}
 
 	/**
-	 * setPrice() setter price attribute - with parameter 
-	 * price type double.
-	 * 
+	 * setPrice() setter price attribute - with parameter
+	 *  price type double.
+	 *
 	 * @param price
-	 * @return price - returns value.
 	 */
 	public void setPrice(final double price) {
 		this.price = price;
@@ -137,47 +130,46 @@ public class Ticket {
 
 	/**
 	 * getPrice() getter for attribute - price value getter.
-	 * 
+	 *
 	 * @return incoming time.
 	 */
 	public Date getInTime() {
-		return this.inTime == null ? 
-				null : new Date(this.inTime.getTime());
+		return this.inTime == null
+				? null : new Date(this.inTime.getTime());
 	}
 
 	/**
-	 * setInTime() setter inTime attribute - with 
-	 * parameter inTime type Date.
-	 * 
+	 * setInTime() setter inTime attribute - with
+	 *  parameter inTime type Date.
+	 *
 	 * @param inTime
-	 * @return inTime - returns value assigned to its attribute.
 	 */
 	public void setInTime(final Date inTime) {
 		this.inTime = Optional.ofNullable(inTime)
-				.map(Date::getTime).map(Date::new).orElse(null); 
+				.map(Date::getTime).map(Date::new)
+				.orElse(null); 
 	}
 
 	/**
-	 * getOutTime() setter outTime attribute - with 
-	 * parameter outTime type Date.
-	 * setter is used to protect the data during 
-	 * class instance creation.
-	 * 
+	 * getOutTime() setter outTime attribute - with
+	 *  parameter outTime type Date.
+	 * setter is used to protect the data during
+	 *  class instance creation.
+	 *
 	 * @return outTime - returns attribute value.
 	 */
 	public Date getOutTime() {
-		return this.outTime == null ? 
-				null : new Date(this.outTime.getTime());
+		return this.outTime == null
+				? null : new Date(this.outTime.getTime());
 	}
 
 	/**
-	 * setOutTime() setter outTime attribute - with 
-	 * parameter outTime type Date.
-	 * setter is used to protect the data during 
-	 * class instance creation.
-	 * 
+	 * setOutTime() setter outTime attribute - with
+	 *  parameter outTime type Date.
+	 * setter is used to protect the data during
+	 *  class instance creation.
+	 *
 	 * @param outTime
-	 * @return outTime - returns value assigned to its attribute.
 	 */
 	public void setOutTime(final Date outTime) {
 		this.outTime = Optional.ofNullable(outTime)
@@ -196,7 +188,7 @@ public class Ticket {
 	 * Setter for the occurrences.
 	 * @param occurences
 	 */
-	public void setOccurences(boolean occurences) {
+	public void setOccurences(final boolean occurences) {
 		this.occurences = occurences;
 	}
 }

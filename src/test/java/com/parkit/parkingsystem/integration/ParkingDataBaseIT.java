@@ -38,7 +38,7 @@ import com.parkit.parkingsystem.util.InputReaderUtil;
  * <b>Test Class: </b> {@link ParkingDataBaseIT} - Performs Integration Test on
  * Parking Database <br>
  * <b>Class Tested:</b> {@link ParkingSpotDAO}.<br>
- * <b>Project: <b> P3 - parking system - ParkIt<br>
+ * <b>Project: </b> P3 - parking system - ParkIt<br>
  * 
  * @see <b>Tests:</b><br>
  *      {@link #testParkingLotExitIT()}: Parking Database Testing - Parking Lot
@@ -48,7 +48,7 @@ import com.parkit.parkingsystem.util.InputReaderUtil;
  * 
  * @author Senthil
  */
-@DisplayName("Vehicle Parking Database - Testing ")
+@DisplayName("IT - Vehicle Parking Database")
 @ExtendWith(MockitoExtension.class)
 public class ParkingDataBaseIT {
 
