@@ -76,6 +76,7 @@ public class ParkingSpotDAOIT {
 
 		dataBasePrepareService.clearDBEntries();
 	}
+	
 
 	@DisplayName("Test Parking Spot WHEN get next CAR Spot availability THEN confirms spot availability")
 	@Test
@@ -196,15 +197,6 @@ public class ParkingSpotDAOIT {
 		// THEN
 		assertEquals(0, actual);
 
-//		when(inputReaderUtil.readSelection()).thenReturn(1);
-//		when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
-//		ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
-//
-//		parkingService.processIncomingVehicle();
-//		parkingService.processIncomingVehicle();
-//		parkingService.processIncomingVehicle();
-//
-//		assertEquals(0, parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR));
 	}
 
 
@@ -244,7 +236,7 @@ public class ParkingSpotDAOIT {
 
 	@DisplayName("Tests Parking Spot WHEN parking two times and exit all THEN spot availability and ticket updated")
 	@Test
-	public void TestParkingIn2TimesAndExitAll() throws Exception {
+	public void testParkingIn2TimesAndExitAll() throws Exception {
 		when(inputReaderUtil.readSelection()).thenReturn(1);
 		when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
 		ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);

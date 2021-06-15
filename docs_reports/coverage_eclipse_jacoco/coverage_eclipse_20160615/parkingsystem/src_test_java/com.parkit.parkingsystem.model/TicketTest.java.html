@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>TicketTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (15 juin 2021 12:18:20)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.model</a> &gt; <span class="el_source">TicketTest.java</span></div><h1>TicketTest.java</h1><pre class="source lang-java linenums">/**
+ * 
+ */
+package com.parkit.parkingsystem.model;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.Date;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+@DisplayName(&quot;Test Ticket Model Class&quot;)
+<span class="fc" id="L14">class TicketTest {</span>
+
+<span class="fc" id="L16">	public static final Ticket ticket = new Ticket();</span>
+
+	@DisplayName(&quot;Test Ticket WHEN get Ticket id for car THEN gets id&quot;)
+	@Test
+	void testTicketCarGetId() {
+<span class="fc" id="L21">		int expected = 5;</span>
+<span class="fc" id="L22">		ticket.setId(expected);</span>
+<span class="fc" id="L23">		int actual = ticket.getId();</span>
+<span class="fc" id="L24">		assertEquals(expected, actual);</span>
+<span class="fc" id="L25">	}</span>
+
+	@DisplayName(&quot;Test Ticket WHEN get Ticket id for bike THEN gets id&quot;)
+	@Test
+	void testTicketBikeGetId() {
+<span class="fc" id="L30">		int expected = 6;</span>
+<span class="fc" id="L31">		ticket.setId(expected);</span>
+<span class="fc" id="L32">		int actual = ticket.getId();</span>
+<span class="fc" id="L33">		assertEquals(expected, actual);</span>
+<span class="fc" id="L34">	}</span>
+
+	@DisplayName(&quot;Test Ticket WHEN get vehicle registration number for bike THEN gets registration number&quot;)
+	@Test
+	void testTicketBikeGetVehicleRegNumber() {
+<span class="fc" id="L39">		String expected = &quot;AB1243GH&quot;;</span>
+<span class="fc" id="L40">		ticket.setVehicleRegNumber(expected);</span>
+<span class="fc" id="L41">		String actual = ticket.getVehicleRegNumber();</span>
+<span class="fc" id="L42">		assertEquals(expected, actual);</span>
+<span class="fc" id="L43">	}</span>
+
+	@DisplayName(&quot;Test Ticket WHEN get vehicle registration number for car THEN gets registration number&quot;)
+	@Test
+	void testTicketCarGetVehicleRegNumber() {
+<span class="fc" id="L48">		String expected = &quot;ABCDEFGH&quot;;</span>
+<span class="fc" id="L49">		ticket.setVehicleRegNumber(expected);</span>
+<span class="fc" id="L50">		String actual = ticket.getVehicleRegNumber();</span>
+<span class="fc" id="L51">		assertEquals(expected, actual);</span>
+<span class="fc" id="L52">	}</span>
+
+	@DisplayName(&quot;Test Ticket WHEN get ticket price at random THEN gets ticket price&quot;)
+	@Test
+	void testTicketPrice() {
+<span class="fc" id="L57">		double expected = (double) Math.random();</span>
+<span class="fc" id="L58">		ticket.setPrice(expected);</span>
+<span class="fc" id="L59">		double actual = ticket.getPrice();</span>
+<span class="fc" id="L60">		assertEquals(expected, actual);</span>
+<span class="fc" id="L61">	}</span>
+
+	@DisplayName(&quot;Test Ticket WHEN get ticket in time THEN gets in time&quot;)
+	@Test
+	void testTicketInTime() {
+<span class="fc" id="L66">		Date expected = new Date();</span>
+<span class="fc" id="L67">		ticket.setInTime(expected);</span>
+<span class="fc" id="L68">		Date actual = ticket.getInTime();</span>
+<span class="fc" id="L69">		assertEquals(expected, actual);</span>
+<span class="fc" id="L70">	}</span>
+	
+	@DisplayName(&quot;Test Ticket WHEN get ticket in time null THEN confirms get in time null&quot;)
+	@Test
+	void testgetTicketInTimeNull() {
+<span class="fc" id="L75">		Date expected = null;</span>
+<span class="fc" id="L76">		ticket.setInTime(expected);</span>
+<span class="fc" id="L77">		Date actual = ticket.getInTime();</span>
+<span class="fc" id="L78">		assertEquals(expected, actual);</span>
+<span class="fc" id="L79">	}</span>
+
+	@DisplayName(&quot;Test Ticket WHEN get ticket out time THEN gets out time&quot;)
+	@Test
+	void testTicketOutTime() {
+<span class="fc" id="L84">		Date expected = new Date();</span>
+<span class="fc" id="L85">		ticket.setOutTime(expected);</span>
+<span class="fc" id="L86">		Date actual = ticket.getOutTime();</span>
+<span class="fc" id="L87">		assertEquals(expected, actual);</span>
+<span class="fc" id="L88">	}</span>
+	
+	@DisplayName(&quot;Test Ticket WHEN get ticket out time null THEN confirms get out time null&quot;)
+	@Test
+	void testTicketOutTimeNull() {
+<span class="fc" id="L93">		Date expected = null;</span>
+<span class="fc" id="L94">		ticket.setOutTime(expected);</span>
+<span class="fc" id="L95">		Date actual = ticket.getOutTime();</span>
+<span class="fc" id="L96">		assertEquals(expected, actual);</span>
+<span class="fc" id="L97">	}</span>
+	
+	@DisplayName(&quot;Test Ticket WHEN get ticket occurences in database THEN gets recurrence value&quot;)
+	@Test
+	void testOccurences() {
+<span class="fc" id="L102">		boolean occurencesExpected = true;</span>
+<span class="fc" id="L103">		ticket.setOccurences(occurencesExpected);</span>
+<span class="fc" id="L104">		boolean actual = ticket.occurences();</span>
+<span class="fc" id="L105">		assertEquals(occurencesExpected, actual);</span>
+<span class="fc" id="L106">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (15 juin 2021 12:18:20)</div></body></html>

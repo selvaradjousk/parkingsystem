@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ParkingSpotDAOIT.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (15 juin 2021 12:18:20)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.integration.dao</a> &gt; <span class="el_source">ParkingSpotDAOIT.java</span></div><h1>ParkingSpotDAOIT.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.integration.dao;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import com.parkit.parkingsystem.constants.ParkingType;
+import com.parkit.parkingsystem.dao.ParkingSpotDAO;
+import com.parkit.parkingsystem.dao.TicketDAO;
+import com.parkit.parkingsystem.integration.config.DataBaseTestConfig;
+import com.parkit.parkingsystem.integration.service.DataBasePrepareService;
+import com.parkit.parkingsystem.model.ParkingSpot;
+import com.parkit.parkingsystem.model.Ticket;
+import com.parkit.parkingsystem.service.ParkingService;
+import com.parkit.parkingsystem.util.InputReaderUtil;
+
+@DisplayName(&quot;IT - Vehicle Parking Spot Data Access Object&quot;)
+@ExtendWith(MockitoExtension.class)
+<span class="fc" id="L48">public class ParkingSpotDAOIT {</span>
+
+<span class="fc" id="L50">	private static DataBaseTestConfig dataBaseTestConfig = new DataBaseTestConfig();</span>
+<span class="fc" id="L51">	private static ParkingSpotDAO parkingSpotDAO = new ParkingSpotDAO();</span>
+<span class="fc" id="L52">	private static DataBasePrepareService dataBasePrepareService = new DataBasePrepareService();</span>
+	private static TicketDAO ticketDAO;
+	private static ParkingSpot parkingSpot;
+	PreparedStatement preparedStatement;
+	ByteArrayOutputStream byteArrayOutputStream;
+	Connection connection;
+	ResultSet resultSet;
+	@Mock
+	private static InputReaderUtil inputReaderUtil;
+
+<span class="fc" id="L62">	private static final Logger LOGGER </span>
+<span class="fc" id="L63">	= LogManager.getLogger(&quot;ParkingSpotDAOIT&quot;);</span>
+	
+	@BeforeAll
+	public static void setupTests() {
+<span class="fc" id="L67">		parkingSpotDAO.setDataBaseConfig(dataBaseTestConfig);</span>
+<span class="fc" id="L68">		parkingSpotDAO = new ParkingSpotDAO();</span>
+<span class="fc" id="L69">		ticketDAO = new TicketDAO();</span>
+<span class="fc" id="L70">		ticketDAO.setDataBaseConfig(dataBaseTestConfig);</span>
+<span class="fc" id="L71">		dataBasePrepareService = new DataBasePrepareService();</span>
+<span class="fc" id="L72">	}</span>
+
+	@BeforeEach
+	public void setupPerTest() throws SQLException {
+
+<span class="fc" id="L77">		dataBasePrepareService.clearDBEntries();</span>
+<span class="fc" id="L78">	}</span>
+
+	@DisplayName(&quot;Test Parking Spot WHEN get next CAR Spot availability THEN confirms spot availability&quot;)
+	@Test
+	public void testGetNextAvailableSpotForCar() throws SQLException {
+		// GIVEN
+<span class="fc" id="L84">		final int expectedSpot = 1;</span>
+
+		// WHEN
+<span class="fc" id="L87">		int selectedSpot = parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR);</span>
+
+		// THEN
+<span class="fc" id="L90">		assertEquals(expectedSpot, selectedSpot, &quot;Result: Both spot not similar&quot;);</span>
+<span class="fc" id="L91">	}</span>
+	
+	@DisplayName(&quot;Test Parking Spot using DB connection method WHEN get next CAR Spot availability THEN confirms spot availability&quot;)
+	@Test
+	void testGetNextAvailableSpotForCarThroughDbConnection() throws SQLException, Exception {
+<span class="fc" id="L96">		connection = dataBaseTestConfig.getConnection();</span>
+<span class="fc" id="L97">		preparedStatement = connection.prepareStatement(&quot;Select 2&quot;);</span>
+<span class="fc" id="L98">		resultSet = preparedStatement.executeQuery();</span>
+<span class="fc" id="L99">		boolean expected = resultSet.next();</span>
+
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		boolean result = (parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR) == 1);</span>
+
+<span class="fc" id="L103">		assertEquals(expected, result); // </span>
+<span class="fc" id="L104">	}</span>
+
+	@DisplayName(&quot;Test Parking Spot WHEN get next BIKE Spot availability THEN confirms spot availability&quot;)
+	@Test
+	public void testNextAvailableSpotForBike() throws SQLException {
+		// GIVEN
+<span class="fc" id="L110">		final int expectedSpot = 4;</span>
+
+		// WHEN
+<span class="fc" id="L113">		int selectedSpot = parkingSpotDAO.getNextAvailableSpot(ParkingType.BIKE);</span>
+
+		// THEN
+<span class="fc" id="L116">		assertEquals(expectedSpot, selectedSpot, &quot;Result: Both spot not similar&quot;);</span>
+<span class="fc" id="L117">	}</span>
+
+	@DisplayName(&quot;Test Parking Spot WHEN Update CAR Spot status THEN confirms update by spot availaibilty&quot;)
+	@Test
+	public void testUpdateParkingForCar() throws SQLException {
+		// GIVEN
+<span class="fc" id="L123">		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);</span>
+
+		// WHEN
+<span class="fc" id="L126">		boolean updated = parkingSpotDAO.updateParking(parkingSpot);</span>
+
+		// THEN
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">		if (updated)</span>
+<span class="fc" id="L130">			assertEquals(parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR), parkingSpot.getId() + 1,</span>
+<span class="fc" id="L131">					&quot;Result: Both spot not similar&quot;);</span>
+		else
+<span class="nc" id="L133">			fail(&quot;Failed to update ticket&quot;);</span>
+<span class="fc" id="L134">	}</span>
+
+	@DisplayName(&quot;Test Parking Spot WHEN Update BIKE Spot status THEN confirms update by spot availaibilty&quot;)
+	@Test
+	public void testUpdateParkingForBike() throws SQLException {
+		// GIVEN
+<span class="fc" id="L140">		ParkingSpot parkingSpot = new ParkingSpot(4, ParkingType.BIKE, false);</span>
+
+		// WHEN
+<span class="fc" id="L143">		boolean updated = parkingSpotDAO.updateParking(parkingSpot);</span>
+
+		// THEN
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">		if (updated)</span>
+<span class="fc" id="L147">			assertEquals(parkingSpotDAO.getNextAvailableSpot(ParkingType.BIKE), parkingSpot.getId() + 1,</span>
+<span class="fc" id="L148">					&quot;Result: Both spot not similar&quot;);</span>
+		else
+<span class="nc" id="L150">			fail(&quot;Failed to update ticket&quot;);</span>
+<span class="fc" id="L151">	}</span>
+
+	@DisplayName(&quot;Test Parking Spot WHEN with Invalid ParkingSpot values THEN Unvalid Parking Spot&quot;)
+	@Test
+	public void testUpdateParkingInvalidParkingSpot() throws SQLException {
+		// GIVEN
+<span class="fc" id="L157">		ParkingSpot parkingSpot = new ParkingSpot(7, ParkingType.BIKE, false);</span>
+
+		// WHEN
+<span class="fc" id="L160">		boolean expected = false;</span>
+
+<span class="fc" id="L162">		boolean actual = parkingSpotDAO.updateParking(parkingSpot);</span>
+		// THEN
+<span class="fc" id="L164">		assertEquals(actual, expected);</span>
+<span class="fc" id="L165">	}</span>
+
+	@DisplayName(&quot;Test Parking Spot WHEN with valid ParkingSpot values THEN validates Parking Spot&quot;)
+	@Test
+	public void testUpdateParkingValidParkingSpot() throws SQLException {
+		// GIVEN
+<span class="fc" id="L171">		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.BIKE, false);</span>
+
+		// WHEN
+<span class="fc" id="L174">		boolean expected = true;</span>
+
+<span class="fc" id="L176">		boolean actual = parkingSpotDAO.updateParking(parkingSpot);</span>
+		// THEN
+<span class="fc" id="L178">		assertEquals(actual, expected);</span>
+<span class="fc" id="L179">	}</span>
+
+	@Test
+	@DisplayName(&quot;Tests Parking Spot WHEN all parking spots are occupied THEN confirms no spot availability&quot;)
+	public void testsNextAvailableSpotStatustWhenAllOccupied() throws SQLException {
+		// GIVEN
+<span class="fc" id="L185">		ParkingSpot parkingSpot1 = new ParkingSpot(1, ParkingType.CAR, false);</span>
+<span class="fc" id="L186">		ParkingSpot parkingSpot2 = new ParkingSpot(2, ParkingType.CAR, false);</span>
+<span class="fc" id="L187">		ParkingSpot parkingSpot3 = new ParkingSpot(3, ParkingType.CAR, false);</span>
+
+		// WHEN
+<span class="fc" id="L190">		parkingSpotDAO.updateParking(parkingSpot1);</span>
+<span class="fc" id="L191">		parkingSpotDAO.updateParking(parkingSpot2);</span>
+<span class="fc" id="L192">		parkingSpotDAO.updateParking(parkingSpot3);</span>
+
+<span class="fc" id="L194">		int actual = parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR);</span>
+
+		// THEN
+<span class="fc" id="L197">		assertEquals(0, actual);</span>
+
+//		when(inputReaderUtil.readSelection()).thenReturn(1);
+//		when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn(&quot;ABCDEF&quot;);
+//		ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+//
+//		parkingService.processIncomingVehicle();
+//		parkingService.processIncomingVehicle();
+//		parkingService.processIncomingVehicle();
+//
+//		assertEquals(0, parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR));
+<span class="fc" id="L208">	}</span>
+
+
+	@Test
+	@DisplayName(&quot;Tests Parking Spot WHEN penultimate parking spot available for CAR is free THEN spot available to be alloted&quot;)
+	public void testNextAvailableSlotWhenPenutimateIsLeftFree() throws SQLException {
+		// GIVEN
+<span class="fc" id="L215">		ParkingSpot parkingSpot1 = new ParkingSpot(1, ParkingType.CAR, false);</span>
+<span class="fc" id="L216">		ParkingSpot parkingSpot2 = new ParkingSpot(2, ParkingType.CAR, false);</span>
+
+		// WHEN
+<span class="fc" id="L219">		parkingSpotDAO.updateParking(parkingSpot1);</span>
+<span class="fc" id="L220">		parkingSpotDAO.updateParking(parkingSpot2);</span>
+
+<span class="fc" id="L222">		int actual = parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR);</span>
+
+		// THEN
+<span class="fc" id="L225">		assertEquals(3, actual);</span>
+<span class="fc" id="L226">	}</span>
+
+	@Test
+	@DisplayName(&quot;Tests Parking Spot WHEN penultimate parking spot available for BIKE is free THEN spot available to be alloted&quot;)
+	public void testBikeNextAvailableSlotWhenPenutimateIsLeftFree() throws SQLException {
+		// GIVEN
+<span class="fc" id="L232">		ParkingSpot parkingSpot1 = new ParkingSpot(1, ParkingType.BIKE, false);</span>
+<span class="fc" id="L233">		ParkingSpot parkingSpot2 = new ParkingSpot(2, ParkingType.BIKE, false);</span>
+
+		// WHEN
+<span class="fc" id="L236">		parkingSpotDAO.updateParking(parkingSpot1);</span>
+<span class="fc" id="L237">		parkingSpotDAO.updateParking(parkingSpot2);</span>
+
+<span class="fc" id="L239">		int actual = parkingSpotDAO.getNextAvailableSpot(ParkingType.BIKE);</span>
+
+		// THEN
+<span class="fc" id="L242">		assertEquals(4, actual);</span>
+<span class="fc" id="L243">	}</span>
+
+	@DisplayName(&quot;Tests Parking Spot WHEN parking two times and exit all THEN spot availability and ticket updated&quot;)
+	@Test
+	public void TestParkingIn2TimesAndExitAll() throws Exception {
+<span class="fc" id="L248">		when(inputReaderUtil.readSelection()).thenReturn(1);</span>
+<span class="fc" id="L249">		when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn(&quot;ABCDEF&quot;);</span>
+<span class="fc" id="L250">		ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);</span>
+
+<span class="fc" id="L252">		parkingService.processIncomingVehicle();</span>
+<span class="fc" id="L253">		Thread.sleep(500);// wait 1 sec before the exiting</span>
+
+<span class="fc" id="L255">		parkingService.processIncomingVehicle();</span>
+<span class="fc" id="L256">		Thread.sleep(500);// wait 1 sec before the exiting</span>
+
+<span class="fc" id="L258">		parkingService.processExitingVehicle();</span>
+<span class="fc" id="L259">		Thread.sleep(500);// wait 1 sec before the exiting</span>
+<span class="fc" id="L260">		parkingService.processExitingVehicle();</span>
+
+<span class="fc" id="L262">		Ticket ticket = ticketDAO.getTicket(&quot;ABCDEF&quot;);</span>
+<span class="fc" id="L263">		assertNotNull(ticket.getOutTime());</span>
+<span class="fc" id="L264">	}</span>
+
+	@DisplayName(&quot;Tests Parking Spot WHEN two CAR parking on entry and one leaving THEN spot availability available for alloting for new one entering&quot;)
+	@Test
+	public void testCarParkingSpotGetAllotedTwoWhenTwoIncomingVehiculesButOneOfThemExiting() throws SQLException {
+<span class="fc" id="L269">		parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);</span>
+<span class="fc" id="L270">		ParkingSpot parkingSpot2 = new ParkingSpot(2, ParkingType.CAR, false);</span>
+
+<span class="fc" id="L272">		parkingSpotDAO.updateParking(parkingSpot);</span>
+<span class="fc" id="L273">		parkingSpotDAO.updateParking(parkingSpot2);</span>
+<span class="fc" id="L274">		parkingSpot.setAvailable(true);</span>
+<span class="fc" id="L275">		parkingSpotDAO.updateParking(parkingSpot);</span>
+<span class="fc" id="L276">		int result = parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR);</span>
+
+
+<span class="fc" id="L279">		assertEquals(1, result);</span>
+<span class="fc" id="L280">	}</span>
+
+	@DisplayName(&quot;Tests Parking Spot WHEN two BIKE parking on entry and one leaving THEN spot availability available for alloting for new one entering&quot;)
+	@Test
+	public void testBikeParkingSpotGetAllotedTwoWhenTwoIncomingVehiculesButOneOfThemExiting() throws SQLException {
+<span class="fc" id="L285">		parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);</span>
+<span class="fc" id="L286">		ParkingSpot parkingSpot2 = new ParkingSpot(2, ParkingType.BIKE, false);</span>
+
+<span class="fc" id="L288">		parkingSpotDAO.updateParking(parkingSpot);</span>
+<span class="fc" id="L289">		parkingSpotDAO.updateParking(parkingSpot2);</span>
+<span class="fc" id="L290">		parkingSpot.setAvailable(true);</span>
+<span class="fc" id="L291">		parkingSpotDAO.updateParking(parkingSpot);</span>
+<span class="fc" id="L292">		int result = parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR);</span>
+
+<span class="fc" id="L294">		assertEquals(1, result);</span>
+<span class="fc" id="L295">	}</span>
+}
+
+	
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (15 juin 2021 12:18:20)</div></body></html>

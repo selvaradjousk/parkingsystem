@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ParkingSpotTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (15 juin 2021 19:10:15)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.model</a> &gt; <span class="el_source">ParkingSpotTest.java</span></div><h1>ParkingSpotTest.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.model;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+import com.parkit.parkingsystem.constants.ParkingType;
+
+import junit.framework.Assert;
+
+@DisplayName(&quot;Test Parking Spot Model Class&quot;)
+<span class="fc" id="L18">class ParkingSpotTest {</span>
+	ParkingSpot parkingSpot;
+<span class="fc" id="L20">	private static final ParkingType CAR = null;</span>
+<span class="fc" id="L21">	private static final ParkingType BIKE = null;</span>
+<span class="fc" id="L22">	public static final ParkingSpot pSpotCar = new ParkingSpot(2, CAR, false);</span>
+<span class="fc" id="L23">	public static final ParkingSpot pSpotBike = new ParkingSpot(2, BIKE, false);</span>
+
+	@DisplayName(&quot;Test Parking Spot WHEN get idfor car THEN gets id&quot;)
+	@Test
+	public void testParkingSpotCarGetId() {
+<span class="fc" id="L28">		int expected = (int) Math.random();</span>
+<span class="fc" id="L29">		pSpotCar.setId(expected);</span>
+<span class="fc" id="L30">		int actual = pSpotCar.getId();</span>
+<span class="fc" id="L31">		assertEquals(expected, actual);</span>
+<span class="fc" id="L32">	}</span>
+
+	@DisplayName(&quot;Test Parking Spot WHEN get id for bike THEN gets id&quot;)
+	@Test
+	public void testParkingSpotBikeGetId() {
+<span class="fc" id="L37">		int expected = (int) Math.random();</span>
+<span class="fc" id="L38">		pSpotBike.setId(expected);</span>
+<span class="fc" id="L39">		int actual = pSpotBike.getId();</span>
+<span class="fc" id="L40">		assertEquals(expected, actual);</span>
+<span class="fc" id="L41">	}</span>
+
+	@DisplayName(&quot;Test Parking Spot WHEN get parking type for car THEN gets parking type&quot;)
+	@Test
+	public void testParkingSpotCarParkingType() {
+<span class="fc" id="L46">		ParkingType expected = ParkingType.CAR;</span>
+<span class="fc" id="L47">		pSpotCar.setParkingType(expected);</span>
+<span class="fc" id="L48">		ParkingType actual = pSpotCar.getParkingType();</span>
+<span class="fc" id="L49">		assertEquals(expected, actual);</span>
+<span class="fc" id="L50">	}</span>
+
+	@DisplayName(&quot;Test Parking Spot WHEN get parking type for bike THEN gets parking type&quot;)
+	@Test
+	public void testParkingSpotBikeParkingType() {
+<span class="fc" id="L55">		ParkingType expected = ParkingType.BIKE;</span>
+<span class="fc" id="L56">		pSpotBike.setParkingType(expected);</span>
+<span class="fc" id="L57">		ParkingType actual = pSpotBike.getParkingType();</span>
+<span class="fc" id="L58">		assertEquals(expected, actual);</span>
+<span class="fc" id="L59">	}</span>
+
+	@ParameterizedTest(name = &quot;Test ParkingSpot WHEN availability set THEN status : {0} - {1} confirmed&quot;)
+	@CsvSource({ &quot;Car, true&quot;, &quot;Car, false&quot;, &quot;Bike, true&quot;, &quot;Bike, False&quot; })
+	public void testParkingSpotVehicleIsAvailableTrue(String vehicleType, boolean expected) {
+<span class="fc" id="L64">		pSpotCar.setAvailable(expected);</span>
+<span class="fc" id="L65">		boolean actual = pSpotCar.isAvailable();</span>
+<span class="fc" id="L66">		assertEquals(expected, actual);</span>
+<span class="fc" id="L67">	}</span>
+
+	@DisplayName(&quot;Test Parking Spot Equals WHEN comparing the same instance THEN returns TRUE&quot;)
+	@Test
+	public void testEqualsShouldReturnTrueWhenComparingTheSameInstance() {
+<span class="fc" id="L72">		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);</span>
+<span class="fc" id="L73">		assertTrue(parkingSpot.equals(parkingSpot));</span>
+<span class="fc" id="L74">	}</span>
+	
+	
+	@DisplayName(&quot;Test Parking Spot Equals WHEN instance is not null THEN returns FALSE for null value&quot;)
+	@Test
+	public void testEqualsShouldReturnFalseWhenComparingTheNullValue() {
+<span class="fc" id="L80">		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);</span>
+<span class="fc" id="L81">		assertFalse(parkingSpot.equals(null));</span>
+<span class="fc" id="L82">	}</span>
+	
+	@DisplayName(&quot;Test Parking Spot Equals WHEN comparing wrong type THEN returns Equals Not Equals getcClass&quot;)
+	@Test
+	public void testEqualsShouldReturnFalseWhenComparingTheWrongType() {
+<span class="fc" id="L87">		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);</span>
+<span class="fc" id="L88">		assertFalse(parkingSpot.equals(ParkingType.CAR));</span>
+<span class="fc" id="L89">	}</span>
+	
+	@DisplayName(&quot;Test Parking Spot Equals WHEN comparing New Instance With Same Values THEN returns TRUE&quot;)
+	@Test
+	public void testEqualsShouldReturnTrueWhenComparingNewInstanceWithSameValues() {
+<span class="fc" id="L94">		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);</span>
+<span class="fc" id="L95">		assertTrue(parkingSpot.equals(new ParkingSpot(1, ParkingType.CAR, false)));</span>
+<span class="fc" id="L96">	}</span>
+	
+	@DisplayName(&quot;Test Parking Spot hashCode WHEN two Instance With Same Values THEN returns confirmation equals&quot;)
+	@Test
+	public void testHashCodeShouldBeEqualWithTwoInstanceWithSameValues() {
+<span class="fc" id="L101">		ParkingSpot parkingSpot1 = new ParkingSpot(1, ParkingType.CAR, false);</span>
+<span class="fc" id="L102">		ParkingSpot parkingSpot2 = new ParkingSpot(1, ParkingType.CAR, false);</span>
+<span class="fc" id="L103">		assertEquals(parkingSpot1.hashCode(), parkingSpot2.hashCode());</span>
+<span class="fc" id="L104">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (15 juin 2021 19:10:15)</div></body></html>

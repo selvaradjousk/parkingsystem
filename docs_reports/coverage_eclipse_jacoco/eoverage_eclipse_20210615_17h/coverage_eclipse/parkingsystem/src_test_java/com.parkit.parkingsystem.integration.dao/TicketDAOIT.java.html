@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>TicketDAOIT.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (15 juin 2021 19:10:15)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.integration.dao</a> &gt; <span class="el_source">TicketDAOIT.java</span></div><h1>TicketDAOIT.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.integration.dao;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Date;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import com.parkit.parkingsystem.constants.DBConstants;
+import com.parkit.parkingsystem.constants.ParkingType;
+import com.parkit.parkingsystem.dao.TicketDAO;
+import com.parkit.parkingsystem.integration.config.DataBaseTestConfig;
+import com.parkit.parkingsystem.integration.service.DataBasePrepareService;
+import com.parkit.parkingsystem.model.ParkingSpot;
+import com.parkit.parkingsystem.model.Ticket;
+
+@DisplayName(&quot;IT - Vehicle Ticket Data Access Object&quot;)
+<span class="fc" id="L30">public class TicketDAOIT {</span>
+<span class="fc" id="L31">	static TicketDAO testTicketDAO = new TicketDAO();</span>
+<span class="fc" id="L32">	static DataBaseTestConfig testDB = new DataBaseTestConfig();</span>
+<span class="fc" id="L33">	static DataBasePrepareService prepareDBService = new DataBasePrepareService();</span>
+
+	@BeforeAll
+	public static void setupTests() {
+<span class="fc" id="L37">		testTicketDAO.setDataBaseConfig(testDB);</span>
+<span class="fc" id="L38">	}</span>
+
+	@BeforeEach
+	public void setupPerTest() throws SQLException {
+<span class="fc" id="L42">		prepareDBService.clearDBEntries();</span>
+<span class="fc" id="L43">	}</span>
+
+	@AfterAll
+	public static void cleanTests() throws SQLException {
+<span class="fc" id="L47">		prepareDBService.clearDBEntries();</span>
+<span class="fc" id="L48">	}</span>
+
+	@Test
+	@DisplayName(&quot;Test Ticket WHEN save ticket THEN Ticket saved&quot;)
+	public void testSaveTicket() throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
+		// GIVEN
+<span class="fc" id="L54">		String testVehicleRegNumber = &quot;ABCEDFGH&quot;;</span>
+
+<span class="fc" id="L56">		Connection testConn = null;</span>
+<span class="fc" id="L57">		PreparedStatement testStmt = null;</span>
+<span class="fc" id="L58">		ResultSet testRs = null;</span>
+
+<span class="fc" id="L60">		Ticket testTicket = createTestingTicket(testVehicleRegNumber);</span>
+<span class="fc" id="L61">		boolean expectedStatus = true;</span>
+
+		// WHEN
+<span class="fc" id="L64">		testTicketDAO.saveTicket(testTicket);</span>
+
+		// THEN
+		try {
+<span class="fc" id="L68">			testConn = testDB.getConnection();</span>
+<span class="fc" id="L69">			testStmt = testConn.prepareStatement(&quot;Select * from ticket where VEHICLE_REG_NUMBER=?&quot;);</span>
+<span class="fc" id="L70">			testStmt.setString(1, testVehicleRegNumber);</span>
+
+<span class="fc" id="L72">			testRs = testStmt.executeQuery();</span>
+<span class="fc" id="L73">			assertEquals(expectedStatus, testRs.next(), &quot;Result: Both Ticket status matches&quot;);</span>
+<span class="pc" id="L74">		} catch (SQLException e) {</span>
+<span class="nc" id="L75">			System.out.println(e);</span>
+		} finally {
+<span class="fc" id="L77">			testDB.closeConnection(testConn);</span>
+<span class="fc" id="L78">			testDB.closePreparedStatement(testStmt);</span>
+<span class="fc" id="L79">			testDB.closeResultSet(testRs);</span>
+		}
+<span class="fc" id="L81">	}</span>
+	
+	@Test
+	@DisplayName(&quot;Test Ticket WHEN invalid registration number save ticket THEN Ticket not saved&quot;)
+	public void testSaveTicketInvalidRegistrationNumberTicketNotSaved() throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
+		// GIVEN
+<span class="fc" id="L87">		String testVehicleRegNumber = &quot;ABCEDFGHSSSSSSS&quot;;</span>
+
+<span class="fc" id="L89">		Connection testConn = null;</span>
+<span class="fc" id="L90">		PreparedStatement testStmt = null;</span>
+<span class="fc" id="L91">		ResultSet testRs = null;</span>
+
+<span class="fc" id="L93">		Ticket testTicket = createTestingTicket(testVehicleRegNumber);</span>
+<span class="fc" id="L94">		boolean expectedStatus = true;</span>
+
+		// WHEN
+<span class="fc" id="L97">		testTicketDAO.saveTicket(testTicket);</span>
+
+		// THEN
+		try {
+<span class="fc" id="L101">			testConn = testDB.getConnection();</span>
+<span class="fc" id="L102">			testStmt = testConn.prepareStatement(&quot;Select * from ticket where VEHICLE_REG_NUMBER=?&quot;);</span>
+<span class="fc" id="L103">			testStmt.setString(1, testVehicleRegNumber);</span>
+
+<span class="fc" id="L105">			testRs = testStmt.executeQuery();</span>
+<span class="fc" id="L106">			assertNotEquals(expectedStatus, testRs.next(), &quot;Result: Both Ticket status does not matches&quot;);</span>
+<span class="pc" id="L107">		} catch (SQLException e) {</span>
+<span class="nc" id="L108">			System.out.println(e);</span>
+		} finally {
+<span class="fc" id="L110">			testDB.closeConnection(testConn);</span>
+<span class="fc" id="L111">			testDB.closePreparedStatement(testStmt);</span>
+<span class="fc" id="L112">			testDB.closeResultSet(testRs);</span>
+		}
+<span class="fc" id="L114">	}</span>
+
+	@DisplayName(&quot;Test Ticket WHEN get ticket THEN retrieves Ticket information&quot;)
+	@Test
+	public void testGetTicket() throws ClassNotFoundException, SQLException {
+		// GIVEN
+<span class="fc" id="L120">		String testVehicleRegNumber = &quot;MLKJHG&quot;;</span>
+<span class="fc" id="L121">		Ticket testTicket = createTestingTicket(testVehicleRegNumber);</span>
+<span class="fc" id="L122">		testTicketDAO.saveTicket(testTicket);</span>
+
+		// WHEN
+<span class="fc" id="L125">		Ticket gettingTicket = testTicketDAO.getTicket(testVehicleRegNumber);</span>
+
+		// THEN
+<span class="fc" id="L128">		assertNotEquals(null, gettingTicket, &quot;Result: Actual Ticket status not null&quot;);</span>
+<span class="fc" id="L129">		assertEquals(testVehicleRegNumber, gettingTicket.getVehicleRegNumber(),</span>
+<span class="fc" id="L130">				&quot;Result: Both Ticket Registration elements matches&quot;);</span>
+<span class="fc" id="L131">	}</span>
+	
+	@DisplayName(&quot;Test Ticket WHEN get ticket for invalid registration number THEN do not retrieves Ticket information&quot;)
+	@Test
+	public void testGetTicketNotValidForInvalidRegistrationNumber() throws ClassNotFoundException, SQLException {
+		// GIVEN
+<span class="fc" id="L137">		String testVehicleRegNumber = &quot;MLKJHGSSSSSS&quot;;</span>
+<span class="fc" id="L138">		Ticket testTicket = createTestingTicket(testVehicleRegNumber);</span>
+<span class="fc" id="L139">		testTicketDAO.saveTicket(testTicket);</span>
+
+		// WHEN
+<span class="fc" id="L142">		Ticket gettingTicket = testTicketDAO.getTicket(testVehicleRegNumber);</span>
+
+		// THEN
+<span class="fc" id="L145">		assertEquals(null, gettingTicket, &quot;Result: Actual Ticket status null&quot;);</span>
+<span class="fc" id="L146">	}</span>
+
+	@DisplayName(&quot;Test Ticket WHEN update ticket THEN Ticket information updated in database&quot;)
+	@Test
+	public void testUpdateTicket() throws ClassNotFoundException, SQLException {
+		// GIVEN
+<span class="fc" id="L152">		String testVehicleRegNumber = &quot;SDFGHJK&quot;;</span>
+<span class="fc" id="L153">		Ticket testTicket = createTestingTicket(testVehicleRegNumber);</span>
+<span class="fc" id="L154">		testTicketDAO.saveTicket(testTicket);</span>
+
+<span class="fc" id="L156">		testTicket = testTicketDAO.getTicket(testVehicleRegNumber);</span>
+<span class="fc" id="L157">		testTicket.setPrice(10);</span>
+<span class="fc" id="L158">		testTicket.setOutTime(new Date());</span>
+
+		// WHEN
+<span class="fc" id="L161">		boolean updateRequest = testTicketDAO.updateTicket(testTicket);</span>
+
+		// THEN
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">		if (!updateRequest)</span>
+<span class="nc" id="L165">			fail(&quot;Failed ticket update&quot;);</span>
+
+<span class="fc" id="L167">		assertEquals(testTicketDAO.getTicket(testVehicleRegNumber).getPrice(), testTicket.getPrice(),</span>
+<span class="fc" id="L168">				&quot;Result: Both Fare Price values matches&quot;);</span>
+<span class="fc" id="L169">	}</span>
+	
+	@DisplayName(&quot;Test Ticket WHEN update ticket for invalid registration number THEN Ticket information not updated in database&quot;)
+	@Test
+	public void testUpdateTicketNotDoneForInvalidRegistrationNumber() throws ClassNotFoundException, SQLException {
+		// GIVEN
+<span class="fc" id="L175">		String testVehicleRegNumber = &quot;SDFGHJKSSSSSSSS&quot;;</span>
+<span class="fc" id="L176">		Ticket testTicket = createTestingTicket(testVehicleRegNumber);</span>
+<span class="fc" id="L177">		testTicketDAO.saveTicket(testTicket);</span>
+
+		// WHEN
+<span class="fc" id="L180">		testTicket = testTicketDAO.getTicket(testVehicleRegNumber);</span>
+
+		// THEN
+<span class="fc" id="L183">		assertNull(testTicket);</span>
+<span class="fc" id="L184">	}</span>
+
+	@DisplayName(&quot;Test Ticket WHEN retrieving vehicle reccurence THEN client recurrence visit confirmed&quot;)
+	@Test
+	public void testGetVehicleOccurence() throws ClassNotFoundException, SQLException {
+		// GIVEN
+<span class="fc" id="L190">		final String vehicleRegNumber = &quot;ZYXWVU&quot;;</span>
+<span class="fc" id="L191">		int ticketCount = 0, targetCount = 3;</span>
+
+<span class="fc bfc" id="L193" title="All 2 branches covered.">		while (ticketCount &lt; targetCount) {</span>
+<span class="fc" id="L194">			ticketCount++;</span>
+
+<span class="fc" id="L196">			Ticket testDataSet = new Ticket();</span>
+<span class="fc" id="L197">			testDataSet.setVehicleRegNumber(vehicleRegNumber);</span>
+<span class="fc" id="L198">			testDataSet.setInTime(new Date(System.currentTimeMillis() - (5 * 60 * 1000) * (ticketCount + 1)));</span>
+<span class="fc" id="L199">			testDataSet.setOutTime(new Date());</span>
+<span class="fc" id="L200">			testDataSet.setParkingSpot(new ParkingSpot(ticketCount + 1, ParkingType.CAR, false));</span>
+
+			
+<span class="fc" id="L203">			Connection connection = null;</span>
+			
+<span class="fc" id="L205">			DataBaseTestConfig dataBaseTestConfig = new DataBaseTestConfig();</span>
+<span class="fc" id="L206">			Ticket ticket = testDataSet;</span>
+					try {
+<span class="fc" id="L208">						connection = dataBaseTestConfig.getConnection();</span>
+			
+<span class="fc" id="L210">						PreparedStatement ps = connection.prepareStatement(DBConstants.SAVE_TICKET);</span>
+<span class="fc" id="L211">						ps.setInt(1, ticket.getParkingSpot().getId());</span>
+<span class="fc" id="L212">						ps.setString(2, ticket.getVehicleRegNumber());</span>
+<span class="fc" id="L213">						ps.setDouble(3, ticket.getPrice());</span>
+<span class="fc" id="L214">						ps.setTimestamp(4, new Timestamp(ticket.getInTime().getTime()));</span>
+<span class="fc" id="L215">						ps.setTimestamp(5,</span>
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">								(ticket.getOutTime() == null) ? null : (new Timestamp(ticket.getOutTime().getTime())));</span>
+			
+<span class="fc" id="L218">						ps.execute();</span>
+<span class="pc" id="L219">					} catch (Exception exception) {</span>
+<span class="nc" id="L220">						exception.printStackTrace();</span>
+					}
+				
+
+//			prepareDBService.insertTestTicket(testDataSet);
+		}
+
+		// WHEN
+<span class="fc" id="L228">		boolean occurences = testTicketDAO.getVehicleOccurence(vehicleRegNumber);</span>
+
+		// THEN
+<span class="fc" id="L231">		assertEquals(true, occurences, &quot;Result: Both client reccurence status matches&quot;);</span>
+<span class="fc" id="L232">	}</span>
+
+	/**
+	 *Test ticket is created as template to use in test cases
+	 */
+	Ticket createTestingTicket(String vehicleRegNumber) {
+<span class="fc" id="L238">		Ticket testingTicket = new Ticket();</span>
+<span class="fc" id="L239">		testingTicket.setParkingSpot(new ParkingSpot(1, ParkingType.CAR, false));</span>
+<span class="fc" id="L240">		testingTicket.setVehicleRegNumber(vehicleRegNumber);</span>
+<span class="fc" id="L241">		testingTicket.setPrice(0);</span>
+<span class="fc" id="L242">		testingTicket.setInTime(new Date(new Date().getTime() - 6 * 1000 * 60));</span>
+<span class="fc" id="L243">		testingTicket.setOutTime(null);</span>
+
+<span class="fc" id="L245">		return testingTicket;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (15 juin 2021 19:10:15)</div></body></html>

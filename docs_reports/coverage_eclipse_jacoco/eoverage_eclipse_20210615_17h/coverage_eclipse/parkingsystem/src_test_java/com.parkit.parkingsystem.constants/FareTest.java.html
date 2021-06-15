@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>FareTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (15 juin 2021 19:10:15)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.constants</a> &gt; <span class="el_source">FareTest.java</span></div><h1>FareTest.java</h1><pre class="source lang-java linenums">/**
+ * 
+ */
+package com.parkit.parkingsystem.constants;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+/**
+ * Class: {@link FareTest} - testing Class: {@link Fare}.
+ *
+ * @author Senthil
+ */
+@DisplayName(&quot;Test on fare constant values&quot;)
+final class FareTest {
+	/**
+	 * Instance of Fare class
+	 */
+	Fare fare;
+
+	/**
+	 * Private Constructor for Fare class.
+	 */
+<span class="fc" id="L26">	private FareTest() {</span>
+<span class="fc" id="L27">	}</span>
+
+	/**
+	 * Parking rate BIKE_RATE_PER_HOUR.
+	 */
+<span class="fc" id="L32">	final double BIKE_RATE_PER_HOUR_expected = 1.0;</span>
+
+	/**
+	 * Parking rate CAR_RATE_PER_HOUR.
+	 */
+<span class="fc" id="L37">	final double CAR_RATE_PER_HOUR_expected = 1.5;</span>
+
+	
+	@DisplayName(&quot;Test fare constant WHEN bike rate per hour THEN &quot;
+			+ &quot;equals bike rate per hour&quot;)
+	@Test
+	void testBikeRateDbConstanst() {
+<span class="fc" id="L44">		assertEquals(fare.BIKE_RATE_PER_HOUR, BIKE_RATE_PER_HOUR_expected);</span>
+<span class="fc" id="L45">	}</span>
+	
+	@DisplayName(&quot;Test fare constant WHEN car rate per hour THEN &quot;
+			+ &quot;equals car rate per hour&quot;)
+	@Test
+	void testCarRateDbConstanst() {
+<span class="fc" id="L51">		assertEquals(fare.BIKE_RATE_PER_HOUR, BIKE_RATE_PER_HOUR_expected);</span>
+<span class="fc" id="L52">	}</span>
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (15 juin 2021 19:10:15)</div></body></html>

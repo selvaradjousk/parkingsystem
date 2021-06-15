@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>TicketDAO.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (15 juin 2021 19:10:15)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.dao</a> &gt; <span class="el_source">TicketDAO.java</span></div><h1>TicketDAO.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.parkit.parkingsystem.config.DataBaseConfig;
+import com.parkit.parkingsystem.constants.DBConstants;
+import com.parkit.parkingsystem.constants.ParkingType;
+import com.parkit.parkingsystem.model.ParkingSpot;
+import com.parkit.parkingsystem.model.Ticket;
+
+/**
+ * Class: {@link TicketDAO} - Ticket Data Access Objects.&lt;br&gt;
+ * &lt;b&gt;Project: &lt;/b&gt; P3 - parking system - ParkIt&lt;br&gt;
+ *
+ * @see Methods: {@link #getTicket(String)}, {@link #saveTicket(Ticket)},
+ *      {@link #getVehicleOccurence(String)}, {@link #updateTicket(Ticket)}
+ * @author Senthil
+ */
+<span class="fc" id="L26">public class TicketDAO {</span>
+
+	/**
+	 * Logger for TicketDao.
+	 */
+<span class="fc" id="L31">	private static final Logger LOGGER</span>
+<span class="fc" id="L32">	= LogManager.getLogger(&quot;TicketDAO&quot;);</span>
+
+	/**
+	 * dataBaseConfig instance to connect with DataBase.
+	 */
+<span class="fc" id="L37">	private DataBaseConfig dataBaseConfig</span>
+<span class="fc" id="L38">	= new DataBaseConfig();</span>
+
+	/**
+	 * DataBaseConfig setter.
+	 *
+	 * @param aDataBaseConfig set instance
+	 */
+	public void setDataBaseConfig(final DataBaseConfig aDataBaseConfig) {
+<span class="fc" id="L46">		this.dataBaseConfig = aDataBaseConfig;</span>
+<span class="fc" id="L47">	}</span>
+
+	 /**
+	 * Constant value for Zero.
+	 */
+	 public static final int NO_MAGIC_PARAMETER_VALUE_ZERO = 0;
+
+	 /**
+	 * Constant value for One.
+	 */
+	 public static final int NO_MAGIC_PARAMETER_VALUE_ONE = 1;
+
+	 /**
+	 * Constant value for Two.
+	 */
+	 public static final int NO_MAGIC_PARAMETER_VALUE_TWO = 2;
+
+	 /**
+	 * Constant value for Three.
+	 */
+	 public static final int NO_MAGIC_PARAMETER_VALUE_THREE = 3;
+
+	 /**
+	 * Constant value for Four.
+	 */
+	 public static final int NO_MAGIC_PARAMETER_VALUE_FOUR = 4;
+
+	 /**
+	 * Constant value for Five.
+	 */
+	 public static final int NO_MAGIC_PARAMETER_VALUE_FIVE = 5;
+
+	 /**
+	 * Constant value for Six.
+	 */
+<span class="fc" id="L82">	 public static final int NO_MAGIC_PARAMETER_VALUE_SIX = 6;</span>
+
+	/**
+	 * {@link #saveTicket()} save the parking spot available alloted.
+	 *
+	 * @return boolean - returns confirm saving
+	 * @param ticket - instance variable of {@link #Ticket}
+	 * @exception SQLException
+	 * @throws ClassNotFoundException
+	 */
+	public boolean saveTicket(final Ticket ticket)
+			throws SQLException, ClassNotFoundException {
+<span class="fc" id="L94">		try (Connection con = dataBaseConfig.getConnection();</span>
+<span class="fc" id="L95">			PreparedStatement ps</span>
+<span class="fc" id="L96">			= con.prepareStatement(DBConstants.SAVE_TICKET)) {</span>
+<span class="fc" id="L97">			ps.setInt(NO_MAGIC_PARAMETER_VALUE_ONE,</span>
+<span class="fc" id="L98">					ticket.getParkingSpot().getId());</span>
+<span class="fc" id="L99">			ps.setString(NO_MAGIC_PARAMETER_VALUE_TWO,</span>
+<span class="fc" id="L100">					ticket.getVehicleRegNumber());</span>
+<span class="fc" id="L101">			ps.setDouble(NO_MAGIC_PARAMETER_VALUE_THREE,</span>
+<span class="fc" id="L102">					ticket.getPrice());</span>
+<span class="fc" id="L103">			ps.setTimestamp(NO_MAGIC_PARAMETER_VALUE_FOUR,</span>
+<span class="fc" id="L104">					new Timestamp(ticket.getInTime()</span>
+<span class="fc" id="L105">							.getTime()));</span>
+<span class="fc" id="L106">			ps.setTimestamp(NO_MAGIC_PARAMETER_VALUE_FIVE,</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">					(ticket.getOutTime() == null)</span>
+<span class="pc" id="L108">					? null : (new Timestamp(ticket</span>
+<span class="nc" id="L109">							.getOutTime()</span>
+<span class="nc" id="L110">							.getTime())));</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">			if (ps.execute()) {</span>
+<span class="nc" id="L112">				LOGGER.info(&quot;Ticket Saved&quot;);</span>
+<span class="nc" id="L113">				return true;</span>
+			}
+<span class="pc bnc" id="L115" title="All 2 branches missed.">		} catch (SQLException ex) {</span>
+<span class="fc" id="L116">			LOGGER.error(&quot;Error fetching next available slot&quot;, ex);</span>
+		}
+<span class="fc" id="L118">		return false;</span>
+	}
+
+	/**
+	 * {@link #getTicket()} Assign ticket for the parking spot alloted.
+	 *
+	 * @return ticket - returns instance value of class Ticket.
+	 * @param vehicleRegNumber - input vehicles registration number
+	 * @exception SQLException
+	 */
+	public Ticket getTicket(final String vehicleRegNumber)
+			throws SQLException {
+<span class="fc" id="L130">		Connection con = null;</span>
+<span class="fc" id="L131">		PreparedStatement ps = null;</span>
+<span class="fc" id="L132">		Ticket ticket = null;</span>
+<span class="fc" id="L133">		ResultSet rs = null;</span>
+		try {
+<span class="fc" id="L135">			con = dataBaseConfig.getConnection();</span>
+<span class="fc" id="L136">			ps = con.prepareStatement(DBConstants.GET_TICKET);</span>
+			// ID, PARKING_NUMBER, VEHICLE_REG_NUMBER,
+			// PRICE, IN_TIME, OUT_TIME)
+<span class="fc" id="L139">			ps.setString(NO_MAGIC_PARAMETER_VALUE_ONE,</span>
+<span class="fc" id="L140">					vehicleRegNumber);</span>
+
+<span class="fc" id="L142">			rs = ps.executeQuery();</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">			if (rs.next()) {</span>
+<span class="fc" id="L144">				ticket = new Ticket();</span>
+<span class="fc" id="L145">				ParkingSpot parkingSpot</span>
+<span class="fc" id="L146">				= new ParkingSpot(rs</span>
+<span class="fc" id="L147">						.getInt(NO_MAGIC_PARAMETER_VALUE_ONE),</span>
+<span class="fc" id="L148">						ParkingType.valueOf(rs</span>
+<span class="fc" id="L149">								.getString(NO_MAGIC_PARAMETER_VALUE_SIX)), false);</span>
+<span class="fc" id="L150">				ticket.setParkingSpot(parkingSpot);</span>
+<span class="fc" id="L151">				ticket.setId(rs.getInt(NO_MAGIC_PARAMETER_VALUE_TWO));</span>
+<span class="fc" id="L152">				ticket.setVehicleRegNumber(vehicleRegNumber);</span>
+<span class="fc" id="L153">				ticket.setPrice(rs</span>
+<span class="fc" id="L154">						.getDouble(NO_MAGIC_PARAMETER_VALUE_THREE));</span>
+<span class="fc" id="L155">				ticket.setInTime(rs</span>
+<span class="fc" id="L156">						.getTimestamp(NO_MAGIC_PARAMETER_VALUE_FOUR));</span>
+<span class="fc" id="L157">				ticket.setOutTime(rs</span>
+<span class="fc" id="L158">						.getTimestamp(NO_MAGIC_PARAMETER_VALUE_FIVE));</span>
+			}
+<span class="fc" id="L160">			dataBaseConfig.closeResultSet(rs);</span>
+<span class="pc" id="L161">		} catch (SQLException ex) {</span>
+<span class="nc" id="L162">			LOGGER.error(&quot;Error fetching next available slot&quot;, ex);</span>
+<span class="nc" id="L163">		} finally {</span>
+<span class="fc" id="L164">			dataBaseConfig.closePreparedStatement(ps);</span>
+<span class="fc" id="L165">			dataBaseConfig.closeConnection(con);</span>
+<span class="fc" id="L166">			return ticket;</span>
+		}
+	}
+
+	/**
+	 * getVehicleOccurence() gets the recurrence visit of customer.
+	 *
+	 * @return occurrences - returns value on the number of recurrence
+	 * @param vehicleRegNumber - input information vehicles Reg number
+	 * @exception SQLException
+	 * @throws ClassNotFoundException
+	 */
+	public boolean getVehicleOccurence(final String vehicleRegNumber)
+			throws SQLException, ClassNotFoundException {
+<span class="fc" id="L180">		Connection con = null;</span>
+<span class="fc" id="L181">		PreparedStatement ps = null;</span>
+<span class="fc" id="L182">		ResultSet rs = null;</span>
+<span class="fc" id="L183">		boolean occurences = false;</span>
+
+		try {
+<span class="fc" id="L186">			con = dataBaseConfig.getConnection();</span>
+<span class="fc" id="L187">			ps = con.prepareStatement(DBConstants</span>
+					.GET_VEHICLE_OCCURENCES);
+<span class="fc" id="L189">			ps.setString(NO_MAGIC_PARAMETER_VALUE_ONE,</span>
+<span class="fc" id="L190">					vehicleRegNumber);</span>
+<span class="fc" id="L191">			rs = ps.executeQuery();</span>
+
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">			if (rs.next() &amp;&amp; rs.getInt(1)</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">					&gt; NO_MAGIC_PARAMETER_VALUE_ONE) {</span>
+<span class="fc" id="L195">				occurences = true;</span>
+<span class="fc" id="L196">			} else {</span>
+<span class="fc" id="L197">				LOGGER.debug(&quot;No ticket found with&quot;</span>
+						+ &quot; this registration number&quot;);
+			}
+
+<span class="pc" id="L201">		} catch (SQLException ex) {</span>
+<span class="nc" id="L202">			LOGGER.error(&quot;Error fetching vehicle occurence&quot;, ex);</span>
+		} finally {
+<span class="fc" id="L204">			dataBaseConfig.closePreparedStatement(ps);</span>
+<span class="fc" id="L205">			dataBaseConfig.closeResultSet(rs);</span>
+		}
+<span class="fc" id="L207">		return occurences;</span>
+	}
+
+	/**
+	 * updateTicket() Update the ticket information for the customer.
+	 *
+	 * @return boolean - true if updated successful else false
+	 * @param ticket - instance variable of {@link #Ticket}
+	 * @exception SQLException
+	 * @throws ClassNotFoundException
+	 */
+	public boolean updateTicket(final Ticket ticket)
+			throws SQLException, ClassNotFoundException {
+<span class="fc" id="L220">		try (Connection con = dataBaseConfig.getConnection();</span>
+<span class="fc" id="L221">			PreparedStatement ps</span>
+<span class="fc" id="L222">			= con.prepareStatement(DBConstants.UPDATE_TICKET)) {</span>
+<span class="fc" id="L223">			ps.setDouble(NO_MAGIC_PARAMETER_VALUE_ONE,</span>
+<span class="fc" id="L224">					ticket.getPrice());</span>
+<span class="fc" id="L225">			ps.setTimestamp(NO_MAGIC_PARAMETER_VALUE_TWO,</span>
+<span class="fc" id="L226">					new Timestamp(ticket.getOutTime()</span>
+<span class="fc" id="L227">							.getTime()));</span>
+<span class="fc" id="L228">			ps.setInt(NO_MAGIC_PARAMETER_VALUE_THREE,</span>
+<span class="fc" id="L229">					ticket.getId());</span>
+<span class="pc bpc" id="L230" title="1 of 2 branches missed.">			if (ps.executeUpdate()</span>
+<span class="fc" id="L231">					== NO_MAGIC_PARAMETER_VALUE_ONE) {</span>
+<span class="fc" id="L232">				return true;</span>
+			}
+<span class="pc bpc" id="L234" title="1 of 2 branches missed.">		} catch (SQLException ex) {</span>
+<span class="nc" id="L235">			LOGGER.error(&quot;Error saving ticket info&quot;, ex);</span>
+		}
+<span class="nc" id="L237">		return false;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (15 juin 2021 19:10:15)</div></body></html>

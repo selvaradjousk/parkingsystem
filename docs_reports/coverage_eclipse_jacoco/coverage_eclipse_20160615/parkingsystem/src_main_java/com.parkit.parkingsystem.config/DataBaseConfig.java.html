@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>DataBaseConfig.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (15 juin 2021 12:18:20)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.config</a> &gt; <span class="el_source">DataBaseConfig.java</span></div><h1>DataBaseConfig.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.config;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Properties;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+/**
+ * Class: {@link DataBaseConfig} Deals with DB connection configuration
+ * settings.&lt;br&gt;
+ * &lt;b&gt;Project: &lt;/b&gt; P3 - parking system - ParkIt&lt;br&gt;
+ *
+ * @see Methods: {@link #getConnection()},
+ *  {@link #closeConnection(Connection)},
+ *      {@link #closePreparedStatement(PreparedStatement)},
+ *      {@link #closeResultSet(ResultSet)}
+ * 
+ * @author Senthil
+ */
+<span class="fc" id="L25">public class DataBaseConfig {</span>
+	/**
+	 * Logger for DatabaseConfig class.
+	 */
+<span class="fc" id="L29">	private static final Logger LOGGER</span>
+<span class="fc" id="L30">	= LogManager.getLogger(&quot;DataBaseConfig&quot;);</span>
+
+	/**
+	 * getConnection() This method establishes DB connection.
+	 *
+	 * @return Instance variable - returns connection values
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	public Connection getConnection()
+			throws SQLException, ClassNotFoundException {
+<span class="fc" id="L41">		Connection con = null;</span>
+<span class="fc" id="L42">		LOGGER.info(&quot;Create DB connection&quot;);</span>
+<span class="fc" id="L43">			Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);</span>
+
+<span class="fc" id="L45">			Properties info = new Properties();</span>
+<span class="fc" id="L46">			info.put(&quot;user&quot;, &quot;root&quot;);</span>
+<span class="fc" id="L47">			info.put(&quot;password&quot;, &quot;rootroot&quot;);</span>
+
+<span class="fc" id="L49">			con = DriverManager</span>
+<span class="fc" id="L50">					.getConnection(&quot;jdbc:mysql://localhost:&quot;</span>
+<span class="fc" id="L51">							+ &quot;3306/prod&quot;, info);</span>
+
+<span class="fc" id="L53">		return con;</span>
+	}
+
+	/**
+	 * closeConnection() Closes the DB connection
+	 *  prevents connection leaks.
+	 *
+	 * @param con - Connection instance value
+	 * @exception SQLException
+	 */
+	public void closeConnection(final Connection con)
+			throws SQLException {
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (con != null) {</span>
+			try {
+<span class="fc" id="L67">				con.close();</span>
+<span class="fc" id="L68">				LOGGER.info(&quot;Closing DB connection&quot;);</span>
+<span class="pc" id="L69">			} catch (SQLException e) {</span>
+<span class="nc" id="L70">				LOGGER.error(&quot;Error while closing&quot;</span>
+<span class="nc" id="L71">						+ &quot; connection&quot;, e);</span>
+			}
+		}
+<span class="fc" id="L74">	}</span>
+
+	/**
+	 * closePreparedStatement() This method closes
+	 *  the DB PreparedStatement object.
+	 *
+	 * @param ps - PreparedStatement instance value input parameter
+	 * @exception SQLException
+	 */
+	public void closePreparedStatement(final PreparedStatement ps) {
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (ps != null) {</span>
+			try {
+<span class="fc" id="L86">				ps.close();</span>
+<span class="fc" id="L87">				LOGGER.info(&quot;Closing Prepared Statement&quot;);</span>
+<span class="pc" id="L88">			} catch (SQLException e) {</span>
+<span class="nc" id="L89">				LOGGER.error(&quot;Error while closing&quot;</span>
+<span class="nc" id="L90">						+ &quot; prepared statement&quot;, e);</span>
+			}
+		}
+<span class="fc" id="L93">	}</span>
+
+	/**
+	 * closeResultSet() This method closes the DB ResultSet object.
+	 *
+	 * @param rs - ResultSet instance value is supplied
+	 *  as a input parameter
+	 * @exception SQLException
+	 */
+	public void closeResultSet(final ResultSet rs) {
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (rs != null) {</span>
+			try {
+<span class="fc" id="L105">				rs.close();</span>
+<span class="fc" id="L106">				LOGGER.info(&quot;Closing Result Set&quot;);</span>
+<span class="pc" id="L107">			} catch (SQLException e) {</span>
+<span class="nc" id="L108">				LOGGER.error(&quot;Error while closing&quot;</span>
+<span class="nc" id="L109">						+ &quot; result set&quot;, e);</span>
+			}
+		}
+<span class="fc" id="L112">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (15 juin 2021 12:18:20)</div></body></html>

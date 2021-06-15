@@ -40,10 +40,10 @@ public class TicketDAO {
 	/**
 	 * DataBaseConfig setter.
 	 *
-	 * @param dataBaseConfig set instance
+	 * @param aDataBaseConfig set instance
 	 */
-	public void setDataBaseConfig(final DataBaseConfig dataBaseConfig) {
-		this.dataBaseConfig = dataBaseConfig;
+	public void setDataBaseConfig(final DataBaseConfig aDataBaseConfig) {
+		this.dataBaseConfig = aDataBaseConfig;
 	}
 
 	 /**
@@ -92,7 +92,8 @@ public class TicketDAO {
 	public boolean saveTicket(final Ticket ticket)
 			throws SQLException, ClassNotFoundException {
 		try (Connection con = dataBaseConfig.getConnection();
-			PreparedStatement ps = con.prepareStatement(DBConstants.SAVE_TICKET)){
+			PreparedStatement ps
+			= con.prepareStatement(DBConstants.SAVE_TICKET)) {
 			ps.setInt(NO_MAGIC_PARAMETER_VALUE_ONE,
 					ticket.getParkingSpot().getId());
 			ps.setString(NO_MAGIC_PARAMETER_VALUE_TWO,
@@ -142,7 +143,8 @@ public class TicketDAO {
 			if (rs.next()) {
 				ticket = new Ticket();
 				ParkingSpot parkingSpot
-				= new ParkingSpot(rs.getInt(NO_MAGIC_PARAMETER_VALUE_ONE),
+				= new ParkingSpot(rs
+						.getInt(NO_MAGIC_PARAMETER_VALUE_ONE),
 						ParkingType.valueOf(rs
 								.getString(NO_MAGIC_PARAMETER_VALUE_SIX)), false);
 				ticket.setParkingSpot(parkingSpot);
@@ -216,7 +218,8 @@ public class TicketDAO {
 	public boolean updateTicket(final Ticket ticket)
 			throws SQLException, ClassNotFoundException {
 		try (Connection con = dataBaseConfig.getConnection();
-			PreparedStatement ps = con.prepareStatement(DBConstants.UPDATE_TICKET)){
+			PreparedStatement ps
+			= con.prepareStatement(DBConstants.UPDATE_TICKET)) {
 			ps.setDouble(NO_MAGIC_PARAMETER_VALUE_ONE,
 					ticket.getPrice());
 			ps.setTimestamp(NO_MAGIC_PARAMETER_VALUE_TWO,

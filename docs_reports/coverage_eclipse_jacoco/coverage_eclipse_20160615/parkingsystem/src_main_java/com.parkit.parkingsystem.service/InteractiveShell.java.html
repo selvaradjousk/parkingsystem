@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>InteractiveShell.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (15 juin 2021 12:18:20)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.service</a> &gt; <span class="el_source">InteractiveShell.java</span></div><h1>InteractiveShell.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.service;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.parkit.parkingsystem.dao.ParkingSpotDAO;
+import com.parkit.parkingsystem.dao.TicketDAO;
+import com.parkit.parkingsystem.util.InputReaderUtil;
+import com.parkit.parkingsystem.util.ScannerWrapper;
+
+/**
+ * Class: {@link InteractiveShell} - Application workflow
+ *  services.&lt;br&gt;
+ * &lt;b&gt;Project: &lt;/b&gt; P3 - parking system - ParkIt&lt;br&gt;
+ *
+ * @see Methods: {@link #loadInterface()}, {@link #loadMenu()}
+ * @author Senthil
+ */
+public final class InteractiveShell {
+
+	/**
+	 * Logger InteractiveShell.
+	 *
+	 */
+<span class="fc" id="L25">	private static final Logger LOGGER</span>
+<span class="fc" id="L26">	= LogManager.getLogger(&quot;InteractiveShell&quot;);</span>
+
+	 /**
+	   * InteractiveShell constructor.
+	   */
+	  private InteractiveShell() {
+	  }
+
+	/**
+	 * {@link #loadInterface()} This method loads
+	 *  the subsequent interface for the menu choice done
+	 *  using Application Menu {@link #loadMenu()}.
+	 *
+	 */
+	public static void loadInterface() {
+<span class="fc" id="L41">		LOGGER.info(&quot;App initialized!!!&quot;);</span>
+<span class="fc" id="L42">		System.out.println(&quot;Welcome to Parking System!&quot;);</span>
+
+<span class="fc" id="L44">		boolean continueApp = true;</span>
+
+<span class="fc" id="L46">		ScannerWrapper scannerWrapper = new ScannerWrapper();</span>
+<span class="fc" id="L47">		InputReaderUtil inputReaderUtil</span>
+<span class="fc" id="L48">		= new InputReaderUtil(scannerWrapper);</span>
+<span class="fc" id="L49">		ParkingSpotDAO parkingSpotDAO = new ParkingSpotDAO();</span>
+<span class="fc" id="L50">		TicketDAO ticketDAO = new TicketDAO();</span>
+<span class="fc" id="L51">		ParkingService parkingService</span>
+<span class="fc" id="L52">		= new ParkingService(inputReaderUtil,</span>
+<span class="fc" id="L53">				parkingSpotDAO, ticketDAO);</span>
+
+<span class="fc bfc" id="L55" title="All 2 branches covered.">		while (continueApp) {</span>
+<span class="fc" id="L56">			loadMenu();</span>
+<span class="fc" id="L57">			int option = inputReaderUtil.readSelection();</span>
+<span class="fc" id="L58">		      final int incomingVehicle = 1;</span>
+<span class="fc" id="L59">		      final int exitingVehicle = 2;</span>
+<span class="fc" id="L60">		      final int exitingSystem = 3;</span>
+
+<span class="pc bpc" id="L62" title="1 of 4 branches missed.">			switch (option) {</span>
+			case incomingVehicle:
+<span class="fc" id="L64">				parkingService.processIncomingVehicle();</span>
+<span class="fc" id="L65">				break;</span>
+			case exitingVehicle:
+<span class="fc" id="L67">				parkingService.processExitingVehicle();</span>
+<span class="fc" id="L68">				break;</span>
+			case exitingSystem:
+<span class="fc" id="L70">				System.out.println(&quot;Exiting from the system!&quot;);</span>
+<span class="fc" id="L71">				continueApp = false;</span>
+<span class="fc" id="L72">				break;</span>
+			default:
+<span class="nc" id="L74">				System.out.println(&quot;Unsupported option.&quot;</span>
+						+ &quot; Please enter a number&quot;
+						+ &quot; corresponding&quot;
+						+ &quot; to the provided menu&quot;);
+			}
+		}
+<span class="fc" id="L80">	}</span>
+
+	/**
+	 * {@link #loadMenu()} This method displays the menu choice
+	 *  for using Parking Application - ParkIt.
+	 *
+	 */
+	private static void loadMenu() {
+<span class="fc" id="L88">		System.out.println(&quot;Please select an option. Simply enter&quot;</span>
+				+ &quot; the number to choose an action&quot;);
+<span class="fc" id="L90">		System.out.println(&quot;1 New Vehicle Entering - Allocate &quot;</span>
+				+ &quot;Parking Space&quot;);
+<span class="fc" id="L92">		System.out.println(&quot;2 Vehicle Exiting - Generate &quot;</span>
+				+ &quot;Ticket Price&quot;);
+<span class="fc" id="L94">		System.out.println(&quot;3 Shutdown System&quot;);</span>
+<span class="fc" id="L95">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (15 juin 2021 12:18:20)</div></body></html>

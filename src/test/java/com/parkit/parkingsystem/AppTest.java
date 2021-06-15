@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import nl.altindag.log.LogCaptor;
 
-@DisplayName("IT - Test on Main Application launch and Interaction")
+@DisplayName("Test on Main Application launch and Interaction")
 class AppTest {
 
 	ByteArrayOutputStream byteArrayOutputStream;

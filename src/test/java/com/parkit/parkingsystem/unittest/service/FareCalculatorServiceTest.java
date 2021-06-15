@@ -52,7 +52,7 @@ class FareCalculatorServiceTest {
 	@DisplayName("Test parking Fare WHEN for CAR one hours and more displayed in minutes THEN asserts fare values")
 	@ParameterizedTest(name = "Duration of Parking: {0} minutes")
 	@Order(1)
-	@CsvSource({ "60, 1", "90, 1.5", "120, 2", "180, 3", "240, 4", "300, 5" })
+	@CsvSource({ "60, 1", "90, 1.5", "300, 5" })
 	void calculateFareCar(long minutesParked, double priceFactor) {
 
 		// GIVEN
@@ -75,7 +75,7 @@ class FareCalculatorServiceTest {
 	@DisplayName("Test parking Fare WHEN for BIKE one hours and more displayed in minutes THEN asserts fare values")
 	@ParameterizedTest(name = "Duration of Parking: {0} minutes")
 	@Order(2)
-	@CsvSource({ "60, 1", "90, 1.5", "120, 2", "180, 3", "240, 4", "300, 5" })
+	@CsvSource({ "60, 1", "90, 1.5", "300, 5" })
 	void calculateFareBike(long minutesParked, double priceFactor) {
 
 		// GIVEN
@@ -200,7 +200,7 @@ class FareCalculatorServiceTest {
 	@DisplayName("Test parking Fare WHEN for CAR more or equal to one day THEN asserts fare values")
 	@ParameterizedTest(name = "Duration of Parking: {0} Day(s)")
 	@Order(7)
-	@CsvSource({ "1, 24", "2, 48", "3, 72", "5, 120", "10, 240", "15, 360" })
+	@CsvSource({ "1, 24", "2, 48", "10, 240"})
 	void calculateFareCarWithMoreThanADayParkingTime(long daysParked, double estimatedPrice) {
 
 		// GIVEN
@@ -226,7 +226,7 @@ class FareCalculatorServiceTest {
 	@DisplayName("Test parking Fare WHEN for BIKE more or equal to one day THEN asserts fare values")
 	@ParameterizedTest(name = "Duration of Parking: {0} Day(s)")
 	@Order(8)
-	@CsvSource({ "1, 24", "2, 48", "3, 72", "5, 120", "10, 240", "15, 360" })
+	@CsvSource({ "1, 24", "2, 48", "10, 240" })
 	void calculateFareBikeWithMoreThanADayParkingTime(long daysParked, double estimatedPrice) {
 
 		// GIVEN
@@ -252,7 +252,7 @@ class FareCalculatorServiceTest {
 	@DisplayName("Test parking Fare WHEN for CAR recurrent user THEN asserts fare values with discount")
 	@ParameterizedTest(name = "Duration of Parking: {0} minutes")
 	@Order(9)
-	@CsvSource({ "60, 1", "120, 2", "180, 3", "240, 4" })
+	@CsvSource({ "60, 1", "120, 2", "240, 4" })
 	void calculateFareRecurentUserCar(long minutesParked, double priceFactor) {
 
 		// GIVEN
@@ -278,7 +278,7 @@ class FareCalculatorServiceTest {
 	@DisplayName("Test parking Fare WHEN for BIKE recurrent user THEN asserts fare values with discount")
 	@ParameterizedTest(name = "Duration of Parking: {0} minutes")
 	@Order(10)
-	@CsvSource({ "60, 1", "120, 2", "180, 3", "240, 4" })
+	@CsvSource({ "60, 1", "120, 2", "240, 4" })
 	void calculateFareRecurentUserBuke(long minutesParked, double priceFactor) {
 
 		// GIVEN

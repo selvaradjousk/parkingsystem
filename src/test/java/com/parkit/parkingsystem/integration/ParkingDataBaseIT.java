@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -102,7 +103,7 @@ public class ParkingDataBaseIT {
 		// THEN
 		assertNotEquals(firstAlternateParkingSlot, nextAlternateParkingSlot, "Result: Both spot not similar");
 	}
-
+	
 	@DisplayName("Test on Parking Database WHEN check parking lot "
 			+ "status on exit THEN return ticket issued")
 	@Test
@@ -111,12 +112,6 @@ public class ParkingDataBaseIT {
 		// GIVEN
 		testParkingACar();
 		ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
-
-		// *******************TASK COMPLETED*****************************************
-		// TODO: check that the fare generated and out time are populated correctly in
-		// the database
-		// *******************TASK COMPLETED*****************************************
-
 		Ticket ticket = ticketDAO.getTicket("ABCDEF");
 
 		// THEN
@@ -134,10 +129,48 @@ public class ParkingDataBaseIT {
 
 	}
 	
+    @Test
+    @DisplayName("Test on Parking Database WHEN exiting vehicle THEN the fare generated and out time are populated correctly in the DB")
+    public void testProcessExitingVehicleFareIsGeneratedAndOutTimePopulated() throws InterruptedException, SQLException{
+    	ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+    	parkingService.processIncomingVehicle();
+        Thread.sleep(500);
+        parkingService.processExitingVehicle();
+
+		// *******************TASK COMPLETED*****************************************
+		// TODO: check that the fare generated and out time are populated correctly in
+		// the database
+		// *******************TASK COMPLETED*****************************************
+        Ticket ticket = ticketDAO.getTicket("ABCDEF");
+        double fare = ticket.getPrice();
+
+        // Checks fare is populated
+        assertEquals(0, fare);
+        assertNotNull(fare);
+        // Checks out time is populated
+        assertNotNull(ticket.getOutTime());
+    }
+    
+    @Test
+    @DisplayName("Test on Parking Database WHEN exiting vehicle invalid registration number THEN the fare not generated and out time are not populated correctly in the DB")
+    public void testProcessExitingVehicleFareNotGeneratedAndOutTimePopulatedForInvalidRegistrationNumber() throws InterruptedException, SQLException{
+    	ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+    	parkingService.processIncomingVehicle();
+        Thread.sleep(500);
+        parkingService.processExitingVehicle();
+
+		// *******************TASK COMPLETED*****************************************
+		// TODO: check that the fare generated and out time are populated correctly in
+		// the database
+		// *******************TASK COMPLETED*****************************************
+        Ticket ticket = ticketDAO.getTicket("ABCDEFSSSSS");
+        assertThrows(NullPointerException.class, () -> ticket.getPrice()); // WHEN
+    }
+	
     @DisplayName("Test on Parking Database WHEN save Ticket and update "
     		+ "availability of parkingSpot THEN confirms database update")
     @Test
-    public void testDbAvailabilityUpdatedAndTicketSave() throws Exception {
+    public void testDbAvailabilityUpdatedAndTicketSaveCar() throws Exception {
 
     	// GIVEN
     	when(inputReaderUtil.readSelection()).thenReturn(1);
@@ -153,7 +186,26 @@ public class ParkingDataBaseIT {
         assertTrue(parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR) > 1);
         assertFalse(parkingSpot.isAvailable());
     }
-    
+   
+    @DisplayName("Test on Parking Database WHEN save Ticket and update "
+    		+ "availability of parkingSpot THEN confirms database update")
+    @Test
+    public void testDbAvailabilityUpdatedAndTicketSaveBike() throws Exception {
+
+    	// GIVEN
+    	when(inputReaderUtil.readSelection()).thenReturn(1);
+        when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
+        dataBasePrepareService.clearDBEntries();
+        parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+        
+        // WHEN
+    	parkingService.processIncomingVehicle();
+
+    	// THEN
+        assertNotNull(ticketDAO.getTicket("ABCDEF"));
+        assertTrue(parkingSpotDAO.getNextAvailableSpot(ParkingType.BIKE) > 1);
+        assertFalse(parkingSpot.isAvailable());
+    }
     
 	
 

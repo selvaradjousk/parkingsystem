@@ -36,16 +36,16 @@ public class ParkingSpot {
 	 * ParkingSpot() Parameterized Constructor with three
 	 *  parameters number, ParkingType and IsAvailable.
 	 *
-	 * @param number
-	 * @param parkingType
-	 * @param isAvailable
+	 * @param aNumber
+	 * @param aParkingType
+	 * @param aIsAvailable
 	 */
-	public ParkingSpot(final int number,
-			final ParkingType parkingType,
-			final boolean isAvailable) {
-		this.number = number;
-		this.parkingType = parkingType;
-		this.isAvailable = isAvailable;
+	public ParkingSpot(final int aNumber,
+			final ParkingType aParkingType,
+			final boolean aIsAvailable) {
+		this.number = aNumber;
+		this.parkingType = aParkingType;
+		this.isAvailable = aIsAvailable;
 	}
 
 	/**
@@ -60,10 +60,10 @@ public class ParkingSpot {
 	/**
 	 * setID() setter for ParkingSpot() parameter - number.
 	 *
-	 * @param number
+	 * @param aNumber
 	 */
-	public void setId(final int number) {
-		this.number = number;
+	public void setId(final int aNumber) {
+		this.number = aNumber;
 	}
 
 	/**
@@ -78,10 +78,10 @@ public class ParkingSpot {
 	/**
 	 * setParkingType() setter for ParkingSpot() Constructor parameter.
 	 *
-	 * @param parkingType
+	 * @param aParkingType
 	 */
-	public void setParkingType(final ParkingType parkingType) {
-		this.parkingType = parkingType;
+	public void setParkingType(final ParkingType aParkingType) {
+		this.parkingType = aParkingType;
 	}
 
 	/**

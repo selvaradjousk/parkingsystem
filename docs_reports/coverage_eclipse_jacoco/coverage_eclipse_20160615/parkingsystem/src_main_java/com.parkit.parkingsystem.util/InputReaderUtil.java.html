@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>InputReaderUtil.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (15 juin 2021 12:18:20)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.util</a> &gt; <span class="el_source">InputReaderUtil.java</span></div><h1>InputReaderUtil.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.util;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+/**
+ * Class: {@link InputReaderUtil} - Input management service.&lt;br&gt;
+ * &lt;b&gt;Project: &lt;/b&gt; P3 - parking system - ParkIt&lt;br&gt;
+ *
+ * @author Senthil
+ */
+public class InputReaderUtil {
+
+	/**
+	 * Instance of ScannerWrapper.
+	 */
+<span class="fc" id="L17">	  private ScannerWrapper scannerWrapper = new ScannerWrapper();</span>
+
+	 /**
+	 * Logger for InputReaderUtil class.
+	 */
+<span class="fc" id="L22">	private static final Logger LOGGER</span>
+<span class="fc" id="L23">	= LogManager.getLogger(&quot;InputReaderUtil&quot;);</span>
+
+	/**
+	 * The maximum number to enter in the menu choice selection.
+	 */
+	private static final int MAX_INPUT_SELECT_VALUE_ALLOWED = 3;
+
+	/**
+	 * Maximum number of characters allocated for a license plate.
+	 */
+<span class="fc" id="L33">	private static final int MAX_CHARACTER_LIMIT_FOR_REG_NUMBER = 8;</span>
+
+	/**
+	 * Constructor class for InputReaderUtil to
+	 *  initialize scannerWrapper.
+	 * @param scanner scannerWrapper instance.
+	 */
+<span class="fc" id="L40">	public InputReaderUtil(final ScannerWrapper scanner) {</span>
+<span class="fc" id="L41">		this.scannerWrapper = scanner;</span>
+<span class="fc" id="L42">	  }</span>
+
+	/**
+	 * {@link #readSelection()}
+	 * Read user input from Shell for vehicle type.
+	 *
+	 * @return selection value or -1 for invalid value entry.
+	 * @exception Exception error reading input vehicle type.
+	 */
+	public int readSelection() {
+		try {
+<span class="fc" id="L53">			int input = Integer.parseInt(scannerWrapper.nextLine());</span>
+
+<span class="fc bfc" id="L55" title="All 2 branches covered.">			if (input &gt;= 1</span>
+<span class="fc" id="L56">					&amp;&amp; input</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">					&lt;= MAX_INPUT_SELECT_VALUE_ALLOWED) {</span>
+<span class="fc" id="L58">		      return input;</span>
+		   }
+<span class="fc" id="L60">		} catch (Exception e) {</span>
+<span class="fc" id="L61">			LOGGER.error(&quot;Error while reading user input&quot;</span>
+<span class="fc" id="L62">					+ &quot; from Shell&quot;, e);</span>
+<span class="fc" id="L63">			System.out.println(&quot;Error reading input.&quot;</span>
+					+ &quot; Please enter valid number&quot;
+					+ &quot; for proceeding further&quot;);
+		}
+<span class="fc" id="L67">		return -1;</span>
+	}
+
+	/**
+	 * {@link #readVehicleRegistrationNumber()}
+	 *  Read input Registration number.
+	 * @return vehicle registration number
+	 * @throws Exception           Input on vehicle registration number
+	 * @throws NullPointerException When invalid input provided
+	 */
+	public String readVehicleRegistrationNumber()
+			throws NullPointerException {
+		try {
+<span class="fc" id="L80">			String vehicleRegNumber = scannerWrapper.nextLine();</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">			if (vehicleRegNumber == null</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">					|| vehicleRegNumber.trim().length()</span>
+					== 0
+<span class="fc" id="L84">					|| vehicleRegNumber.trim().length()</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">					&gt; MAX_CHARACTER_LIMIT_FOR_REG_NUMBER) {</span>
+<span class="fc" id="L86">				throw new IllegalArgumentException(&quot;Invalid&quot;</span>
+						+ &quot; input provided&quot;);
+			}
+<span class="fc" id="L89">			return vehicleRegNumber;</span>
+<span class="fc" id="L90">		} catch (Exception e) {</span>
+<span class="fc" id="L91">			LOGGER.error(&quot;Error while reading user input from &quot;</span>
+<span class="fc" id="L92">					+ &quot;Shell&quot;, e);</span>
+<span class="fc" id="L93">			System.out.println(&quot;Error reading input. Please&quot;</span>
+					+ &quot; enter a valid string for vehicle&quot;
+					+ &quot; registration number&quot;);
+<span class="fc" id="L96">			throw e;</span>
+		}
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (15 juin 2021 12:18:20)</div></body></html>

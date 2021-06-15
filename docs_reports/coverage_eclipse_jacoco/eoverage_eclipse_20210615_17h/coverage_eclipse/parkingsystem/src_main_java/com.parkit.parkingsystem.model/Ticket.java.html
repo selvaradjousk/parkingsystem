@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Ticket.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (15 juin 2021 19:10:15)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.model</a> &gt; <span class="el_source">Ticket.java</span></div><h1>Ticket.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.model;
+
+import java.util.Date;
+import java.util.Optional;
+
+/**
+ * Class: {@link Ticket} - Ticket Data Objects.&lt;br&gt;
+ * &lt;b&gt;Project: &lt;/b&gt; P3 - parking system - ParkIt&lt;br&gt;
+ *
+ * @author Senthil
+ */
+public class Ticket {
+
+	  /**
+	   * Ticket class constructor.
+	   */
+<span class="fc" id="L17">	  public Ticket() {</span>
+<span class="fc" id="L18">	  }</span>
+
+	/**
+	 * Ticket Identifier.
+	 */
+	private int id;
+
+	/**
+	 * Parking Spot for the vehicle.
+	 */
+	private ParkingSpot parkingSpot;
+
+	/**
+	 * Vehicle registration number.
+	 */
+	private String vehicleRegNumber;
+
+	/**
+	 * Fare price of parking.
+	 */
+	private double price;
+
+	/**
+	 * Entry Time.
+	 */
+	private Date inTime;
+
+	/**
+	 * Exit Time.
+	 */
+	private Date outTime;
+
+	/**
+	 * Occurrence to represent recurrent user.
+	 */
+	private boolean occurences;
+
+	/**
+	 * getID() getter for attribute - id getter.
+	 *
+	 * @return id - returns id.
+	 */
+	public int getId() {
+<span class="fc" id="L61">		return id;</span>
+	}
+
+	/**
+	 * setId() setter id attribute.
+	 *
+	 * @param aId
+	 */
+	public void setId(final int aId) {
+<span class="fc" id="L70">		this.id = aId;</span>
+<span class="fc" id="L71">	}</span>
+
+	/**
+	 * getID() getter for attribute method.
+	 *
+	 * @return parkingSpot
+	 */
+	public ParkingSpot getParkingSpot() {
+<span class="fc" id="L79">		return parkingSpot;</span>
+	}
+
+	/**
+	 * setParkingSpot() setter for ParkingSpot() Constructor.
+	 *
+	 * @param aParkingSpot
+	 */
+	public void setParkingSpot(final ParkingSpot aParkingSpot) {
+<span class="fc" id="L88">		this.parkingSpot = aParkingSpot;</span>
+<span class="fc" id="L89">	}</span>
+
+	/**
+	 * getVehicleRegNumber() getter for attribute - vehicleRegNumber.
+	 *
+	 * @return vehicleRegNumber - returns the attribute value.
+	 */
+	public String getVehicleRegNumber() {
+<span class="fc" id="L97">		return vehicleRegNumber;</span>
+	}
+
+	/**
+	 * setVehicleRegNumber() setter vehicle Reg Number attribute.
+	 *
+	 * @param aVehicleRegNumber
+	 */
+	public void setVehicleRegNumber(final String aVehicleRegNumber) {
+<span class="fc" id="L106">		this.vehicleRegNumber = aVehicleRegNumber;</span>
+<span class="fc" id="L107">	}</span>
+
+	/**
+	 * getPrice() getter for attribute - price getter
+	 *  is used to protect the data during class
+	 *  instance creation.
+	 *
+	 * @return price - returns the instance parameter
+	 * attribute value.
+	 */
+	public double getPrice() {
+<span class="fc" id="L118">		return price;</span>
+	}
+
+	/**
+	 * setPrice() setter price attribute - with parameter
+	 *  price type double.
+	 *
+	 * @param aPrice
+	 */
+	public void setPrice(final double aPrice) {
+<span class="fc" id="L128">		this.price = aPrice;</span>
+<span class="fc" id="L129">	}</span>
+
+	/**
+	 * getPrice() getter for attribute - price value getter.
+	 *
+	 * @return incoming time.
+	 */
+	public Date getInTime() {
+<span class="fc bfc" id="L137" title="All 2 branches covered.">		return this.inTime == null</span>
+<span class="fc" id="L138">				? null : new Date(this.inTime.getTime());</span>
+	}
+
+	/**
+	 * setInTime() setter inTime attribute - with
+	 *  parameter inTime type Date.
+	 *
+	 * @param aInTime
+	 */
+	public void setInTime(final Date aInTime) {
+<span class="fc" id="L148">		this.inTime = Optional.ofNullable(aInTime)</span>
+<span class="fc" id="L149">				.map(Date::getTime).map(Date::new)</span>
+<span class="fc" id="L150">				.orElse(null); </span>
+<span class="fc" id="L151">	}</span>
+
+	/**
+	 * getOutTime() setter outTime attribute - with
+	 *  parameter outTime type Date.
+	 * setter is used to protect the data during
+	 *  class instance creation.
+	 *
+	 * @return outTime - returns attribute value.
+	 */
+	public Date getOutTime() {
+<span class="fc bfc" id="L162" title="All 2 branches covered.">		return this.outTime == null</span>
+<span class="fc" id="L163">				? null : new Date(this.outTime.getTime());</span>
+	}
+
+	/**
+	 * setOutTime() setter outTime attribute - with
+	 *  parameter outTime type Date.
+	 * setter is used to protect the data during
+	 *  class instance creation.
+	 *
+	 * @param aOutTime
+	 */
+	public void setOutTime(final Date aOutTime) {
+<span class="fc" id="L175">		this.outTime = Optional.ofNullable(aOutTime)</span>
+<span class="fc" id="L176">				.map(Date::getTime).map(Date::new).orElse(null);</span>
+<span class="fc" id="L177">	}</span>
+
+	/**
+	 * Occurrences represents recurrent user.
+	 * @return occurrences
+	 */
+	public boolean occurences() {
+<span class="fc" id="L184">		return occurences;</span>
+	}
+
+	/**
+	 * Setter for the occurrences.
+	 * @param aOccurences
+	 */
+	public void setOccurences(final boolean aOccurences) {
+<span class="fc" id="L192">		this.occurences = aOccurences;</span>
+<span class="fc" id="L193">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (15 juin 2021 19:10:15)</div></body></html>

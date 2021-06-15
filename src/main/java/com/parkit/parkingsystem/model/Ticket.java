@@ -64,10 +64,10 @@ public class Ticket {
 	/**
 	 * setId() setter id attribute.
 	 *
-	 * @param id
+	 * @param aId
 	 */
-	public void setId(final int id) {
-		this.id = id;
+	public void setId(final int aId) {
+		this.id = aId;
 	}
 
 	/**
@@ -82,10 +82,10 @@ public class Ticket {
 	/**
 	 * setParkingSpot() setter for ParkingSpot() Constructor.
 	 *
-	 * @param parkingSpot
+	 * @param aParkingSpot
 	 */
-	public void setParkingSpot(final ParkingSpot parkingSpot) {
-		this.parkingSpot = parkingSpot;
+	public void setParkingSpot(final ParkingSpot aParkingSpot) {
+		this.parkingSpot = aParkingSpot;
 	}
 
 	/**
@@ -100,10 +100,10 @@ public class Ticket {
 	/**
 	 * setVehicleRegNumber() setter vehicle Reg Number attribute.
 	 *
-	 * @param vehicleRegNumber
+	 * @param aVehicleRegNumber
 	 */
-	public void setVehicleRegNumber(final String vehicleRegNumber) {
-		this.vehicleRegNumber = vehicleRegNumber;
+	public void setVehicleRegNumber(final String aVehicleRegNumber) {
+		this.vehicleRegNumber = aVehicleRegNumber;
 	}
 
 	/**
@@ -122,10 +122,10 @@ public class Ticket {
 	 * setPrice() setter price attribute - with parameter
 	 *  price type double.
 	 *
-	 * @param price
+	 * @param aPrice
 	 */
-	public void setPrice(final double price) {
-		this.price = price;
+	public void setPrice(final double aPrice) {
+		this.price = aPrice;
 	}
 
 	/**
@@ -142,10 +142,10 @@ public class Ticket {
 	 * setInTime() setter inTime attribute - with
 	 *  parameter inTime type Date.
 	 *
-	 * @param inTime
+	 * @param aInTime
 	 */
-	public void setInTime(final Date inTime) {
-		this.inTime = Optional.ofNullable(inTime)
+	public void setInTime(final Date aInTime) {
+		this.inTime = Optional.ofNullable(aInTime)
 				.map(Date::getTime).map(Date::new)
 				.orElse(null); 
 	}
@@ -169,10 +169,10 @@ public class Ticket {
 	 * setter is used to protect the data during
 	 *  class instance creation.
 	 *
-	 * @param outTime
+	 * @param aOutTime
 	 */
-	public void setOutTime(final Date outTime) {
-		this.outTime = Optional.ofNullable(outTime)
+	public void setOutTime(final Date aOutTime) {
+		this.outTime = Optional.ofNullable(aOutTime)
 				.map(Date::getTime).map(Date::new).orElse(null);
 	}
 
@@ -186,9 +186,9 @@ public class Ticket {
 
 	/**
 	 * Setter for the occurrences.
-	 * @param occurences
+	 * @param aOccurences
 	 */
-	public void setOccurences(final boolean occurences) {
-		this.occurences = occurences;
+	public void setOccurences(final boolean aOccurences) {
+		this.occurences = aOccurences;
 	}
 }

@@ -53,10 +53,10 @@ public class ParkingSpotDAO {
 	  /**
 	   * Setter of a DataBaseConfig.
 	   *
-	   * @param dataBaseConfig set instance
+	   * @param aDataBaseConfig set instance
 	   */
-	public void setDataBaseConfig(final DataBaseConfig dataBaseConfig) {
-	    this.dataBaseConfig = dataBaseConfig;
+	public void setDataBaseConfig(final DataBaseConfig aDataBaseConfig) {
+	    this.dataBaseConfig = aDataBaseConfig;
 	  }
 
 	/**
@@ -72,19 +72,19 @@ public class ParkingSpotDAO {
 		int result = NO_MAGIC_PARAMETER_VALUE_MINUS_ONE;
 		try (Connection con = dataBaseConfig.getConnection();
 			PreparedStatement ps = con.prepareStatement(DBConstants
-					.GET_NEXT_PARKING_SPOT)){
+					.GET_NEXT_PARKING_SPOT)) {
 			ps.setString(NO_MAGIC_PARAMETER_VALUE_ONE,
 					parkingType.toString());
-			try (ResultSet rs = ps.executeQuery()){
+			try (ResultSet rs = ps.executeQuery()) {
 			if (rs.next()) {
 				result = rs
-						.getInt(NO_MAGIC_PARAMETER_VALUE_ONE);
+					.getInt(NO_MAGIC_PARAMETER_VALUE_ONE);
 				return result;
 			}
 			}
 		} catch (Exception ex) {
 			LOGGER.error("Error fetching next available slot", ex);
-		} 
+		}
 		return result;
 	}
 
@@ -101,14 +101,15 @@ public class ParkingSpotDAO {
 			throws SQLException {
 		// update the availability of that parking slot
 		try (Connection con = dataBaseConfig.getConnection();
-				PreparedStatement ps = con.prepareStatement(DBConstants
-					.UPDATE_PARKING_SPOT)){
+				PreparedStatement ps 
+				= con.prepareStatement(DBConstants
+						.UPDATE_PARKING_SPOT)) {
 			ps.setBoolean(NO_MAGIC_PARAMETER_VALUE_ONE,
 					parkingSpot.isAvailable());
 			ps.setInt(NO_MAGIC_PARAMETER_VALUE_TWO,
 					parkingSpot.getId());
 			int updateRowCount = ps.executeUpdate();
-			
+
 			if (updateRowCount == NO_MAGIC_PARAMETER_VALUE_ONE) {
 				return true;
 			}

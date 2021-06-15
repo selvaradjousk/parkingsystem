@@ -62,17 +62,17 @@ public class ParkingService {
 	 * {@link InputReaderUtil}, {@link ParkingSpotDAO},
 	 *  {@link TicketDAO}.
 	 *
-	 * @param inputReaderUtil Instance of InputReaderUtil class
-	 * @param parkingSpotDAO  Instance of ParkingSpotDAO class
-	 * @param ticketDAO       Instance of TicketDAO class
+	 * @param aInputReaderUtil Instance of InputReaderUtil class
+	 * @param aParkingSpotDAO  Instance of ParkingSpotDAO class
+	 * @param aTicketDAO       Instance of TicketDAO class
 	 */
 	public ParkingService(
-			final InputReaderUtil inputReaderUtil,
-			final ParkingSpotDAO parkingSpotDAO,
-			final TicketDAO ticketDAO) {
-		this.inputReaderUtil = inputReaderUtil;
-		this.parkingSpotDAO = parkingSpotDAO;
-		this.ticketDAO = ticketDAO;
+			final InputReaderUtil aInputReaderUtil,
+			final ParkingSpotDAO aParkingSpotDAO,
+			final TicketDAO aTicketDAO) {
+		this.inputReaderUtil = aInputReaderUtil;
+		this.parkingSpotDAO = aParkingSpotDAO;
+		this.ticketDAO = aTicketDAO;
 	}
 
 	/**

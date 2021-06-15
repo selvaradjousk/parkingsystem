@@ -2,6 +2,7 @@ package com.parkit.parkingsystem.integration.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.sql.Connection;
@@ -78,6 +79,39 @@ public class TicketDAOIT {
 			testDB.closeResultSet(testRs);
 		}
 	}
+	
+	@Test
+	@DisplayName("Test Ticket WHEN invalid registration number save ticket THEN Ticket not saved")
+	public void testSaveTicketInvalidRegistrationNumberTicketNotSaved() throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
+		// GIVEN
+		String testVehicleRegNumber = "ABCEDFGHSSSSSSS";
+
+		Connection testConn = null;
+		PreparedStatement testStmt = null;
+		ResultSet testRs = null;
+
+		Ticket testTicket = createTestingTicket(testVehicleRegNumber);
+		boolean expectedStatus = true;
+
+		// WHEN
+		testTicketDAO.saveTicket(testTicket);
+
+		// THEN
+		try {
+			testConn = testDB.getConnection();
+			testStmt = testConn.prepareStatement("Select * from ticket where VEHICLE_REG_NUMBER=?");
+			testStmt.setString(1, testVehicleRegNumber);
+
+			testRs = testStmt.executeQuery();
+			assertNotEquals(expectedStatus, testRs.next(), "Result: Both Ticket status does not matches");
+		} catch (SQLException e) {
+			System.out.println(e);
+		} finally {
+			testDB.closeConnection(testConn);
+			testDB.closePreparedStatement(testStmt);
+			testDB.closeResultSet(testRs);
+		}
+	}
 
 	@DisplayName("Test Ticket WHEN get ticket THEN retrieves Ticket information")
 	@Test
@@ -94,6 +128,21 @@ public class TicketDAOIT {
 		assertNotEquals(null, gettingTicket, "Result: Actual Ticket status not null");
 		assertEquals(testVehicleRegNumber, gettingTicket.getVehicleRegNumber(),
 				"Result: Both Ticket Registration elements matches");
+	}
+	
+	@DisplayName("Test Ticket WHEN get ticket for invalid registration number THEN do not retrieves Ticket information")
+	@Test
+	public void testGetTicketNotValidForInvalidRegistrationNumber() throws ClassNotFoundException, SQLException {
+		// GIVEN
+		String testVehicleRegNumber = "MLKJHGSSSSSS";
+		Ticket testTicket = createTestingTicket(testVehicleRegNumber);
+		testTicketDAO.saveTicket(testTicket);
+
+		// WHEN
+		Ticket gettingTicket = testTicketDAO.getTicket(testVehicleRegNumber);
+
+		// THEN
+		assertEquals(null, gettingTicket, "Result: Actual Ticket status null");
 	}
 
 	@DisplayName("Test Ticket WHEN update ticket THEN Ticket information updated in database")
@@ -117,6 +166,21 @@ public class TicketDAOIT {
 
 		assertEquals(testTicketDAO.getTicket(testVehicleRegNumber).getPrice(), testTicket.getPrice(),
 				"Result: Both Fare Price values matches");
+	}
+	
+	@DisplayName("Test Ticket WHEN update ticket for invalid registration number THEN Ticket information not updated in database")
+	@Test
+	public void testUpdateTicketNotDoneForInvalidRegistrationNumber() throws ClassNotFoundException, SQLException {
+		// GIVEN
+		String testVehicleRegNumber = "SDFGHJKSSSSSSSS";
+		Ticket testTicket = createTestingTicket(testVehicleRegNumber);
+		testTicketDAO.saveTicket(testTicket);
+
+		// WHEN
+		testTicket = testTicketDAO.getTicket(testVehicleRegNumber);
+
+		// THEN
+		assertNull(testTicket);
 	}
 
 	@DisplayName("Test Ticket WHEN retrieving vehicle reccurence THEN client recurrence visit confirmed")

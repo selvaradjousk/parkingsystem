@@ -19,13 +19,12 @@ import org.apache.logging.log4j.Logger;
  *  {@link #closeConnection(Connection)},
  *      {@link #closePreparedStatement(PreparedStatement)},
  *      {@link #closeResultSet(ResultSet)}
- * 
  * @author Senthil
  */
 public class DataBaseConfig {
 	/**
 	 * Logger for DatabaseConfig class.
-	 */
+	*/
 	private static final Logger LOGGER
 	= LogManager.getLogger("DataBaseConfig");
 

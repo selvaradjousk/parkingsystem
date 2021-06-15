@@ -52,7 +52,7 @@ class InputReaderUtilTest {
 
 	@DisplayName("Test input read selection WHEN negative values selection THEN should return -1")
 	@ParameterizedTest(name = "Tested Value: {0} on read return -1")
-	@ValueSource(strings = { "-1", "-2", "-3", "-4", "-9" })
+	@ValueSource(strings = { "-1", "-2", "-9" })
 	void testReadSelectionNegativeValues(String arg) {
 
 		// GIVEN
@@ -67,7 +67,7 @@ class InputReaderUtilTest {
 
 	@DisplayName("Test input read selection WHEN more than value 3 THEN should return -1")
 	@ParameterizedTest(name = "Tested Value: {0} on read return -1")
-	@ValueSource(strings = { "4", "5", "9", "10", "100" })
+	@ValueSource(strings = { "4", "5", "100" })
 	void testReadSelectionAboveValueThree(String arg) {
 
 		// GIVEN
@@ -82,7 +82,7 @@ class InputReaderUtilTest {
 
 	@DisplayName("Test input read selection WHEN alphabet characters selection THEN should return -1")
 	@ParameterizedTest(name = "Tested Value: {0} on read return -1")
-	@ValueSource(strings = { "a", "b", "c", "x", "z" })
+	@ValueSource(strings = { "a", "x", "z" })
 	void testReadSelectionAlphabets(String arg) {
 
 		// GIVEN
@@ -97,7 +97,7 @@ class InputReaderUtilTest {
 
 	@DisplayName("Test input read selection WHEN special characters selection")
 	@ParameterizedTest(name = "Tested Value: {0} on read return -1")
-	@ValueSource(strings = { "&", "#", "!", "=", "~" })
+	@ValueSource(strings = { "&", "#", "!", "~" })
 	void testReadSelectionSpecialCharacters(String arg) {
 
 		// GIVEN
@@ -112,7 +112,7 @@ class InputReaderUtilTest {
 
 	@DisplayName("Test input read vehicle registration number WHEN valid registration number inputs THEN returns TRUE")
 	@ParameterizedTest(name = "Tested Value: {0} on read return {0}")
-	@ValueSource(strings = { "AB123CD", "BC456DE", "123456", "AB1234YZ", "XY9874OP" })
+	@ValueSource(strings = { "AB123CD", "123456", "XY9874OP" })
 	void testReadVehicleRegistrationNumberValidType(String arg) throws Exception {
 
 		// GIVEN
@@ -127,7 +127,7 @@ class InputReaderUtilTest {
 
 	@DisplayName("Test input read vehicle registration number WHEN invalid registration number inputs THEN throws Illegal Argument Exception")
 	@ParameterizedTest(name = "Tested Value: {0} on read throws exception")
-	@ValueSource(strings = { "WOOOO WOOOO", "BC4sdfs56DE", "123sdfq456", "HAAAAHHAAAAA", "XY9IUYT&874OP" })
+	@ValueSource(strings = { "BC4sdfs56DE", "123sdfq456", "XY9IUYT&874OP" })
 	void testReadVehicleRegistrationNumberInvalid(String arg) {
 
 		// GIVEN
@@ -139,7 +139,7 @@ class InputReaderUtilTest {
 
 	@DisplayName("Test input read vehicle registration number WHEN empty input value THEN throws Illegal Argument Exception")
 	@ParameterizedTest(name = "Tested Value: {0} on read throws exception")
-	@ValueSource(strings = { "", " ", "   ", "     ", "     ", "             " })
+	@ValueSource(strings = { "", " ", "             " })
 	void testReadVehicleRegistrationNumberEmpty(String arg) {
 
 		// GIVEN
