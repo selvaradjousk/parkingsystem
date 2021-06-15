@@ -1,17 +1,9 @@
 package com.parkit.parkingsystem.integration.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 
-import org.junit.jupiter.api.Test;
-
-import com.parkit.parkingsystem.constants.DBConstants;
 import com.parkit.parkingsystem.integration.config.DataBaseTestConfig;
 import com.parkit.parkingsystem.model.Ticket;
 
@@ -58,55 +50,4 @@ public class DataBasePrepareService {
 			dataBaseTestConfig.closePreparedStatement(preparedStatement);
 		}
 	}
-	
-//	@Test
-//	public void clearDBEntriesTest() throws Exception{
-//		Connection connection = null;
-//		 PreparedStatement preparedStatement = null;
-//		try {
-//			connection = dataBaseTestConfig.getConnection();
-//
-//			// set parking entries to available
-//			connection.prepareStatement("update parking set available = true").execute();
-//
-//			// clear ticket entries;
-//			connection.prepareStatement(null).execute();
-////new throw Exception();
-//			fail();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			assertEquals("java.sql.SQLException: SQL String cannot be NULL", e.toString());
-//		} finally {
-//			dataBaseTestConfig.closeConnection(connection);
-//			dataBaseTestConfig.closePreparedStatement(preparedStatement);
-//		}
-//	}
-	
-
-//	/**
-//	 * {@link #insertTestTicket(Ticket testData)} This method does the insert
-//	 * function in the DB for test ticket values
-//	 *
-//	 * @exception Exception
-//	 */
-//	public void insertTestTicket(Ticket testData) {
-//		Connection connection = null;
-//
-//		try {
-//			connection = dataBaseTestConfig.getConnection();
-//
-//			PreparedStatement ps = connection.prepareStatement(DBConstants.SAVE_TICKET);
-//			ps.setInt(1, testData.getParkingSpot().getId());
-//			ps.setString(2, testData.getVehicleRegNumber());
-//			ps.setDouble(3, testData.getPrice());
-//			ps.setTimestamp(4, new Timestamp(testData.getInTime().getTime()));
-//			ps.setTimestamp(5,
-//					(testData.getOutTime() == null) ? null : (new Timestamp(testData.getOutTime().getTime())));
-//
-//			ps.execute();
-//		} catch (Exception exception) {
-//			exception.printStackTrace();
-//		}
-//	}
-
 }

@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>DataBaseConfigIT.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">parkingsystem (14 juin 2021 19:11:25)</a> &gt; <a href="../../index.html" class="el_group">parkingsystem</a> &gt; <a href="../index.html" class="el_bundle">src/test/java</a> &gt; <a href="index.source.html" class="el_package">com.parkit.parkingsystem.integration.config</a> &gt; <span class="el_source">DataBaseConfigIT.java</span></div><h1>DataBaseConfigIT.java</h1><pre class="source lang-java linenums">package com.parkit.parkingsystem.integration.config;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
+
+import com.parkit.parkingsystem.config.DataBaseConfig;
+import com.parkit.parkingsystem.constants.DBConstants;
+
+import nl.altindag.log.LogCaptor;
+
+
+/**
+ * &lt;b&gt;Test Class: &lt;/b&gt; {@link DataBaseConfigIT} - Performs Integration Test on
+ * Database configuration &lt;br&gt;
+ * &lt;b&gt;Class Tested:&lt;/b&gt; {@link DataBaseConfig}.&lt;br&gt;
+ * &lt;b&gt;Project: &lt;/b&gt; P3 - parking system - ParkIt&lt;br&gt;
+ * 
+ * @author Senthil
+ */
+@DisplayName(&quot;IT - Test Parking DB Configuration&quot;)
+<span class="fc" id="L37">public class DataBaseConfigIT {</span>
+
+	DataBaseConfig dataBaseTestConfig;
+	ByteArrayOutputStream byteArrayOutputStream;
+
+	Connection connection;
+	PreparedStatement statement;
+	ResultSet resultSet;
+
+
+	// ********************************************************************************************
+	//                                GET CONNECTION TESTS	
+	// ********************************************************************************************
+
+	@DisplayName(&quot;Test Parking DB Configuration - Get Connection&quot;)
+	@Test
+	public void testGetConnectionStatusConnected() // OK DONE
+			throws SQLException, ClassNotFoundException, IllegalAccessException, InstantiationException {
+
+		// GIVEN
+<span class="fc" id="L57">		boolean expectedConnectionNotConnected = false;</span>
+<span class="fc" id="L58">		dataBaseTestConfig = new DataBaseConfig();</span>
+<span class="fc" id="L59">		connection = dataBaseTestConfig.getConnection();</span>
+
+<span class="fc" id="L61">		assertNotNull(connection); // Connection is not null</span>
+<span class="fc" id="L62">		assertEquals(expectedConnectionNotConnected, connection.isClosed(),</span>
+<span class="fc" id="L63">				&quot;Result: Not connected when closed, so there was a connection before&quot;);</span>
+<span class="fc" id="L64">	}</span>
+
+	// ********************************************************************************************
+	@DisplayName(&quot;Test Parking DB Configuration - Get Connection&quot;) // OK DONE
+	@Test
+	public void testGetConnectionDatabaseUrl()
+			throws SQLException, ClassNotFoundException, IllegalAccessException, InstantiationException {
+
+		// GIVEN
+<span class="fc" id="L73">		String expectedDatabaseUrl = &quot;jdbc:mysql://localhost:3306/prod&quot;;</span>
+<span class="fc" id="L74">		dataBaseTestConfig = new DataBaseConfig();</span>
+<span class="fc" id="L75">		connection = dataBaseTestConfig.getConnection();</span>
+<span class="fc" id="L76">		DatabaseMetaData metaData = connection.getMetaData();</span>
+
+		// THEN
+<span class="fc" id="L79">		assertEquals(expectedDatabaseUrl, metaData.getURL(), &quot;Result: expected and actual Database URLs match&quot;);</span>
+<span class="fc" id="L80">		connection.close();</span>
+<span class="fc" id="L81">	}</span>
+
+	// ********************************************************************************************
+
+	@DisplayName(&quot;Test Parking DB Configuration - Get Connection&quot;) // OK DONE
+	@Test
+	public void testGetConnectionReturnConnectionWhenConnected()
+			throws SQLException, ClassNotFoundException, IllegalAccessException, InstantiationException {
+
+		// GIVEN
+<span class="fc" id="L91">		String expectedConnectionConnected = &quot;com.mysql.cj.jdbc.ConnectionImpl@&quot;;</span>
+<span class="fc" id="L92">		dataBaseTestConfig = new DataBaseConfig();</span>
+
+		// WHEN
+<span class="fc" id="L95">		connection = dataBaseTestConfig.getConnection();</span>
+
+		// THEN
+<span class="fc" id="L98">		assertTrue(connection.toString().contains(expectedConnectionConnected));</span>
+<span class="fc" id="L99">		assertNotNull(connection);</span>
+<span class="fc" id="L100">	}</span>
+
+	// ********************************************************************************************
+	@Test
+	public void testGetConnectionLoggerMessageCreateDBconnection()
+			throws SQLException, ClassNotFoundException, IllegalAccessException, InstantiationException, IOException {
+<span class="fc" id="L106">		String outputScreen = null;</span>
+		// GIVEN
+<span class="fc" id="L108">		String expectedInfoMessage = &quot;Create DB connection&quot;;</span>
+<span class="fc" id="L109">		LogCaptor logCaptor = LogCaptor.forClass(DataBaseConfig.class);</span>
+
+<span class="fc" id="L111">		dataBaseTestConfig = new DataBaseConfig();</span>
+<span class="fc" id="L112">		assertFalse(logCaptor.getErrorLogs().contains(expectedInfoMessage));</span>
+
+<span class="fc" id="L114">		byteArrayOutputStream = new ByteArrayOutputStream();</span>
+<span class="fc" id="L115">		System.setOut(new PrintStream(byteArrayOutputStream));</span>
+
+		// WHEN
+<span class="fc" id="L118">		connection = dataBaseTestConfig.getConnection();</span>
+<span class="fc" id="L119">		outputScreen = byteArrayOutputStream.toString(&quot;UTF-8&quot;);</span>
+
+		// THEN
+<span class="fc" id="L122">		assertTrue(outputScreen.toString().trim().contains(expectedInfoMessage));</span>
+
+<span class="fc" id="L124">		connection.close();</span>
+<span class="fc" id="L125">	}</span>
+
+	// ********************************************************************************************
+	//                                CLOSING CONNECTION TESTS	
+	// ********************************************************************************************
+	@DisplayName(&quot;Test Parking DB Configuration - Closing Connection&quot;)
+	@Test
+	public void testCloseConnection()
+			throws SQLException, ClassNotFoundException, IllegalAccessException, InstantiationException, IOException {
+
+		// GIVEN
+<span class="fc" id="L136">		String expectedInfoMessage = &quot;Closing DB connection&quot;;</span>
+<span class="fc" id="L137">		LogCaptor logCaptor = LogCaptor.forClass(DataBaseConfig.class);</span>
+<span class="fc" id="L138">		String expectedConnectionConnected = &quot;com.mysql.cj.jdbc.ConnectionImpl@&quot;;</span>
+<span class="fc" id="L139">		dataBaseTestConfig = new DataBaseConfig();</span>
+<span class="fc" id="L140">		boolean expectedConnectionClosed = true;</span>
+
+<span class="fc" id="L142">		connection = dataBaseTestConfig.getConnection();</span>
+<span class="fc" id="L143">		assertTrue(connection.toString().contains(&quot;com.mysql.cj.jdbc.ConnectionImpl@&quot;));</span>
+//		if (connection == null)
+//			fail(&quot;Couldn't retrieve connection to start test&quot;);
+
+<span class="fc" id="L147">		assertFalse(logCaptor.getErrorLogs().contains(expectedInfoMessage));</span>
+		// WHEN
+<span class="fc" id="L149">		String outputScreen = null;</span>
+<span class="fc" id="L150">		byteArrayOutputStream = new ByteArrayOutputStream();</span>
+<span class="fc" id="L151">		System.setOut(new PrintStream(byteArrayOutputStream));</span>
+<span class="fc" id="L152">		dataBaseTestConfig.closeConnection(connection);</span>
+
+<span class="fc" id="L154">		outputScreen = byteArrayOutputStream.toString(&quot;UTF-8&quot;);</span>
+		// THEN
+
+//		assertEquals(outputScreen, &quot;sdfs&quot;);
+<span class="fc" id="L158">		assertEquals(expectedConnectionClosed, connection.isClosed(),</span>
+<span class="fc" id="L159">				&quot;Result: expected and actual Connections status match&quot;);</span>
+<span class="fc" id="L160">		assertFalse(outputScreen.toString().trim().contains(&quot;PLEASE&quot; + &quot; PARK your VEHICLE in spot number:&quot;));</span>
+<span class="fc" id="L161">		assertTrue(outputScreen.toString().trim().contains(expectedInfoMessage));</span>
+<span class="fc" id="L162">		assertNotNull(connection);</span>
+<span class="fc" id="L163">	}</span>
+
+	// ********************************************************************************************
+	@Test
+	@DisplayName(&quot;Test Parking DB Configuration- Null Connection&quot;)
+	public void testGetNullConnection() throws ClassNotFoundException, SQLException, Exception, InstantiationException {
+
+		// GIVEN
+<span class="fc" id="L171">		Connection connection = null;</span>
+		// THEN
+<span class="pc" id="L173">		assertThrows(NullPointerException.class, () -&gt; dataBaseTestConfig.getConnection()); // WHEN</span>
+<span class="fc" id="L174">	}</span>
+
+
+	// ********************************************************************************************
+	//                                PREPARED STATEMENT TESTS	
+	// ********************************************************************************************
+
+	@DisplayName(&quot;Test Parking DB Configuration - Closing Prepared Statement&quot;)
+	@Test
+	public void testClosePreparedStatement()
+			throws IllegalAccessException, InstantiationException, ClassNotFoundException, SQLException, IOException {
+<span class="fc" id="L185">		String outputScreen = null;</span>
+		// GIVEN
+<span class="fc" id="L187">		String expectedInfoMessage = &quot;Closing Prepared Statement&quot;;</span>
+<span class="fc" id="L188">		LogCaptor logCaptor = LogCaptor.forClass(DataBaseConfig.class);</span>
+<span class="fc" id="L189">		dataBaseTestConfig = new DataBaseConfig();</span>
+<span class="fc" id="L190">		Connection testConnection = null;</span>
+<span class="fc" id="L191">		PreparedStatement testStatement = null;</span>
+<span class="fc" id="L192">		boolean expectedStatementClosed = true;</span>
+<span class="fc" id="L193">		dataBaseTestConfig = new DataBaseConfig();</span>
+<span class="fc" id="L194">		testConnection = dataBaseTestConfig.getConnection();</span>
+
+<span class="fc" id="L196">		assertTrue(testConnection.toString().contains(&quot;com.mysql.cj.jdbc.ConnectionImpl@&quot;));</span>
+
+<span class="fc" id="L198">		assertFalse(logCaptor.getErrorLogs().contains(expectedInfoMessage));</span>
+		// WHEN
+
+<span class="fc" id="L201">		byteArrayOutputStream = new ByteArrayOutputStream();</span>
+<span class="fc" id="L202">		System.setOut(new PrintStream(byteArrayOutputStream));</span>
+
+<span class="fc" id="L204">		testStatement = testConnection.prepareStatement(DBConstants.GET_TICKET);</span>
+<span class="fc" id="L205">		dataBaseTestConfig.closePreparedStatement(testStatement);</span>
+
+<span class="fc" id="L207">		outputScreen = byteArrayOutputStream.toString(&quot;UTF-8&quot;);</span>
+		// THEN
+
+<span class="fc" id="L210">		assertEquals(expectedStatementClosed, testStatement.isClosed(),</span>
+<span class="fc" id="L211">				&quot;Result: expected and actual Prepared Statements status match&quot;);</span>
+<span class="fc" id="L212">		assertFalse(outputScreen.toString().trim().contains(&quot;PLEASE&quot; + &quot; PARK your VEHICLE in spot number:&quot;));</span>
+<span class="fc" id="L213">		assertTrue(outputScreen.toString().trim().contains(expectedInfoMessage));</span>
+
+<span class="fc" id="L215">		testConnection.close();</span>
+<span class="fc" id="L216">	}</span>
+
+	// ********************************************************************************************
+	@Test
+	@DisplayName(&quot;Test Parking DB Configuration - SQL Exception preparedStatement&quot;)
+	public void testSQLExceptionPreparedStatement()
+			throws NullPointerException, ClassNotFoundException, SQLException, Exception, InstantiationException {
+
+		// GIVEN
+<span class="fc" id="L225">		dataBaseTestConfig = new DataBaseConfig();</span>
+
+<span class="fc" id="L227">		final Connection testConnection = dataBaseTestConfig.getConnection();</span>
+
+		// THEN
+<span class="fc" id="L230">		assertThrows(SQLException.class,</span>
+<span class="pc" id="L231">				() -&gt; dataBaseTestConfig.closePreparedStatement(testConnection.prepareStatement(null))); // WHEN</span>
+<span class="fc" id="L232">	}</span>
+	// ********************************************************************************************
+
+	@Test
+	@DisplayName(&quot;Test Parking DB Configuration - SQL Exception preparedStatement&quot;)
+	public void testSQLExceptionMessagePreparedStatement()
+			throws NullPointerException, ClassNotFoundException, SQLException, Exception, InstantiationException {
+<span class="fc" id="L239">		String outputScreen = null;</span>
+		// GIVEN
+<span class="fc" id="L241">		String expectedInfoMessage = &quot;Error while closing prepared statement&quot;;</span>
+<span class="fc" id="L242">		LogCaptor logCaptor = LogCaptor.forClass(DataBaseConfig.class);</span>
+<span class="fc" id="L243">		dataBaseTestConfig = new DataBaseConfig();</span>
+<span class="fc" id="L244">		assertFalse(logCaptor.getErrorLogs().contains(expectedInfoMessage));</span>
+
+		// WHEN
+<span class="fc" id="L247">		final Connection testConnection = dataBaseTestConfig.getConnection();</span>
+
+		// THEN
+		try {
+<span class="nc" id="L251">			dataBaseTestConfig.closePreparedStatement(testConnection.prepareStatement(null));</span>
+
+<span class="nc" id="L253">			byteArrayOutputStream = new ByteArrayOutputStream();</span>
+<span class="nc" id="L254">			System.setOut(new PrintStream(byteArrayOutputStream));</span>
+<span class="nc" id="L255">			outputScreen = byteArrayOutputStream.toString(&quot;UTF-8&quot;);</span>
+<span class="nc" id="L256">			assertTrue(outputScreen.toString().trim().contains(expectedInfoMessage));</span>
+<span class="pc" id="L257">		} catch (SQLException e) {</span>
+<span class="fc" id="L258">			SQLException errorStatement = e;</span>
+<span class="fc" id="L259">			byteArrayOutputStream = new ByteArrayOutputStream();</span>
+<span class="fc" id="L260">			System.setOut(new PrintStream(byteArrayOutputStream));</span>
+<span class="fc" id="L261">			outputScreen = byteArrayOutputStream.toString(&quot;UTF-8&quot;);</span>
+<span class="fc" id="L262">			errorStatement = e;</span>
+<span class="fc" id="L263">			assertEquals(errorStatement.toString(), (&quot;java.sql.SQLException: SQL String cannot be NULL&quot;));</span>
+<span class="fc" id="L264">			assertFalse(outputScreen.toString().trim().contains(expectedInfoMessage));</span>
+		}
+<span class="fc" id="L266">	}</span>
+	
+	
+	// ********************************************************************************************
+	//                                RESULTSET TESTS	
+	// ********************************************************************************************
+
+	@DisplayName(&quot;Test Parking DB Configuration - Closing ResultSet&quot;)
+	@Test
+	public void testCloseResultSet()
+			throws IllegalAccessException, InstantiationException, ClassNotFoundException, SQLException, IOException {
+
+		// GIVEN
+<span class="fc" id="L279">		dataBaseTestConfig = new DataBaseConfig();</span>
+<span class="fc" id="L280">		Connection testConnection = null;</span>
+<span class="fc" id="L281">		PreparedStatement testStatement = null;</span>
+<span class="fc" id="L282">		ResultSet testResults = null;</span>
+<span class="fc" id="L283">		boolean expectedResultSetClosed = true;</span>
+
+<span class="fc" id="L285">		testConnection = dataBaseTestConfig.getConnection();</span>
+<span class="fc" id="L286">		testStatement = testConnection.prepareStatement(DBConstants.GET_TICKET);</span>
+<span class="fc" id="L287">		testStatement.setString(1, &quot;CAR&quot;);</span>
+<span class="fc" id="L288">		testResults = testStatement.executeQuery();</span>
+
+		// WHEN
+<span class="fc" id="L291">		dataBaseTestConfig.closeResultSet(testResults);</span>
+
+		// THEN
+<span class="fc" id="L294">		assertEquals(expectedResultSetClosed, testResults.isClosed(),</span>
+<span class="fc" id="L295">				&quot;Result: expected and actual ResultSets status match&quot;);</span>
+<span class="fc" id="L296">		assertTrue(testResults.isClosed());</span>
+
+<span class="fc" id="L298">		testConnection.close();</span>
+<span class="fc" id="L299">		testStatement.close();</span>
+<span class="fc" id="L300">		testResults.close();</span>
+<span class="fc" id="L301">	}</span>
+	// ********************************************************************************************
+
+	@DisplayName(&quot;Test Parking DB Configuration - Closing ResultSet&quot;)
+	@Test
+	public void testCloseResultSetLoggerMessage()
+			throws IllegalAccessException, InstantiationException, ClassNotFoundException, SQLException, IOException {
+<span class="fc" id="L308">		String outputScreen = null;</span>
+<span class="fc" id="L309">		String expectedInfoMessage = &quot;Closing Result Set&quot;;</span>
+<span class="fc" id="L310">		LogCaptor logCaptor = LogCaptor.forClass(DataBaseConfig.class);</span>
+
+		// GIVEN
+<span class="fc" id="L313">		dataBaseTestConfig = new DataBaseConfig();</span>
+<span class="fc" id="L314">		Connection testConnection = null;</span>
+<span class="fc" id="L315">		PreparedStatement testStatement = null;</span>
+<span class="fc" id="L316">		ResultSet testResults = null;</span>
+<span class="fc" id="L317">		assertFalse(logCaptor.getErrorLogs().contains(expectedInfoMessage));</span>
+
+<span class="fc" id="L319">		testConnection = dataBaseTestConfig.getConnection();</span>
+<span class="fc" id="L320">		testStatement = testConnection.prepareStatement(DBConstants.GET_TICKET);</span>
+<span class="fc" id="L321">		testStatement.setString(1, &quot;CAR&quot;);</span>
+<span class="fc" id="L322">		testResults = testStatement.executeQuery();</span>
+<span class="fc" id="L323">		byteArrayOutputStream = new ByteArrayOutputStream();</span>
+
+<span class="fc" id="L325">		byteArrayOutputStream = new ByteArrayOutputStream();</span>
+<span class="fc" id="L326">		System.setOut(new PrintStream(byteArrayOutputStream));</span>
+		// WHEN
+<span class="fc" id="L328">		dataBaseTestConfig.closeResultSet(testResults);</span>
+<span class="fc" id="L329">		System.setOut(new PrintStream(byteArrayOutputStream));</span>
+
+<span class="fc" id="L331">		outputScreen = byteArrayOutputStream.toString(&quot;UTF-8&quot;);</span>
+
+		// THEN
+<span class="fc" id="L334">		assertTrue(outputScreen.toString().trim().contains(expectedInfoMessage));</span>
+
+<span class="fc" id="L336">		testConnection.close();</span>
+<span class="fc" id="L337">		testStatement.close();</span>
+<span class="fc" id="L338">		testResults.close();</span>
+<span class="fc" id="L339">	}</span>
+	// ********************************************************************************************
+
+	@Test
+	@DisplayName(&quot;Test DB Configuration - SQL Exception ResultSet&quot;)
+	public void testSQLExceptionResultSet()
+			throws NullPointerException, ClassNotFoundException, SQLException, Exception, InstantiationException {
+
+		// GIVEN
+<span class="fc" id="L348">		dataBaseTestConfig = new DataBaseConfig();</span>
+
+<span class="fc" id="L350">		final Connection testConnection = dataBaseTestConfig.getConnection();</span>
+
+		// THEN
+<span class="fc" id="L353">		assertThrows(SQLException.class,</span>
+<span class="pc" id="L354">				() -&gt; dataBaseTestConfig.closeResultSet(((testConnection.prepareStatement(null))).executeQuery())); // WHEN</span>
+<span class="fc" id="L355">	}</span>
+	// ********************************************************************************************
+
+	@Test
+	@DisplayName(&quot;Test DB Configuration - SQL Exception close ResultSet Logger Message&quot;)
+	public void testSQLExceptionResultSetLoggerMessage()
+			throws NullPointerException, ClassNotFoundException, SQLException, Exception, InstantiationException {
+
+<span class="fc" id="L363">		String outputScreen = null;</span>
+		// GIVEN
+<span class="fc" id="L365">		String expectedInfoMessage = &quot;Error while closing result set&quot;;</span>
+<span class="fc" id="L366">		LogCaptor logCaptor = LogCaptor.forClass(DataBaseConfig.class);</span>
+<span class="fc" id="L367">		dataBaseTestConfig = new DataBaseConfig();</span>
+
+<span class="fc" id="L369">		assertFalse(logCaptor.getErrorLogs().contains(expectedInfoMessage));</span>
+
+//		final Connection testConnection = dataBaseTestConfig.getConnection();
+
+		// THEN
+		try {
+<span class="fc" id="L375">			byteArrayOutputStream = new ByteArrayOutputStream();</span>
+<span class="fc" id="L376">			System.setOut(new PrintStream(byteArrayOutputStream));</span>
+
+<span class="fc" id="L378">			final Connection testConnection = dataBaseTestConfig.getConnection();</span>
+<span class="nc" id="L379">			dataBaseTestConfig.closeResultSet(((testConnection.prepareStatement(null))).executeQuery());</span>
+
+<span class="nc" id="L381">			outputScreen = byteArrayOutputStream.toString(&quot;UTF-8&quot;);</span>
+<span class="nc" id="L382">			assertTrue(outputScreen.toString().trim().contains(expectedInfoMessage));</span>
+<span class="nc" id="L383">			fail();</span>
+<span class="pc" id="L384">		} catch (SQLException e) {</span>
+<span class="fc" id="L385">			SQLException errorStatement = e;</span>
+<span class="fc" id="L386">			byteArrayOutputStream = new ByteArrayOutputStream();</span>
+<span class="fc" id="L387">			System.setOut(new PrintStream(byteArrayOutputStream));</span>
+<span class="fc" id="L388">			outputScreen = byteArrayOutputStream.toString(&quot;UTF-8&quot;);</span>
+<span class="fc" id="L389">			errorStatement = e;</span>
+<span class="fc" id="L390">			assertEquals((errorStatement.toString()), (&quot;java.sql.SQLException: SQL String cannot be NULL&quot;));</span>
+<span class="fc" id="L391">			assertFalse(outputScreen.toString().trim().contains(expectedInfoMessage));</span>
+		} 
+<span class="fc" id="L393">	}</span>
+	
+	
+	
+	// ********************************************************************************************
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span>parkingsystem (14 juin 2021 19:11:25)</div></body></html>

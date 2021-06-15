@@ -10,19 +10,19 @@ import java.util.Date;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.parkit.parkingsystem.constants.Fare;
 import com.parkit.parkingsystem.constants.ParkingType;
@@ -30,41 +30,7 @@ import com.parkit.parkingsystem.model.ParkingSpot;
 import com.parkit.parkingsystem.model.Ticket;
 import com.parkit.parkingsystem.service.FareCalculatorService;
 
-/**
- * <b>Test Class: </b> {@link FareCalculatorServiceTest} - Performs Unit Testing
- * on Fare calculation process for customer of ParkIt <br>
- * <b>Class Tested:</b> {@link FareCalculatorService}.<br>
- * <b>Project: <b> P3 - parking system - ParkIt<br>
- * 
- * @see <b>Tests:</b><br>
- *      {@link #calculateFareCar(long minutesParked, double priceFactor)}:
- *      Parking Fare: CAR one hours + in minutes <br>
- *      {@link #calculateFareBike(long minutesParked, double priceFactor)}:
- *      Parking Fare: BIKE one hours + in minutes <br>
- *      {@link #calculateFareRecurentUserCar(long minutesParked, double priceFactor)}:
- *      Parking Fare: CAR recurrent user <br>
- *      {@link #calculateFareUnkownType()}: Parking Fare: ERROR-CHECK Unknown
- *      Type of Vehicle <br>
- *      {@link #calculateFareBikeWithFutureInTime()}: Parking Fare: ERROR-CHECK
- *      Bike With Future In Time <br>
- *      {@link #calculateFareBikeWithNegativeDurationTime()}: Parking Fare:
- *      ERROR-CHECK Bike Negative Duration Park Time <br>
- *      {@link #calculateFareBikeWithLessThanThirtyMinutesParkingTime(int arg)}
- *      : Parking Fare: Bike < 30 minutes parking time <br>
- *      {@link #calculateFareCarWithLessThanThirtyMinutesParkingTime(int arg)}:
- *      Parking Fare: CAR < 30 minutes parking time <br>
- *      {@link #calculateFareBikeWithLessThanOneHourParkingTime(int minutes, double priceConversionFactor)}:
- *      Parking Fare: BIKE < 1 hour parking time <br>
- *      {@link #calculateFareCarWithLessThanOneHourParkingTime(int minutes, double priceConversionFactor)}:
- *      Parking Fare: CAR < 1 hour parking time <br>
- *      {@link #calculateFareCarWithMoreThanADayParkingTime(long daysParked, double estimatedPrice)}:
- *      Parking Fare: CAR >= 1 day parking time <br>
- *      {@link #calculateFareBikeWithMoreThanADayParkingTime(long daysParked, double estimatedPrice)}:
- *      Parking Fare: BIKE >= 1 day parking time <br>
- * 
- * @author Senthil
- */
-@DisplayName("Vehicle Parking Fare Calculation Service ")
+@DisplayName("Test Parking Fare Calculation Service ")
 @ExtendWith(MockitoExtension.class)
 @TestMethodOrder(OrderAnnotation.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -83,17 +49,7 @@ class FareCalculatorServiceTest {
 		ticket = new Ticket();
 	}
 
-	/**
-	 * {@link #calculateFareCar(long minutesParked, double priceFactor)} Unit Test
-	 * <br>
-	 * GIVEN: One hour and plus of parking time for a <b>CAR</b> <br>
-	 * WHEN: calculation of fare service activated <br>
-	 * THEN: calculation of <b>CAR</b> fare per hour <br>
-	 * <b>Test Condition <i>PASSED</i>: </b>assertEquals <code><b>TRUE</b></code>
-	 * <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals <code><b>FALSE</b></code>
-	 */
-	@DisplayName("Parking Fare: CAR one hours + in minutes ")
+	@DisplayName("Test parking Fare WHEN for CAR one hours and more displayed in minutes THEN asserts fare values")
 	@ParameterizedTest(name = "Duration of Parking: {0} minutes")
 	@Order(1)
 	@CsvSource({ "60, 1", "90, 1.5", "120, 2", "180, 3", "240, 4", "300, 5" })
@@ -116,17 +72,7 @@ class FareCalculatorServiceTest {
 		assertEquals(priceFactor * Fare.CAR_RATE_PER_HOUR, ticket.getPrice(), "Result: estimated and actual price match");
 	}
 
-	/**
-	 * {@link #calculateFareBike(long minutesParked, double priceFactor)} Unit Test
-	 * <br>
-	 * GIVEN: One hour and plus of parking time for a <b>CAR</b> <br>
-	 * WHEN: calculation of fare service activated <br>
-	 * THEN: calculation of <b>BIKE</b> fare per hour <br>
-	 * <b>Test Condition <i>PASSED</i>: </b>assertEquals <code><b>TRUE</b></code>
-	 * <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals <code><b>FALSE</b></code>
-	 */
-	@DisplayName("Parking Fare: BIKE one hours + in minutes ")
+	@DisplayName("Test parking Fare WHEN for BIKE one hours and more displayed in minutes THEN asserts fare values")
 	@ParameterizedTest(name = "Duration of Parking: {0} minutes")
 	@Order(2)
 	@CsvSource({ "60, 1", "90, 1.5", "120, 2", "180, 3", "240, 4", "300, 5" })
@@ -152,20 +98,7 @@ class FareCalculatorServiceTest {
 		assertEquals(estimate, ticket.getPrice(), "Result: estimated and actual price match");
 	}
 
-	/**
-	 * {@link #calculateFareCarWithLessThanOneHourParkingTime(int minutes, double priceConversionFactor)}
-	 * Unit Test <br>
-	 * GIVEN: Parking exit time for the <b>CAR</b> set to less than One hour and
-	 * more than 30 minutes i.e. <b>45 minutes</b> <br>
-	 * WHEN: calculation of fare service activated <br>
-	 * THEN: calculation of fare service checks for duration threshold below One
-	 * hour <br>
-	 * <b>Test Condition <i>PASSED</i>: </b>assertEquals fare = "0.75 *
-	 * Fare.CAR_RATE_PER_HOUR" <code><b>TRUE</b></code> <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals fare != "0.75 *
-	 * Fare.CAR_RATE_PER_HOUR" <code><b>FALSE</b></code>
-	 */
-	@DisplayName("Parking Fare: CAR < 1 hour parking time ")
+	@DisplayName("Test parking Fare WHEN for CAR less than one hour and more than 30 minutes THEN asserts fare values")
 	@ParameterizedTest(name = "Duration of car parking: {0} Minute(s) i.e less than one hour")
 	@Order(3)
 	@CsvSource({ "30, 0.5", "45, 0.75", "54, 0.9" })
@@ -190,19 +123,7 @@ class FareCalculatorServiceTest {
 				"Result: estimated and actual price match");
 	}
 
-	/**
-	 * {@link calculateFareBikeWithLessThanOneHourParkingTime() Unit Test <br>
-	 * GIVEN: Parking exit time for the <b>BIKE</b> set to less than One hour and
-	 * more than 30 minutes i.e. <b>45 minutes</b> <br>
-	 * WHEN: calculation of fare service activated <br>
-	 * THEN: calculation of fare service checks for duration threshold below One
-	 * hour <br>
-	 * <b>Test Condition <i>PASSED</i>: </b>assertEquals fare = "0.75 *
-	 * Fare.CAR_RATE_PER_HOUR" <code><b>TRUE</b></code> <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals fare != "0.75 *
-	 * Fare.CAR_RATE_PER_HOUR" <code><b>FALSE</b></code>
-	 */
-	@DisplayName("Parking Fare: BIKE < 1 hour parking time ")
+	@DisplayName("Test parking Fare WHEN for BIKE less than one hour and more than 30 minutes THEN asserts fare values")
 	@ParameterizedTest(name = "Duration of Bike parking: {0} Minute(s) i.e less than one hour")
 	@Order(4)
 	@CsvSource({ "30, 0.5", "45, 0.75", "54, 0.9" })
@@ -227,20 +148,8 @@ class FareCalculatorServiceTest {
 				"Result: estimated and actual price match");
 	}
 
-	/**
-	 * {@link #calculateFareCarWithLessThanThirtyMinutesParkingTime(int arg)} Unit
-	 * Test <br>
-	 * GIVEN: Parking exit time for the <b>CAR</b> set to <b>less than 30
-	 * minutes</b> <br>
-	 * WHEN: calculation of fare service activated <br>
-	 * THEN: calculation of fare service checks for duration threshold below 30
-	 * minutes <br>
-	 * <b>Test Condition <i>PASSED</i>: </b>assertEquals fare = 0€
-	 * <code><b>TRUE</b></code> <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals fare != 0€
-	 * <code><b>FALSE</b></code>
-	 */
-	@DisplayName("Parking Fare: CAR < 30 minutes parking time ")
+
+	@DisplayName("Test parking Fare WHEN for CAR less than 30 minutes THEN asserts fare values")
 	@Order(5)
 	@ParameterizedTest(name = "Duration of Car parking: {0} Minute(s) - Free parking less than 30 minutes")
 	@ValueSource(ints = { 1, 15, 29 })
@@ -264,20 +173,7 @@ class FareCalculatorServiceTest {
 		assertEquals((0.0 * Fare.CAR_RATE_PER_HOUR), ticket.getPrice(), "Result: estimated and actual price match");
 	}
 
-	/**
-	 * {@link #calculateFareBikeWithLessThanThirtyMinutesParkingTime(int arg)} Unit
-	 * Test <br>
-	 * GIVEN: Parking exit time for the <b>BIKE</b> set to <b>less than 30
-	 * minutes</b> <br>
-	 * WHEN: calculation of fare service activated <br>
-	 * THEN: calculation of fare service checks for duration threshold below 30
-	 * minutes <br>
-	 * <b>Test Condition <i>PASSED</i>: </b>assertEquals fare = 0€
-	 * <code><b>TRUE</b></code> <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals fare != 0€
-	 * <code><b>FALSE</b></code>
-	 */
-	@DisplayName("Parking Fare: Bike < 30 minutes parking time ")
+	@DisplayName("Test parking Fare WHEN for BIKE less than 30 minutes THEN asserts fare values")
 	@ParameterizedTest(name = "Duration of bike parking: {0} Minute(s) - Free parking less than 30 minutes")
 	@Order(6)
 	@ValueSource(ints = { 1, 15, 29 })
@@ -301,20 +197,7 @@ class FareCalculatorServiceTest {
 		assertEquals((0.0 * Fare.BIKE_RATE_PER_HOUR), ticket.getPrice(), "Result: estimated and actual price match");
 	}
 
-	/**
-	 * {@link #calculateFareCarWithMoreThanADayParkingTime(long daysParked, double estimatedPrice)}
-	 * Unit Test <br>
-	 * GIVEN: Parking exit time for the <b>CAR</b> set to more than a day i.e. <b>24
-	 * hours</b> <br>
-	 * WHEN: calculation of fare service activated <br>
-	 * THEN: calculation of fare service checks for duration threshold for One day
-	 * and more <br>
-	 * <b>Test Condition <i>PASSED</i>: </b>assertEquals (24 *
-	 * Fare.CAR_RATE_PER_HOUR) <code><b>TRUE</b></code> <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals (24 *
-	 * Fare.CAR_RATE_PER_HOUR) <code><b>FALSE</b></code>
-	 */
-	@DisplayName("Parking Fare: CAR >= 1 day parking time ")
+	@DisplayName("Test parking Fare WHEN for CAR more or equal to one day THEN asserts fare values")
 	@ParameterizedTest(name = "Duration of Parking: {0} Day(s)")
 	@Order(7)
 	@CsvSource({ "1, 24", "2, 48", "3, 72", "5, 120", "10, 240", "15, 360" })
@@ -340,20 +223,7 @@ class FareCalculatorServiceTest {
 				"Result: estimated and actual price match");
 	}
 
-	/**
-	 * {@link #calculateFareBikeWithMoreThanADayParkingTime(long daysParked, double estimatedPrice)}
-	 * Unit Test <br>
-	 * GIVEN: Parking exit time for the <b>BIKE</b> set to more than a day i.e.
-	 * <b>24 hours</b> <br>
-	 * WHEN: calculation of fare service activated <br>
-	 * THEN: calculation of fare service checks for duration threshold for One day
-	 * and more <br>
-	 * <b>Test Condition <i>PASSED</i>: </b>assertEquals (24 *
-	 * Fare.CAR_RATE_PER_HOUR) <code><b>TRUE</b></code> <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals (24 *
-	 * Fare.CAR_RATE_PER_HOUR) <code><b>FALSE</b></code>
-	 */
-	@DisplayName("Parking Fare: BIKE >= 1 day parking time ")
+	@DisplayName("Test parking Fare WHEN for BIKE more or equal to one day THEN asserts fare values")
 	@ParameterizedTest(name = "Duration of Parking: {0} Day(s)")
 	@Order(8)
 	@CsvSource({ "1, 24", "2, 48", "3, 72", "5, 120", "10, 240", "15, 360" })
@@ -379,18 +249,7 @@ class FareCalculatorServiceTest {
 				"Result: estimated and actual price match");
 	}
 
-	/**
-	 * {@link #calculateFareRecurentUserCar(long minutesParked, double priceFactor)}
-	 * Unit Test <br>
-	 * GIVEN: More hour of parking time for a <b>CAR recurrent user</b> <br>
-	 * WHEN: calculation of fare service activated <br>
-	 * THEN: calculation of <b>Recurrence of user</b> tested <br>
-	 * <b>Test Condition <i>PASSED</i>: </b>actual estimated price match
-	 * <code><b>TRUE</b></code> <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>actual estimated price do not match
-	 * <code><b>FALSE</b></code>
-	 */
-	@DisplayName("Parking Fare: CAR recurrent user ")
+	@DisplayName("Test parking Fare WHEN for CAR recurrent user THEN asserts fare values with discount")
 	@ParameterizedTest(name = "Duration of Parking: {0} minutes")
 	@Order(9)
 	@CsvSource({ "60, 1", "120, 2", "180, 3", "240, 4" })
@@ -416,18 +275,7 @@ class FareCalculatorServiceTest {
 		assertEquals(estimate, ticket.getPrice(), "Result: estimated and actual price match");
 	}
 
-	/**
-	 * {@link #calculateFareRecurentUserBike(long minutesParked, double priceFactor)}
-	 * Unit Test <br>
-	 * GIVEN: More hour of parking time for a <b>BIKE recurrent user</b> <br>
-	 * WHEN: calculation of fare service activated <br>
-	 * THEN: calculation of <b>Recurrence of user</b> tested <br>
-	 * <b>Test Condition <i>PASSED</i>: </b>actual estimated price match
-	 * <code><b>TRUE</b></code> <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>actual estimated price do not match
-	 * <code><b>FALSE</b></code>
-	 */
-	@DisplayName("Parking Fare: BIKE recurrent user ")
+	@DisplayName("Test parking Fare WHEN for BIKE recurrent user THEN asserts fare values with discount")
 	@ParameterizedTest(name = "Duration of Parking: {0} minutes")
 	@Order(10)
 	@CsvSource({ "60, 1", "120, 2", "180, 3", "240, 4" })
@@ -453,17 +301,7 @@ class FareCalculatorServiceTest {
 		assertEquals(estimate, ticket.getPrice(), "Result: estimated and actual price match");
 	}
 
-	/**
-	 * {@link #calculateFareUnkownType()} Unit Test <br>
-	 * GIVEN: One hour of parking time for a <b>UNKNOWN VEHICLE TYPE</b> <br>
-	 * WHEN: calculation of fare service activated <br>
-	 * THEN: Identify <b>UNKNOWN VEHICLE TYPE</b> <br>
-	 * <b>Test Condition <i>PASSED</i>: </b>assertThrows NullPointerException
-	 * <code><b>TRUE</b></code> <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>assertThrows NullPointerException
-	 * <code><b>FALSE</b></code>
-	 */
-	@DisplayName("Parking Fare: ERROR-CHECK Unknown Type of Vehicle ")
+	@DisplayName("Test parking Fare WHEN Unknown Type of Vehicle THEN throws Null Pointer Exception")
 	@Order(11)
 	@Test
 	void calculateFareUnkownType() {
@@ -484,18 +322,7 @@ class FareCalculatorServiceTest {
 
 	}
 
-	/**
-	 * {@link #calculateFareCarWithFutureInTime()} Unit Test <br>
-	 * GIVEN: Parking entry time for the <b>CAR</b> set to <b>FUTURE TIME</b> <br>
-	 * WHEN: calculation of fare service activated <br>
-	 * THEN: calculation of fare per hour checks for entry time compliance to
-	 * current time or not <br>
-	 * <b>Test Condition <i>PASSED</i>: </b>assertThrows IllegalArgumentException
-	 * <code><b>TRUE</b></code> <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>assertThrows IllegalArgumentException
-	 * <code><b>FALSE</b></code>
-	 */
-	@DisplayName("Parking Fare: ERROR-CHECK Car With Future In Time ")
+	@DisplayName("Test parking Fare WHEN error check CAR future incoming time THEN throws Illegal Argument Exception")
 	@Test
 	@Order(12)
 	void calculateFareCarWithFutureInTime() {
@@ -514,18 +341,7 @@ class FareCalculatorServiceTest {
 		assertThrows(IllegalArgumentException.class, () -> fareCalculatorService.calculateFare(ticket, false)); // WHEN
 	}
 
-	/**
-	 * {@link #calculateFareBikeWithFutureInTime()} Unit Test <br>
-	 * GIVEN: Parking entry time for the <b>BIKE</b> set to <b>FUTURE TIME</b> <br>
-	 * WHEN: calculation of fare service activated <br>
-	 * THEN: calculation of fare per hour checks for entry time compliance to
-	 * current time or not <br>
-	 * <b>Test Condition <i>PASSED</i>: </b>assertThrows IllegalArgumentException
-	 * <code><b>TRUE</b></code> <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>assertThrows IllegalArgumentException
-	 * <code><b>FALSE</b></code>
-	 */
-	@DisplayName("Parking Fare: ERROR-CHECK Bike With Future In Time ")
+	@DisplayName("Test parking Fare WHEN error check BIKE future incoming time THEN throws Illegal Argument Exception")
 	@Test
 	@Order(13)
 	void calculateFareBikeWithFutureInTime() {
@@ -544,18 +360,7 @@ class FareCalculatorServiceTest {
 		assertThrows(IllegalArgumentException.class, () -> fareCalculatorService.calculateFare(ticket, false)); // WHEN
 	}
 
-	/**
-	 * {@link #calculateFareBikeWithNegativeDurationTime()} Unit Test <br>
-	 * GIVEN: Parking duration for the <b>BIKE</b> set to <b>NEGATIVE TIME VALUE</b>
-	 * <br>
-	 * WHEN: calculation of fare service activated <br>
-	 * THEN: calculation of fare per hour checks for duration value compliance <br>
-	 * <b>Test Condition <i>PASSED</i>: </b>assertThrows IllegalArgumentException
-	 * <code><b>TRUE</b></code> <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>assertThrows IllegalArgumentException
-	 * <code><b>FALSE</b></code>
-	 */
-	@DisplayName("Parking Fare: ERROR-CHECK Bike Negative Duration Park Time ")
+	@DisplayName("Test parking Fare WHEN error check Bike Negative Duration Park Time THEN throws Illegal Argument Exception")
 	@Test
 	@Order(14)
 	void calculateFareBikeWithNegativeDurationTime() {
@@ -579,7 +384,7 @@ class FareCalculatorServiceTest {
 	@ParameterizedTest
 	@Order(15)
 	@Tag("Exceptions")
-	@DisplayName("For a ticket with null out time, calculatorFare should raise an IllegalArgumentException")
+	@DisplayName("Test parking Fare WHEN for a ticket with null out time, THEN calculatorFare should raise an Illegal Argument Exception")
 	@EnumSource(value = ParkingType.class, names = { "CAR", "BIKE" })
 	void givenATicketWithNoOutTime_whenGetCalculatedFare_thenIllegalArgumentExceptionThrown(
 			ParkingType parkingType) {
@@ -602,7 +407,7 @@ class FareCalculatorServiceTest {
 	@ParameterizedTest
 	@Order(15)
 	@Tag("Exceptions")
-	@DisplayName("For a ticket with null out time, calculatorFare should raise an IllegalArgumentException")
+	@DisplayName("Test parking Fare WHEN for a ticket with null out time THEN calculatorFare should raise an Illegal Argument Exception")
 	@EnumSource(value = ParkingType.class, names = { "CAR", "BIKE" })
 	void givenAVehicleTypeNull_whenGetCalculatedFare_thenNullPointerExceptionThrown(
 			ParkingType parkingType) {
@@ -610,7 +415,7 @@ class FareCalculatorServiceTest {
 		// GIVEN
 		Date inTime = new Date();
 		inTime.setTime(System.currentTimeMillis());
-		ParkingSpot parkingSpot = new ParkingSpot(1, null, false);
+//		ParkingSpot parkingSpot = new ParkingSpot(1, null, false);
 
 		ticket.setInTime(inTime);
 		ticket.setOutTime(null);

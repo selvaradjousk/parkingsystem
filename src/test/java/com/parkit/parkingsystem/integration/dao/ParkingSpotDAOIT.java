@@ -43,25 +43,6 @@ import com.parkit.parkingsystem.model.Ticket;
 import com.parkit.parkingsystem.service.ParkingService;
 import com.parkit.parkingsystem.util.InputReaderUtil;
 
-/**
- * <b>Test Class: </b> {@link ParkingSpotDAOIT} - Parking Spot Data Access
- * Object - Tests on Functions and Methods for dealing with availability
- * management of parking spots / slots <br>
- * <b>Class Tested:</b>{@link ParkingSpotDAO}.<br>
- * <b>Project: </b> P3 - parking system - ParkIt<br>
- * 
- * @see <b>Tests:</b><br>
- *      {@link #testGetNextAvailableSpotForCar()}: Parking Spot - Integration
- *      Testing - Car Spot availability<br>
- *      {@link #testNextAvailableSpotForBike()}: Parking Spot - Integration
- *      Testing - Bike Spot availability<br>
- *      {@link #testUpdateParkingForCar()}: Parking Spot - Integration Testing -
- *      CAR Update Spot status<br>
- *      {@link #testUpdateParkingForBike()} Parking Spot - Integration Testing -
- *      BIKE Update Spot status<br>
- * 
- * @author Senthil
- */
 @DisplayName("IT - Vehicle Parking Spot Data Access Object")
 @ExtendWith(MockitoExtension.class)
 public class ParkingSpotDAOIT {
@@ -96,20 +77,7 @@ public class ParkingSpotDAOIT {
 		dataBasePrepareService.clearDBEntries();
 	}
 
-	/**
-	 * {@link #testGetNextAvailableSpotForCar()} Integration Test on
-	 * {@link ParkingSpotDAO#getNextAvailableSpot()}<br>
-	 * GIVEN: expected parking spot value as 2 <br>
-	 * WHEN: executing method to get next available parking spot <br>
-	 * THEN: verify the spot actual with expected values <b>resultSet
-	 * checked</b><br>
-	 * <b>Test Condition <i>PASSED</i>: </b>assertEquals expected = 1
-	 * <code><b>TRUE</b></code> <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected != 1
-	 * <code><b>FALSE</b></code>
-	 * @throws SQLException 
-	 */
-	@DisplayName("Parking Spot - CAR Spot availability ")
+	@DisplayName("Test Parking Spot WHEN get next CAR Spot availability THEN confirms spot availability")
 	@Test
 	public void testGetNextAvailableSpotForCar() throws SQLException {
 		// GIVEN
@@ -122,6 +90,7 @@ public class ParkingSpotDAOIT {
 		assertEquals(expectedSpot, selectedSpot, "Result: Both spot not similar");
 	}
 	
+	@DisplayName("Test Parking Spot using DB connection method WHEN get next CAR Spot availability THEN confirms spot availability")
 	@Test
 	void testGetNextAvailableSpotForCarThroughDbConnection() throws SQLException, Exception {
 		connection = dataBaseTestConfig.getConnection();
@@ -134,20 +103,7 @@ public class ParkingSpotDAOIT {
 		assertEquals(expected, result); // 
 	}
 
-	/**
-	 * {@link #testNextAvailableSpotForBike()} Integration Test on
-	 * {@link ParkingSpotDAO#getNextAvailableSpot()}<br>
-	 * GIVEN: expected parking spot value as 1 <br>
-	 * WHEN: executing method to get next available parking spot <br>
-	 * THEN: verify the spot actual with expected values <b>resultSet
-	 * checked</b><br>
-	 * <b>Test Condition <i>PASSED</i>: </b>assertEquals expected = 4
-	 * <code><b>TRUE</b></code> <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected != 4
-	 * <code><b>FALSE</b></code>
-	 * @throws SQLException 
-	 */
-	@DisplayName("Parking Spot - BIKE Spot availability ")
+	@DisplayName("Test Parking Spot WHEN get next BIKE Spot availability THEN confirms spot availability")
 	@Test
 	public void testNextAvailableSpotForBike() throws SQLException {
 		// GIVEN
@@ -160,20 +116,7 @@ public class ParkingSpotDAOIT {
 		assertEquals(expectedSpot, selectedSpot, "Result: Both spot not similar");
 	}
 
-	/**
-	 * {@link #testUpdateParkingForCar()} Integration Test on
-	 * {@link ParkingSpotDAO#updateParking()}<br>
-	 * GIVEN: updating parking spot values <br>
-	 * WHEN: executing method for updating parking spot parking spot <br>
-	 * THEN: verify the getNextAvailableSpot(ParkingType.CAR) with expected values
-	 * <b>resultSet checked</b><br>
-	 * <b>Test Condition <i>PASSED</i>: </b>assertEquals expected =
-	 * getNextAvailableSpot(ParkingType.CAR) <code><b>TRUE</b></code> <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected !=
-	 * getNextAvailableSpot(ParkingType.CAR) <code><b>FALSE</b></code>
-	 * @throws SQLException 
-	 */
-	@DisplayName("Parking Spot - CAR Update Spot status")
+	@DisplayName("Test Parking Spot WHEN Update CAR Spot status THEN confirms update by spot availaibilty")
 	@Test
 	public void testUpdateParkingForCar() throws SQLException {
 		// GIVEN
@@ -190,20 +133,7 @@ public class ParkingSpotDAOIT {
 			fail("Failed to update ticket");
 	}
 
-	/**
-	 * {@link #testUpdateParkingForBike()} Integration Test on
-	 * {@link ParkingSpotDAO#updateParking()}<br>
-	 * GIVEN: updating parking spot values <br>
-	 * WHEN: executing method for updating parking spot parking spot <br>
-	 * THEN: verify the getNextAvailableSpot(ParkingTypeBIKE) with expected values
-	 * <b>resultSet checked</b><br>
-	 * <b>Test Condition <i>PASSED</i>: </b>assertEquals expected =
-	 * getNextAvailableSpot(ParkingType.BIKE) <code><b>TRUE</b></code> <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected !=
-	 * getNextAvailableSpot(ParkingType.BIKE) <code><b>FALSE</b></code>
-	 * @throws SQLException 
-	 */
-	@DisplayName("Parking Spot - BIKE Update Spot status ")
+	@DisplayName("Test Parking Spot WHEN Update BIKE Spot status THEN confirms update by spot availaibilty")
 	@Test
 	public void testUpdateParkingForBike() throws SQLException {
 		// GIVEN
@@ -220,19 +150,7 @@ public class ParkingSpotDAOIT {
 			fail("Failed to update ticket");
 	}
 
-	/**
-	 * {@link #testUpdateParkingInvalidParkingSpot()} Integration Test on
-	 * {@link ParkingSpotDAO#updateParking()}<br>
-	 * GIVEN: invalid input parking spot <br>
-	 * WHEN: setting expected value<br>
-	 * THEN: verify the invalid input is <b>rejected</b><br>
-	 * <b>Test Condition <i>PASSED</i>: </b>assertEquals expected = actual
-	 * <code><b>TRUE</b></code> <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected != actual
-	 * <code><b>FALSE</b></code>
-	 * @throws SQLException 
-	 */
-	@DisplayName("Parking Spot with Invalid ParkingSpot values ")
+	@DisplayName("Test Parking Spot WHEN with Invalid ParkingSpot values THEN Unvalid Parking Spot")
 	@Test
 	public void testUpdateParkingInvalidParkingSpot() throws SQLException {
 		// GIVEN
@@ -246,19 +164,7 @@ public class ParkingSpotDAOIT {
 		assertEquals(actual, expected);
 	}
 
-	/**
-	 * {@link #testUpdateParkingValidParkingSpot()} Integration Test on
-	 * {@link ParkingSpotDAO#updateParking()}<br>
-	 * GIVEN: Valid input parking spot <br>
-	 * WHEN: setting expected value<br>
-	 * THEN: verify the invalid input is <b> accepted</b><br>
-	 * <b>Test Condition <i>PASSED</i>: </b>assertEquals expected = actual
-	 * <code><b>TRUE</b></code> <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected != actual
-	 * <code><b>FALSE</b></code>
-	 * @throws SQLException 
-	 */
-	@DisplayName("Parking Spot with Valid ParkingSpot values ")
+	@DisplayName("Test Parking Spot WHEN with valid ParkingSpot values THEN validates Parking Spot")
 	@Test
 	public void testUpdateParkingValidParkingSpot() throws SQLException {
 		// GIVEN
@@ -272,20 +178,8 @@ public class ParkingSpotDAOIT {
 		assertEquals(actual, expected);
 	}
 
-	/**
-	 * {@link #testsNextAvailableSpotStatustWhenAllOccupied()} Integration Test on
-	 * {@link ParkingSpotDAO#updateParking()}<br>
-	 * GIVEN: Parking spot with all three vehicles<br>
-	 * WHEN: setting expected for update <br>
-	 * THEN: verify the <b>availability and identify no free spot available<br>
-	 * <b>Test Condition <i>PASSED</i>: </b>assertEquals expected = actual
-	 * <code><b>TRUE</b></code> <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected != actual
-	 * <code><b>FALSE</b></code>
-	 * @throws SQLException 
-	 */
 	@Test
-	@DisplayName("Tests of if all parking spots are occupied")
+	@DisplayName("Tests Parking Spot WHEN all parking spots are occupied THEN confirms no spot availability")
 	public void testsNextAvailableSpotStatustWhenAllOccupied() throws SQLException {
 		// GIVEN
 		ParkingSpot parkingSpot1 = new ParkingSpot(1, ParkingType.CAR, false);
@@ -313,21 +207,9 @@ public class ParkingSpotDAOIT {
 //		assertEquals(0, parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR));
 	}
 
-	/**
-	 * {@link #testNextAvailableSlotWhenPenutimateIsLeftFree()} Integration Test on
-	 * {@link ParkingSpotDAO#updateParking()}<br>
-	 * GIVEN: When two vehicles occupied<br>
-	 * WHEN: setting expected for update <br>
-	 * THEN: verify the <b>availability and allocated the third to incoming
-	 * vehicle<br>
-	 * <b>Test Condition <i>PASSED</i>: </b>assertEquals expected = actual
-	 * <code><b>TRUE</b></code> <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected != actual
-	 * <code><b>FALSE</b></code>
-	 * @throws SQLException 
-	 */
+
 	@Test
-	@DisplayName("Tests CAR for penultimate parking spot available to be alloted")
+	@DisplayName("Tests Parking Spot WHEN penultimate parking spot available for CAR is free THEN spot available to be alloted")
 	public void testNextAvailableSlotWhenPenutimateIsLeftFree() throws SQLException {
 		// GIVEN
 		ParkingSpot parkingSpot1 = new ParkingSpot(1, ParkingType.CAR, false);
@@ -343,21 +225,8 @@ public class ParkingSpotDAOIT {
 		assertEquals(3, actual);
 	}
 
-	/**
-	 * {@link #testBikeNextAvailableSlotWhenPenutimateIsLeftFree()} Integration Test
-	 * on {@link ParkingSpotDAO#updateParking()}<br>
-	 * GIVEN: When two vehicles occupied<br>
-	 * WHEN: setting expected for update <br>
-	 * THEN: verify the <b>availability and allocated the third to incoming
-	 * vehicle<br>
-	 * <b>Test Condition <i>PASSED</i>: </b>assertEquals expected = actual
-	 * <code><b>TRUE</b></code> <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>assertEquals expected != actual
-	 * <code><b>FALSE</b></code>
-	 * @throws SQLException 
-	 */
 	@Test
-	@DisplayName("Tests BIKE for penultimate parking spot available to be alloted")
+	@DisplayName("Tests Parking Spot WHEN penultimate parking spot available for BIKE is free THEN spot available to be alloted")
 	public void testBikeNextAvailableSlotWhenPenutimateIsLeftFree() throws SQLException {
 		// GIVEN
 		ParkingSpot parkingSpot1 = new ParkingSpot(1, ParkingType.BIKE, false);
@@ -373,6 +242,7 @@ public class ParkingSpotDAOIT {
 		assertEquals(4, actual);
 	}
 
+	@DisplayName("Tests Parking Spot WHEN parking two times and exit all THEN spot availability and ticket updated")
 	@Test
 	public void TestParkingIn2TimesAndExitAll() throws Exception {
 		when(inputReaderUtil.readSelection()).thenReturn(1);
@@ -393,6 +263,7 @@ public class ParkingSpotDAOIT {
 		assertNotNull(ticket.getOutTime());
 	}
 
+	@DisplayName("Tests Parking Spot WHEN two CAR parking on entry and one leaving THEN spot availability available for alloting for new one entering")
 	@Test
 	public void testCarParkingSpotGetAllotedTwoWhenTwoIncomingVehiculesButOneOfThemExiting() throws SQLException {
 		parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
@@ -408,6 +279,7 @@ public class ParkingSpotDAOIT {
 		assertEquals(1, result);
 	}
 
+	@DisplayName("Tests Parking Spot WHEN two BIKE parking on entry and one leaving THEN spot availability available for alloting for new one entering")
 	@Test
 	public void testBikeParkingSpotGetAllotedTwoWhenTwoIncomingVehiculesButOneOfThemExiting() throws SQLException {
 		parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);

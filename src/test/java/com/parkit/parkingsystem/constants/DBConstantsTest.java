@@ -8,12 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-/**
- * Test on DBConstants.
- * 
- * @author Senthil
- *
- */
+@DisplayName("Test on DataBase Constants")
 class DBConstantsTest {
 	/**
 	 * Instance of DBConstants class
@@ -56,55 +51,39 @@ class DBConstantsTest {
 	final String GET_VEHICLE_OCCURENCES_expected = "select "
 			+ "count(VEHICLE_REG_NUMBER) from ticket where VEHICLE_REG_NUMBER = ?";
 
-	/**
-	 * test SQL query to get available parking spot.
-	 */
-	@DisplayName("Test GET_NEXT_PARKING_SPOT")
+	@DisplayName("Test database query WHEN next parking Spot THEN return next parking spot")
 	@Test
 	void testGetNextParkingSpotDbConstanst() {
 		assertEquals(dbConstants.GET_NEXT_PARKING_SPOT, GET_NEXT_PARKING_SPOT_expected);
 	}
 
-	/**
-	 * Test SQL query to update available parking spot.
-	 */
-	@DisplayName("Test UPDATE_PARKING_SPOT")
+	@DisplayName("Test database query WHEN update available parking spot"
+			+ " THEN updates available parking spot")
 	@Test
 	void testUpdateParkingSpotDbConstanst() {
 		assertEquals(dbConstants.UPDATE_PARKING_SPOT, UPDATE_PARKING_SPOT_expected);
 	}
 
-	/**
-	 * Test SQL query to save ticket.
-	 */
-	@DisplayName("Test SAVE_TICKET")
+	@DisplayName("Test database query WHEN save ticket THEN ticket saved")
 	@Test
 	void testSaveTickettDbConstanst() {
 		assertEquals(dbConstants.SAVE_TICKET, SAVE_TICKET_expected);
 	}
 
-	/**
-	 * Test SQL query to update ticket.
-	 */
-	@DisplayName("Test UPDATE_TICKET")
+	@DisplayName("Test SQL query WHEN update ticket THEN update ticket done")
 	@Test
 	void testUpdateTicketbConstanst() {
 		assertEquals(dbConstants.UPDATE_TICKET, UPDATE_TICKET_expected);
 	}
 
-	/**
-	 * Test SQL query to get ticket.
-	 */
-	@DisplayName("Test GET_TICKET")
+	@DisplayName("Test SQL query WHEN get ticket THEN get ticket done")
 	@Test
 	void testGetTickettDbConstanst() {
 		assertEquals(dbConstants.GET_TICKET, GET_TICKET_expected);
 	}
 
-	/**
-	 * Test SQL query to get vehicle recurrence frequency.
-	 */
-	@DisplayName("Test GET_VEHICLE_OCCURENCES")
+	@DisplayName("Test SQL query WHEN to get vehicle recurrence "
+			+ "frequency THEN gets vehicle recurrence frequency value")
 	@Test
 	void testGetVehicleOccurencesDbConstanst() {
 		assertEquals(dbConstants.GET_VEHICLE_OCCURENCES, GET_VEHICLE_OCCURENCES_expected);

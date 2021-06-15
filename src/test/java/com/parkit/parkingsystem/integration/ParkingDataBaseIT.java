@@ -34,21 +34,7 @@ import com.parkit.parkingsystem.model.Ticket;
 import com.parkit.parkingsystem.service.ParkingService;
 import com.parkit.parkingsystem.util.InputReaderUtil;
 
-/**
- * <b>Test Class: </b> {@link ParkingDataBaseIT} - Performs Integration Test on
- * Parking Database <br>
- * <b>Class Tested:</b> {@link ParkingSpotDAO}.<br>
- * <b>Project: </b> P3 - parking system - ParkIt<br>
- * 
- * @see <b>Tests:</b><br>
- *      {@link #testParkingLotExitIT()}: Parking Database Testing - Parking Lot
- *      Status on Exit<br>
- *      {@link #testParkingACar()}}: Parking Database Testing - Availability of
- *      alternate parking spot <br>
- * 
- * @author Senthil
- */
-@DisplayName("IT - Vehicle Parking Database")
+@DisplayName("IT - testing Vehicle Parking Database")
 @ExtendWith(MockitoExtension.class)
 public class ParkingDataBaseIT {
 
@@ -87,18 +73,7 @@ public class ParkingDataBaseIT {
 
 	}
 
-	/**
-	 * {@link #testParkingACar()} Integration Test <br>
-	 * GIVEN: <br>
-	 * WHEN: check on the alternate Parking spot availability for Parking<br>
-	 * THEN: <b>availability status</b><br>
-	 * <b>Test Condition <i>PASSED</i>: </b>verify alternate available parking spot
-	 * are not same <code><b>TRUE</b></code> <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>verify alternate available parking spot
-	 * are not same <code><b>FALSE</b></code>
-	 * @throws SQLException 
-	 */
-	@DisplayName("Parking Database Testing - Availability of alternate parking spot ")
+	@DisplayName("Test on Parking Database WHEN check parking a car THEN confirms parking done")
 	@Test
 	public void testParkingACar() throws SQLException {
 
@@ -128,18 +103,8 @@ public class ParkingDataBaseIT {
 		assertNotEquals(firstAlternateParkingSlot, nextAlternateParkingSlot, "Result: Both spot not similar");
 	}
 
-	/**
-	 * {@link #testParkingLotExitIT()} Integration Test <br>
-	 * GIVEN: <br>
-	 * WHEN: processing of the parking Lot<br>
-	 * THEN: parking spot <b>processing exiting vehicle process</b><br>
-	 * <b>Test Condition <i>PASSED</i>: </b>assertNull with getOutime
-	 * <code><b>TRUE</b></code> <br>
-	 * <b>Test Condition <i>FAILED</i>: </b>assertNull with getOutime
-	 * <code><b>FALSE</b></code>
-	 * @throws SQLException 
-	 */
-	@DisplayName("Parking Service Testing - Parking Lot Status on Exit ")
+	@DisplayName("Test on Parking Database WHEN check parking lot "
+			+ "status on exit THEN return ticket issued")
 	@Test
 	public void testParkingLotExitIT() throws InterruptedException, SQLException {
 
@@ -169,7 +134,8 @@ public class ParkingDataBaseIT {
 
 	}
 	
-    @DisplayName("Test DB save Ticket and update availability of parkingSpot")
+    @DisplayName("Test on Parking Database WHEN save Ticket and update "
+    		+ "availability of parkingSpot THEN confirms database update")
     @Test
     public void testDbAvailabilityUpdatedAndTicketSave() throws Exception {
 

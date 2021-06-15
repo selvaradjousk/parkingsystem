@@ -16,25 +16,17 @@ import org.junit.jupiter.api.Test;
 
 import nl.altindag.log.LogCaptor;
 
-/**
- * @author Senthil
- *
- */
-@DisplayName("Application launch and Interaction")
+@DisplayName("IT - Test on Main Application launch and Interaction")
 class AppTest {
 
 	ByteArrayOutputStream byteArrayOutputStream;
 
-	/**
-	 * Test appLoads.
-	 */
+	@DisplayName("test Application empty or blanchlaunch")
 	@Test
 	public void appLoads() {
 	}
 
-	/**
-	 * Test appLoading.
-	 */
+	@DisplayName("Test Application WHEN launching THEN display message")
 	@Test
 	public void appLoading() {
 		LogCaptor logCaptor = LogCaptor.forClass(App.class);
@@ -44,7 +36,7 @@ class AppTest {
 		assertFalse(logCaptor.getInfoLogs().contains(expectedInfoMessage));
 	}
 
-	@DisplayName("Testing the Message Dispays in InteractiveShell")
+	@DisplayName("Test Application WHEN launching Dispays the following Messages in InteractiveShell")
 	@Test
 	public void testLoadInterfaceChoiceIncomingVehicle() throws IOException {
 		String expectedInfoMessage = "CAR";

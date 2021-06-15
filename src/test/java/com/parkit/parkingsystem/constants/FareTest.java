@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author Senthil
  */
+@DisplayName("Test on fare constant values")
 final class FareTest {
 	/**
 	 * Instance of Fare class
@@ -36,19 +37,15 @@ final class FareTest {
 	final double CAR_RATE_PER_HOUR_expected = 1.5;
 
 	
-	/**
-	 * Test bike fare rate per hour.
-	 */
-	@DisplayName("Test BIKE_RATE_PER_HOUR")
+	@DisplayName("Test fare constant WHEN bike rate per hour THEN "
+			+ "equals bike rate per hour")
 	@Test
 	void testBikeRateDbConstanst() {
 		assertEquals(fare.BIKE_RATE_PER_HOUR, BIKE_RATE_PER_HOUR_expected);
 	}
 	
-	/**
-	 * Test car fare rate per hour.
-	 */
-	@DisplayName("testCarRateDbConstanst")
+	@DisplayName("Test fare constant WHEN car rate per hour THEN "
+			+ "equals car rate per hour")
 	@Test
 	void testCarRateDbConstanst() {
 		assertEquals(fare.BIKE_RATE_PER_HOUR, BIKE_RATE_PER_HOUR_expected);

@@ -69,28 +69,22 @@ public class ParkingSpotDAO {
 	 */
 	public int getNextAvailableSpot(final ParkingType parkingType)
 			throws SQLException {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
 		int result = NO_MAGIC_PARAMETER_VALUE_MINUS_ONE;
-		try {
-			con = dataBaseConfig.getConnection();
-			ps = con.prepareStatement(DBConstants
-					.GET_NEXT_PARKING_SPOT);
+		try (Connection con = dataBaseConfig.getConnection();
+			PreparedStatement ps = con.prepareStatement(DBConstants
+					.GET_NEXT_PARKING_SPOT)){
 			ps.setString(NO_MAGIC_PARAMETER_VALUE_ONE,
 					parkingType.toString());
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()){
 			if (rs.next()) {
 				result = rs
 						.getInt(NO_MAGIC_PARAMETER_VALUE_ONE);
+				return result;
+			}
 			}
 		} catch (Exception ex) {
 			LOGGER.error("Error fetching next available slot", ex);
-		} finally {
-			dataBaseConfig.closeConnection(con);
-			dataBaseConfig.closeResultSet(rs);
-			dataBaseConfig.closePreparedStatement(ps);
-		}
+		} 
 		return result;
 	}
 
@@ -106,24 +100,26 @@ public class ParkingSpotDAO {
 	public boolean updateParking(final ParkingSpot parkingSpot)
 			throws SQLException {
 		// update the availability of that parking slot
-		Connection con = null;
-		PreparedStatement ps = null;
-		try {
-			con = dataBaseConfig.getConnection();
-			ps = con.prepareStatement(DBConstants
-					.UPDATE_PARKING_SPOT);
+		try (Connection con = dataBaseConfig.getConnection();
+				PreparedStatement ps = con.prepareStatement(DBConstants
+					.UPDATE_PARKING_SPOT)){
 			ps.setBoolean(NO_MAGIC_PARAMETER_VALUE_ONE,
 					parkingSpot.isAvailable());
 			ps.setInt(NO_MAGIC_PARAMETER_VALUE_TWO,
 					parkingSpot.getId());
 			int updateRowCount = ps.executeUpdate();
-			return (updateRowCount == NO_MAGIC_PARAMETER_VALUE_ONE);
+			
+			if (updateRowCount == NO_MAGIC_PARAMETER_VALUE_ONE) {
+				return true;
+			}
+//			return (updateRowCount == NO_MAGIC_PARAMETER_VALUE_ONE);
 		} catch (Exception ex) {
 			LOGGER.error("Error updating parking info", ex);
-			return false;
-		} finally {
-			dataBaseConfig.closeConnection(con);
-			dataBaseConfig.closePreparedStatement(ps);
+//			return false;
+//		} finally {
+//			dataBaseConfig.closeConnection(con);
+//			dataBaseConfig.closePreparedStatement(ps);
 		}
+		return false;
 	}
 }

@@ -2,17 +2,14 @@ package com.parkit.parkingsystem.unittest.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -23,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.parkit.parkingsystem.util.InputReaderUtil;
 import com.parkit.parkingsystem.util.ScannerWrapper;
 
+@DisplayName("Test Input Reader Util class")
 @ExtendWith(MockitoExtension.class)
 class InputReaderUtilTest {
 
@@ -37,7 +35,7 @@ class InputReaderUtilTest {
 		inputReaderUtil = new InputReaderUtil(scanner);
 	}
 
-	@DisplayName("Test ReadSelection - REGULAR selection")
+	@DisplayName("Test input read selection WHEN regular selection THEN test pass")
 	@ParameterizedTest(name = "Tested Value: {0} on read return {0}")
 	@ValueSource(strings = { "1", "2", "3" })
 	void testReadSelectionRegularSelection(String arg) {
@@ -52,7 +50,7 @@ class InputReaderUtilTest {
 		assertEquals(selection, Integer.parseInt(arg));
 	}
 
-	@DisplayName("Test ReadSelection - NEGATIVE values selection")
+	@DisplayName("Test input read selection WHEN negative values selection THEN should return -1")
 	@ParameterizedTest(name = "Tested Value: {0} on read return -1")
 	@ValueSource(strings = { "-1", "-2", "-3", "-4", "-9" })
 	void testReadSelectionNegativeValues(String arg) {
@@ -67,7 +65,7 @@ class InputReaderUtilTest {
 		assertEquals(selection, -1);
 	}
 
-	@DisplayName("Test ReadSelection - >3 values selection")
+	@DisplayName("Test input read selection WHEN more than value 3 THEN should return -1")
 	@ParameterizedTest(name = "Tested Value: {0} on read return -1")
 	@ValueSource(strings = { "4", "5", "9", "10", "100" })
 	void testReadSelectionAboveValueThree(String arg) {
@@ -82,7 +80,7 @@ class InputReaderUtilTest {
 		assertEquals(selection, -1);
 	}
 
-	@DisplayName("Test ReadSelection - ALPHABET characters selection")
+	@DisplayName("Test input read selection WHEN alphabet characters selection THEN should return -1")
 	@ParameterizedTest(name = "Tested Value: {0} on read return -1")
 	@ValueSource(strings = { "a", "b", "c", "x", "z" })
 	void testReadSelectionAlphabets(String arg) {
@@ -97,7 +95,7 @@ class InputReaderUtilTest {
 		assertEquals(selection, -1);
 	}
 
-	@DisplayName("Test ReadSelection - SPECIAL characters selection")
+	@DisplayName("Test input read selection WHEN special characters selection")
 	@ParameterizedTest(name = "Tested Value: {0} on read return -1")
 	@ValueSource(strings = { "&", "#", "!", "=", "~" })
 	void testReadSelectionSpecialCharacters(String arg) {
@@ -112,7 +110,7 @@ class InputReaderUtilTest {
 		assertEquals(selection, -1);
 	}
 
-	@DisplayName("Test readVehicleRegistrationNumber - VALID registration number inputs")
+	@DisplayName("Test input read vehicle registration number WHEN valid registration number inputs THEN returns TRUE")
 	@ParameterizedTest(name = "Tested Value: {0} on read return {0}")
 	@ValueSource(strings = { "AB123CD", "BC456DE", "123456", "AB1234YZ", "XY9874OP" })
 	void testReadVehicleRegistrationNumberValidType(String arg) throws Exception {
@@ -127,7 +125,7 @@ class InputReaderUtilTest {
 		assertEquals(regNumber, arg);
 	}
 
-	@DisplayName("Test readVehicleRegistrationNumber - INVALID registration number input throws exception")
+	@DisplayName("Test input read vehicle registration number WHEN invalid registration number inputs THEN throws Illegal Argument Exception")
 	@ParameterizedTest(name = "Tested Value: {0} on read throws exception")
 	@ValueSource(strings = { "WOOOO WOOOO", "BC4sdfs56DE", "123sdfq456", "HAAAAHHAAAAA", "XY9IUYT&874OP" })
 	void testReadVehicleRegistrationNumberInvalid(String arg) {
@@ -139,7 +137,7 @@ class InputReaderUtilTest {
 		assertThrows(IllegalArgumentException.class, () -> inputReaderUtil.readVehicleRegistrationNumber()); // WHEN
 	}
 
-	@DisplayName("Test readVehicleRegistrationNumber -EMPTY input value throws exception")
+	@DisplayName("Test input read vehicle registration number WHEN empty input value THEN throws Illegal Argument Exception")
 	@ParameterizedTest(name = "Tested Value: {0} on read throws exception")
 	@ValueSource(strings = { "", " ", "   ", "     ", "     ", "             " })
 	void testReadVehicleRegistrationNumberEmpty(String arg) {
@@ -152,7 +150,7 @@ class InputReaderUtilTest {
 	}
 
 	@Test
-	@DisplayName("Test readVehicleRegistrationNumber - null input value: {0} throws exception")
+	@DisplayName("Test input read vehicle registration number WHEN null input value THEN throws Illegal Argument exception")
 	void testReadVehicleRegistrationNumberNull() {
 
 		// GIVEN
@@ -164,7 +162,7 @@ class InputReaderUtilTest {
 	
 
 	@Test
-	@DisplayName("Test read Vehicle Registration Number Illegal Argument Exception Message")
+	@DisplayName("Test read Vehicle Registration Number WHEN Illegal Argument Exception THEN displays error Message")
 	void testReadVehicleRegistrationNumberIllegalArgumentExceptionMessageTest() {
 		// GIVEN
 		when(scanner.nextLine()).thenReturn(null);

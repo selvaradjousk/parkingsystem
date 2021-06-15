@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -13,6 +14,7 @@ import com.parkit.parkingsystem.constants.ParkingType;
 
 import junit.framework.Assert;
 
+@DisplayName("Test Parking Spot Model Class")
 class ParkingSpotTest {
 	ParkingSpot parkingSpot;
 	private static final ParkingType CAR = null;
@@ -20,9 +22,7 @@ class ParkingSpotTest {
 	public static final ParkingSpot pSpotCar = new ParkingSpot(2, CAR, false);
 	public static final ParkingSpot pSpotBike = new ParkingSpot(2, BIKE, false);
 
-	/**
-	 * test Parking Spot Car getId.
-	 */
+	@DisplayName("Test Parking Spot WHEN get idfor car THEN gets id")
 	@Test
 	public void testParkingSpotCarGetId() {
 		int expected = (int) Math.random();
@@ -31,9 +31,7 @@ class ParkingSpotTest {
 		assertEquals(expected, actual);
 	}
 
-	/**
-	 * test Parking Spot Bike getId.
-	 */
+	@DisplayName("Test Parking Spot WHEN get id for bike THEN gets id")
 	@Test
 	public void testParkingSpotBikeGetId() {
 		int expected = (int) Math.random();
@@ -42,9 +40,7 @@ class ParkingSpotTest {
 		assertEquals(expected, actual);
 	}
 
-	/**
-	 * test Parking Spot Car Parking Type.
-	 */
+	@DisplayName("Test Parking Spot WHEN get parking type for car THEN gets parking type")
 	@Test
 	public void testParkingSpotCarParkingType() {
 		ParkingType expected = ParkingType.CAR;
@@ -53,9 +49,7 @@ class ParkingSpotTest {
 		assertEquals(expected, actual);
 	}
 
-	/**
-	 * test Parking Spot Bike Parking Type.
-	 */
+	@DisplayName("Test Parking Spot WHEN get parking type for bike THEN gets parking type")
 	@Test
 	public void testParkingSpotBikeParkingType() {
 		ParkingType expected = ParkingType.BIKE;
@@ -64,12 +58,7 @@ class ParkingSpotTest {
 		assertEquals(expected, actual);
 	}
 
-	/**
-	 * Test Car Vehicle availability status
-	 * @param vehicleType
-	 * @param expected
-	 */
-	@ParameterizedTest(name = "Testing availability: {0} - {1}")
+	@ParameterizedTest(name = "Test ParkingSpot WHEN availability set THEN status : {0} - {1} confirmed")
 	@CsvSource({ "Car, true", "Car, false", "Bike, true", "Bike, False" })
 	public void testParkingSpotVehicleIsAvailableTrue(String vehicleType, boolean expected) {
 		pSpotCar.setAvailable(expected);
@@ -77,10 +66,7 @@ class ParkingSpotTest {
 		assertEquals(expected, actual);
 	}
 
-	
-	/**
-	 * instance of test for Equals Equals true (this equals object o).
-	 */
+	@DisplayName("Test Parking Spot Equals WHEN comparing the same instance THEN returns TRUE")
 	@Test
 	public void testEqualsShouldReturnTrueWhenComparingTheSameInstance() {
 		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
@@ -88,36 +74,28 @@ class ParkingSpotTest {
 	}
 	
 	
-	/**
-	 * instance of test for Equals Equals Null ( o equals null).
-	 */
+	@DisplayName("Test Parking Spot Equals WHEN instance is not null THEN returns FALSE for null value")
 	@Test
 	public void testEqualsShouldReturnFalseWhenComparingTheNullValue() {
 		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
 		assertFalse(parkingSpot.equals(null));
 	}
 	
-	/**
-	 * instance of test for Equals Not Equals getcClass.
-	 */
+	@DisplayName("Test Parking Spot Equals WHEN comparing wrong type THEN returns Equals Not Equals getcClass")
 	@Test
 	public void testEqualsShouldReturnFalseWhenComparingTheWrongType() {
 		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
 		assertFalse(parkingSpot.equals(ParkingType.CAR));
 	}
 	
-	/**
-	 * instance of test for Equals true Comparing New Instance With Same Values.
-	 */
+	@DisplayName("Test Parking Spot Equals WHEN comparing New Instance With Same Values THEN returns TRUE")
 	@Test
 	public void testEqualsShouldReturnTrueWhenComparingNewInstanceWithSameValues() {
 		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
 		assertTrue(parkingSpot.equals(new ParkingSpot(1, ParkingType.CAR, false)));
 	}
 	
-	/**
-	 * instance of hashCode.
-	 */
+	@DisplayName("Test Parking Spot hashCode WHEN two Instance With Same Values THEN returns confirmation equals")
 	@Test
 	public void testHashCodeShouldBeEqualWithTwoInstanceWithSameValues() {
 		ParkingSpot parkingSpot1 = new ParkingSpot(1, ParkingType.CAR, false);

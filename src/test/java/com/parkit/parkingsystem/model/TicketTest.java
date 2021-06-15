@@ -7,12 +7,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Date;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@DisplayName("Test Ticket Model Class")
 class TicketTest {
 
 	public static final Ticket ticket = new Ticket();
 
+	@DisplayName("Test Ticket WHEN get Ticket id for car THEN gets id")
 	@Test
 	void testTicketCarGetId() {
 		int expected = 5;
@@ -21,6 +24,7 @@ class TicketTest {
 		assertEquals(expected, actual);
 	}
 
+	@DisplayName("Test Ticket WHEN get Ticket id for bike THEN gets id")
 	@Test
 	void testTicketBikeGetId() {
 		int expected = 6;
@@ -29,6 +33,7 @@ class TicketTest {
 		assertEquals(expected, actual);
 	}
 
+	@DisplayName("Test Ticket WHEN get vehicle registration number for bike THEN gets registration number")
 	@Test
 	void testTicketBikeGetVehicleRegNumber() {
 		String expected = "AB1243GH";
@@ -37,6 +42,7 @@ class TicketTest {
 		assertEquals(expected, actual);
 	}
 
+	@DisplayName("Test Ticket WHEN get vehicle registration number for car THEN gets registration number")
 	@Test
 	void testTicketCarGetVehicleRegNumber() {
 		String expected = "ABCDEFGH";
@@ -45,6 +51,7 @@ class TicketTest {
 		assertEquals(expected, actual);
 	}
 
+	@DisplayName("Test Ticket WHEN get ticket price at random THEN gets ticket price")
 	@Test
 	void testTicketPrice() {
 		double expected = (double) Math.random();
@@ -53,6 +60,7 @@ class TicketTest {
 		assertEquals(expected, actual);
 	}
 
+	@DisplayName("Test Ticket WHEN get ticket in time THEN gets in time")
 	@Test
 	void testTicketInTime() {
 		Date expected = new Date();
@@ -61,6 +69,7 @@ class TicketTest {
 		assertEquals(expected, actual);
 	}
 	
+	@DisplayName("Test Ticket WHEN get ticket in time null THEN confirms get in time null")
 	@Test
 	void testgetTicketInTimeNull() {
 		Date expected = null;
@@ -69,6 +78,7 @@ class TicketTest {
 		assertEquals(expected, actual);
 	}
 
+	@DisplayName("Test Ticket WHEN get ticket out time THEN gets out time")
 	@Test
 	void testTicketOutTime() {
 		Date expected = new Date();
@@ -76,6 +86,8 @@ class TicketTest {
 		Date actual = ticket.getOutTime();
 		assertEquals(expected, actual);
 	}
+	
+	@DisplayName("Test Ticket WHEN get ticket out time null THEN confirms get out time null")
 	@Test
 	void testTicketOutTimeNull() {
 		Date expected = null;
@@ -84,6 +96,7 @@ class TicketTest {
 		assertEquals(expected, actual);
 	}
 	
+	@DisplayName("Test Ticket WHEN get ticket occurences in database THEN gets recurrence value")
 	@Test
 	void testOccurences() {
 		boolean occurencesExpected = true;

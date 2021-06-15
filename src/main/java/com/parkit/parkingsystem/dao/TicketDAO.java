@@ -91,11 +91,8 @@ public class TicketDAO {
 	 */
 	public boolean saveTicket(final Ticket ticket)
 			throws SQLException, ClassNotFoundException {
-		Connection con = null;
-		PreparedStatement ps = null;
-		try {
-			con = dataBaseConfig.getConnection();
-			ps = con.prepareStatement(DBConstants.SAVE_TICKET);
+		try (Connection con = dataBaseConfig.getConnection();
+			PreparedStatement ps = con.prepareStatement(DBConstants.SAVE_TICKET)){
 			ps.setInt(NO_MAGIC_PARAMETER_VALUE_ONE,
 					ticket.getParkingSpot().getId());
 			ps.setString(NO_MAGIC_PARAMETER_VALUE_TWO,
@@ -116,9 +113,6 @@ public class TicketDAO {
 			}
 		} catch (SQLException ex) {
 			LOGGER.error("Error fetching next available slot", ex);
-		} finally {
-			dataBaseConfig.closeConnection(con);
-			dataBaseConfig.closePreparedStatement(ps);
 		}
 		return false;
 	}
@@ -221,11 +215,8 @@ public class TicketDAO {
 	 */
 	public boolean updateTicket(final Ticket ticket)
 			throws SQLException, ClassNotFoundException {
-		Connection con = null;
-		PreparedStatement ps = null;
-		try {
-			con = dataBaseConfig.getConnection();
-			ps = con.prepareStatement(DBConstants.UPDATE_TICKET);
+		try (Connection con = dataBaseConfig.getConnection();
+			PreparedStatement ps = con.prepareStatement(DBConstants.UPDATE_TICKET)){
 			ps.setDouble(NO_MAGIC_PARAMETER_VALUE_ONE,
 					ticket.getPrice());
 			ps.setTimestamp(NO_MAGIC_PARAMETER_VALUE_TWO,
@@ -239,9 +230,6 @@ public class TicketDAO {
 			}
 		} catch (SQLException ex) {
 			LOGGER.error("Error saving ticket info", ex);
-		} finally {
-			dataBaseConfig.closeConnection(con);
-			dataBaseConfig.closePreparedStatement(ps);
 		}
 		return false;
 	}

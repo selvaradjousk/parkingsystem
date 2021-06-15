@@ -25,14 +25,6 @@ import com.parkit.parkingsystem.constants.DBConstants;
 import nl.altindag.log.LogCaptor;
 
 
-/**
- * <b>Test Class: </b> {@link DataBaseConfigIT} - Performs Integration Test on
- * Database configuration <br>
- * <b>Class Tested:</b> {@link DataBaseConfig}.<br>
- * <b>Project: </b> P3 - parking system - ParkIt<br>
- * 
- * @author Senthil
- */
 @DisplayName("IT - Test Parking DB Configuration")
 public class DataBaseConfigIT {
 
@@ -48,7 +40,7 @@ public class DataBaseConfigIT {
 	//                                GET CONNECTION TESTS	
 	// ********************************************************************************************
 
-	@DisplayName("Test Parking DB Configuration - Get Connection")
+	@DisplayName("Test DB Configuration WHEN get connection THEN confirms connection status")
 	@Test
 	public void testGetConnectionStatusConnected() // OK DONE
 			throws SQLException, ClassNotFoundException, IllegalAccessException, InstantiationException {
@@ -64,7 +56,7 @@ public class DataBaseConfigIT {
 	}
 
 	// ********************************************************************************************
-	@DisplayName("Test Parking DB Configuration - Get Connection") // OK DONE
+	@DisplayName("Test DB Configuration WHEN get connection  DB URL THEN confirms connection URL")
 	@Test
 	public void testGetConnectionDatabaseUrl()
 			throws SQLException, ClassNotFoundException, IllegalAccessException, InstantiationException {
@@ -82,7 +74,7 @@ public class DataBaseConfigIT {
 
 	// ********************************************************************************************
 
-	@DisplayName("Test Parking DB Configuration - Get Connection") // OK DONE
+	@DisplayName("Test DB Configuration WHEN get connection connected THEN confirms connected status")
 	@Test
 	public void testGetConnectionReturnConnectionWhenConnected()
 			throws SQLException, ClassNotFoundException, IllegalAccessException, InstantiationException {
@@ -100,6 +92,8 @@ public class DataBaseConfigIT {
 	}
 
 	// ********************************************************************************************
+	
+	@DisplayName("Test DB Configuration WHEN get connection THEN display Create DB connection message")
 	@Test
 	public void testGetConnectionLoggerMessageCreateDBconnection()
 			throws SQLException, ClassNotFoundException, IllegalAccessException, InstantiationException, IOException {
@@ -127,7 +121,7 @@ public class DataBaseConfigIT {
 	// ********************************************************************************************
 	//                                CLOSING CONNECTION TESTS	
 	// ********************************************************************************************
-	@DisplayName("Test Parking DB Configuration - Closing Connection")
+	@DisplayName("Test DB Configuration WHEN closing connection THEN confirms closing connection")
 	@Test
 	public void testCloseConnection()
 			throws SQLException, ClassNotFoundException, IllegalAccessException, InstantiationException, IOException {
@@ -164,7 +158,7 @@ public class DataBaseConfigIT {
 
 	// ********************************************************************************************
 	@Test
-	@DisplayName("Test Parking DB Configuration- Null Connection")
+	@DisplayName("Test DB Configuration WHEN Connection is null THEN throws Null Pointer Exception")
 	public void testGetNullConnection() throws ClassNotFoundException, SQLException, Exception, InstantiationException {
 
 		// GIVEN
@@ -178,7 +172,7 @@ public class DataBaseConfigIT {
 	//                                PREPARED STATEMENT TESTS	
 	// ********************************************************************************************
 
-	@DisplayName("Test Parking DB Configuration - Closing Prepared Statement")
+	@DisplayName("Test DB Configuration WHEN Closing Prepared Statement THEN confirms closing PS ")
 	@Test
 	public void testClosePreparedStatement()
 			throws IllegalAccessException, InstantiationException, ClassNotFoundException, SQLException, IOException {
@@ -217,7 +211,7 @@ public class DataBaseConfigIT {
 
 	// ********************************************************************************************
 	@Test
-	@DisplayName("Test Parking DB Configuration - SQL Exception preparedStatement")
+	@DisplayName("Test DB Configuration WHEN error close Preparaed Statement THEN throws SQL Exception")
 	public void testSQLExceptionPreparedStatement()
 			throws NullPointerException, ClassNotFoundException, SQLException, Exception, InstantiationException {
 
@@ -233,7 +227,7 @@ public class DataBaseConfigIT {
 	// ********************************************************************************************
 
 	@Test
-	@DisplayName("Test Parking DB Configuration - SQL Exception preparedStatement")
+	@DisplayName("Test DB Configuration WHEN error close Preparaed Statement THEN display error SQL Exception message")
 	public void testSQLExceptionMessagePreparedStatement()
 			throws NullPointerException, ClassNotFoundException, SQLException, Exception, InstantiationException {
 		String outputScreen = null;
@@ -270,7 +264,7 @@ public class DataBaseConfigIT {
 	//                                RESULTSET TESTS	
 	// ********************************************************************************************
 
-	@DisplayName("Test Parking DB Configuration - Closing ResultSet")
+	@DisplayName("Test DB Configuration WHEN closing ResultSet THEN confirms ResultSet closed")
 	@Test
 	public void testCloseResultSet()
 			throws IllegalAccessException, InstantiationException, ClassNotFoundException, SQLException, IOException {
@@ -301,7 +295,7 @@ public class DataBaseConfigIT {
 	}
 	// ********************************************************************************************
 
-	@DisplayName("Test Parking DB Configuration - Closing ResultSet")
+	@DisplayName("Test DB Configuration WHEN on Closing ResultSet THEN displays message - Closing Result Set")
 	@Test
 	public void testCloseResultSetLoggerMessage()
 			throws IllegalAccessException, InstantiationException, ClassNotFoundException, SQLException, IOException {
@@ -340,7 +334,7 @@ public class DataBaseConfigIT {
 	// ********************************************************************************************
 
 	@Test
-	@DisplayName("Test DB Configuration - SQL Exception ResultSet")
+	@DisplayName("Test DB Configuration WHEN error closing result set THEN SQL Exception ResultSet")
 	public void testSQLExceptionResultSet()
 			throws NullPointerException, ClassNotFoundException, SQLException, Exception, InstantiationException {
 
@@ -356,7 +350,7 @@ public class DataBaseConfigIT {
 	// ********************************************************************************************
 
 	@Test
-	@DisplayName("Test DB Configuration - SQL Exception close ResultSet Logger Message")
+	@DisplayName("Test DB Configuration WHEN SQL Exception close ResultSet THEN display Logger Message")
 	public void testSQLExceptionResultSetLoggerMessage()
 			throws NullPointerException, ClassNotFoundException, SQLException, Exception, InstantiationException {
 
