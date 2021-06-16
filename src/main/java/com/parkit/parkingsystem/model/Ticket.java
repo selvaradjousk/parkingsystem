@@ -147,7 +147,7 @@ public class Ticket {
 	public void setInTime(final Date aInTime) {
 		this.inTime = Optional.ofNullable(aInTime)
 				.map(Date::getTime).map(Date::new)
-				.orElse(null); 
+				.orElse(null);
 	}
 
 	/**

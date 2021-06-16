@@ -124,22 +124,20 @@ public class TicketDAO {
 	 * @return ticket - returns instance value of class Ticket.
 	 * @param vehicleRegNumber - input vehicles registration number
 	 * @exception SQLException
+	 * @throws ClassNotFoundException
 	 */
 	public Ticket getTicket(final String vehicleRegNumber)
-			throws SQLException {
-		Connection con = null;
-		PreparedStatement ps = null;
+			throws SQLException, ClassNotFoundException {
 		Ticket ticket = null;
-		ResultSet rs = null;
-		try {
-			con = dataBaseConfig.getConnection();
-			ps = con.prepareStatement(DBConstants.GET_TICKET);
+
+		try (Connection con = dataBaseConfig.getConnection();
+			PreparedStatement ps = con.prepareStatement(DBConstants.GET_TICKET)) {
 			// ID, PARKING_NUMBER, VEHICLE_REG_NUMBER,
 			// PRICE, IN_TIME, OUT_TIME)
 			ps.setString(NO_MAGIC_PARAMETER_VALUE_ONE,
 					vehicleRegNumber);
 
-			rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery()) {
 			if (rs.next()) {
 				ticket = new Ticket();
 				ParkingSpot parkingSpot
@@ -156,15 +154,16 @@ public class TicketDAO {
 						.getTimestamp(NO_MAGIC_PARAMETER_VALUE_FOUR));
 				ticket.setOutTime(rs
 						.getTimestamp(NO_MAGIC_PARAMETER_VALUE_FIVE));
+				}
 			}
-			dataBaseConfig.closeResultSet(rs);
+//			dataBaseConfig.closeResultSet(rs);
 		} catch (SQLException ex) {
 			LOGGER.error("Error fetching next available slot", ex);
-		} finally {
-			dataBaseConfig.closePreparedStatement(ps);
-			dataBaseConfig.closeConnection(con);
-			return ticket;
+//		} finally {
+//			dataBaseConfig.closePreparedStatement(ps);
+//			dataBaseConfig.closeConnection(con);
 		}
+		return ticket;
 	}
 
 	/**

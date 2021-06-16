@@ -101,7 +101,7 @@ public class ParkingSpotDAO {
 			throws SQLException {
 		// update the availability of that parking slot
 		try (Connection con = dataBaseConfig.getConnection();
-				PreparedStatement ps 
+				PreparedStatement ps
 				= con.prepareStatement(DBConstants
 						.UPDATE_PARKING_SPOT)) {
 			ps.setBoolean(NO_MAGIC_PARAMETER_VALUE_ONE,

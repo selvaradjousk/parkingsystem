@@ -76,7 +76,7 @@ public class ParkingDataBaseIT {
 
 	@DisplayName("Test on Parking Database WHEN check parking a car THEN confirms parking done")
 	@Test
-	public void testParkingACar() throws SQLException {
+	public void testParkingACar() throws SQLException, ClassNotFoundException {
 
 		// GIVEN
 		int firstAlternateParkingSlot = parkingSpotDAO.getNextAvailableSpot(ParkingType.CAR);
@@ -107,7 +107,7 @@ public class ParkingDataBaseIT {
 	@DisplayName("Test on Parking Database WHEN check parking lot "
 			+ "status on exit THEN return ticket issued")
 	@Test
-	public void testParkingLotExitIT() throws InterruptedException, SQLException {
+	public void testParkingLotExitIT() throws InterruptedException, SQLException, ClassNotFoundException {
 
 		// GIVEN
 		testParkingACar();
@@ -131,7 +131,7 @@ public class ParkingDataBaseIT {
 	
     @Test
     @DisplayName("Test on Parking Database WHEN exiting vehicle THEN the fare generated and out time are populated correctly in the DB")
-    public void testProcessExitingVehicleFareIsGeneratedAndOutTimePopulated() throws InterruptedException, SQLException{
+    public void testProcessExitingVehicleFareIsGeneratedAndOutTimePopulated() throws InterruptedException, SQLException, ClassNotFoundException{
     	ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
     	parkingService.processIncomingVehicle();
         Thread.sleep(500);
@@ -153,7 +153,7 @@ public class ParkingDataBaseIT {
     
     @Test
     @DisplayName("Test on Parking Database WHEN exiting vehicle invalid registration number THEN the fare not generated and out time are not populated correctly in the DB")
-    public void testProcessExitingVehicleFareNotGeneratedAndOutTimePopulatedForInvalidRegistrationNumber() throws InterruptedException, SQLException{
+    public void testProcessExitingVehicleFareNotGeneratedAndOutTimePopulatedForInvalidRegistrationNumber() throws InterruptedException, SQLException, ClassNotFoundException{
     	ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
     	parkingService.processIncomingVehicle();
         Thread.sleep(500);
